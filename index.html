@@ -908,7 +908,7 @@ class Charm {
             
            let app, scene, begin, game, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
-                 
+           
             let towerLvl1Damage = 80;
             let bigTowerScale = 1.6;
             let towerColor = "pink" ;
@@ -974,6 +974,8 @@ class Charm {
                 scene.addChild(begin); //comment set playfield + first tower out
                 //scene.addChild(game);
                 //scene.addChild(end);
+                game.scale.set(0.29);
+                game.position.set(game.x+108, game.y+170);
                
                 width = app.screen.width;
                 height = app.screen.height;
@@ -996,7 +998,6 @@ class Charm {
             
             function checkPlatform() {
               var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                // iOS detection from: http://stackoverflow.com/a/9039885/177710
                 if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                     platform = ios;
                 }else{
@@ -1065,7 +1066,7 @@ class Charm {
                 blue = createColorOption(width/3,width/2+width/6,0,"blue",0x3EA0FF,tweens);
                 green = createColorOption(-width/3,0,0,"green",0x11C725,tweens);
                 
-                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 0.65,begin);
+                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 1.8,begin);
                 if(this.type == "landscape"){banner.scale.set(1.4,1.2)}
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: 'riffic_free_mediumbold', fontSize: "30px", fill: 'white'});
                 text.anchor.set(0.5,0.5);
