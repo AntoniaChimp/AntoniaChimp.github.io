@@ -1034,8 +1034,8 @@ class Charm {
                 setupGame();
                 setupEnd();
                 
-                scene.scale.set(width/1.4/height/1.4);
-                game.position.set(game.width/2.6,game.height/2.6);
+                scene.scale.set(width/height);
+                game.position.set(0,0);
                 
                 //AUDIO
                 backgroundMusic = PIXI.sound.Sound.from({
