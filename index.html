@@ -1065,7 +1065,7 @@ class Charm {
                 blue = createColorOption(width/3,width/2+width/6,0,"blue",0x3EA0FF,tweens);
                 green = createColorOption(-width/3,0,0,"green",0x11C725,tweens);
                 
-                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 1.8,begin);
+                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 0.65,begin);
                 if(this.type == "landscape"){banner.scale.set(1.4,1.2)}
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: 'riffic_free_mediumbold', fontSize: "30px", fill: 'white'});
                 text.anchor.set(0.5,0.5);
@@ -1436,7 +1436,7 @@ class Charm {
                         delay = 3;
                     },1300);
                 });
-                let pT = createSprite(color+"Tower.png", towerX,120,0.5,1,begin);
+                let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 1, begin);
                 let tween;
                 if(this.type == "landscape"){
                     pT.scale.set(0.8,0.8);
