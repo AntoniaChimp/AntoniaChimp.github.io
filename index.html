@@ -953,17 +953,17 @@ class Charm {
                 checkPlatform();
                 
                 app = new PIXI.Application();
-                //app.stage = new PIXI.display.Stage();
+                app.stage = new PIXI.display.Stage();
                 document.body.appendChild(app.view);
-//                PIXI.settings.RESOLUTION = window.devicePixelRatio;
-//                app.renderer.backgroundColor = 0x122B4C;
-//                app.renderer.view.style.position = "absolute";
-//                app.renderer.view.style.display = "block";
-//                app.renderer.autoResize = true;
-//                app.renderer.resize(window.innerWidth, window.innerHeight);
-//     
-//                mraid.setOrientationProperties ( {"allowOrientationChange": false } );
-//                PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
+                PIXI.settings.RESOLUTION = window.devicePixelRatio;
+                app.renderer.backgroundColor = 0x122B4C;
+                app.renderer.view.style.position = "absolute";
+                app.renderer.view.style.display = "block";
+                app.renderer.autoResize = true;
+                app.renderer.resize(mraid.getScreenSize().width, mraid.getScreenSize().height);
+     
+                mraid.setOrientationProperties ( {"allowOrientationChange": false } );
+                PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
                 
                 charm = new Charm(PIXI);
                
