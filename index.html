@@ -962,7 +962,7 @@ class Charm {
                 mraid.setOrientationProperties ( {"allowOrientationChange": false } );
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
                 
-                ratio = window.innerWidth/window.innerHeight;
+                ratio = app.screen.width/app.screen.height;
                 
                 charm = new Charm(PIXI);
                
@@ -2032,7 +2032,7 @@ class Charm {
                     },
                     "meta": {
                         "size": {"w": 1400, "h": 1515},
-                        "scale": ratio/2
+                        "scale": ratio
                     }
                 });
 
