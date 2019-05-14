@@ -962,7 +962,7 @@ class Charm {
                 mraid.setOrientationProperties ( {"allowOrientationChange": false } );
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
                 
-                ratio = mraid.getMaxSize().width/mraid.getMaxSize().height;
+                ratio = window.innerWidth/window.innerHeight;
                 
                 charm = new Charm(PIXI);
                
@@ -1115,7 +1115,7 @@ class Charm {
                 }
                 
                 //TRY NOW
-                let scaleX = width/15;
+                let scaleX = width/3;
                 let scaleY = 50;
                 let x = width/2 - scaleX;
                 let y = height/2 - scaleY;
