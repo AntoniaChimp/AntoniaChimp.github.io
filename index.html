@@ -963,6 +963,7 @@ class Charm {
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
                 
                 ratio = window.innerWidth/window.innerHeight;
+                app.stage.addChild(new PIXI.Text(ratio.toString(),{fontFamily: 'riffic_free_mediumbold', fontSize: "30px", fill: 'white'}));
                 
                 charm = new Charm(PIXI);
                
@@ -1108,7 +1109,7 @@ class Charm {
             function setupGame() {  
       
                 //LOGO            
-                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,ratio);
+                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,1);
                 if(this.type == "landscape"){
                     logo.scale.set(ratio,ratio);
                     logo.position.set(game.width/2+20,4.4*game.height);
