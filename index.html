@@ -938,15 +938,16 @@ class Charm {
             document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(init, 50)});
         
              function init(){
-                 if (document.readyState === 'complete') {
-                     if (typeof mraid !== 'undefined') {
-                         if (mraid.getState() === 'loading') {
-                            mraid.addEventListener('ready', mraidIsReady);
-                         } else if (mraid.getState() === 'default') {
-                            displayAd();
-                         }
-                     }
-                 }
+//                 if (document.readyState === 'complete') {
+//                     if (typeof mraid !== 'undefined') {
+//                         if (mraid.getState() === 'loading') {
+//                            mraid.addEventListener('ready', mraidIsReady);
+//                         } else if (mraid.getState() === 'default') {
+//                            displayAd();
+//                         }
+//                     }
+//                 }
+                 displayAd();
              } 
             
             function mraidIsReady(){
