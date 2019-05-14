@@ -906,15 +906,10 @@ class Charm {
            let app, scene, begin, game, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
            
-           let desiredWidth = 1440;
-           let desiredHeight = 2960;
+           let desiredWidth = 720;
+           let desiredHeight = 1280;
            let ratioX = window.innerWidth/desiredWidth;
            let ratioY = window.innerHeight/desiredHeight;
-            console.log(ratioX);
-            console.log(ratioY);
-            
-            ratioX = (ratioX/ratioY)*0.5;
-            ratioY = ratioX;
             
             let towerLvl1Damage = 80;
             let bigTowerScale = ratioX;
@@ -1069,7 +1064,7 @@ class Charm {
                 blue = createColorOption(width/3,width/2+width/6,0,"blue",0x3EA0FF,tweens);
                 green = createColorOption(-width/3,0,0,"green",0x11C725,tweens);
                 
-                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 2,begin);
+                banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 1.4,begin);
                 if(this.type == "landscape"){banner.scale.set(ratioX,ratioY);}
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: 'riffic_free_mediumbold', fontSize: "30px", fill: 'white'});
                 text.anchor.set(0.5,0.5);
@@ -1116,7 +1111,7 @@ class Charm {
             function setupGame() {  
       
                 //LOGO            
-                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,0.5);
+                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,0.8);
                 if(this.type == "landscape"){
                     logo.scale.set(ratioX,ratioY);
                     logo.position.set(game.width/2+20,4.4*game.height);
@@ -1153,14 +1148,14 @@ class Charm {
                 for (let i = 0; i < 4; i++) {
                     let placeholder = new PIXI.Sprite(spritesheet.textures["placeholder.png"]);
                     placeholder.parentGroup = backgroundGroup;
-                    placeholder.scale.set(ratioX,ratioY);
+                    placeholder.scale.set(ratioX*0.6,ratioY*0.6);
                     placeholder.anchor.set(0.5,0.5);
                     placeHolderGroup.addChild(placeholder);
                 }
-                placeHolderGroup.children[0].position.set(width/2+220, height/2-590);
-                placeHolderGroup.children[1].position.set(width/2+220, height/2+460);
-                placeHolderGroup.children[2].position.set(width/2-220, height/2+460);
-                placeHolderGroup.children[3].position.set(width/2-220, height/2-590);
+                placeHolderGroup.children[0].position.set(width/5.6, height/8);
+                placeHolderGroup.children[1].position.set(width/5.6, height/1.3);
+                placeHolderGroup.children[2].position.set(width/1.23, height/8);
+                placeHolderGroup.children[3].position.set(width/1.23, height/1.3);
                 if(this.type == "landscape"){
                     placeHolderGroup.children[0].position.set(game.width-game.width/8.5,game.height/9);
                     placeHolderGroup.children[0].scale.set(ratioX,ratioY);
@@ -1441,13 +1436,13 @@ class Charm {
                         delay = 3;
                     },1300);
                 });
-                let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 1, begin);
+                let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 0.8, begin);
                 let tween;
                 if(this.type == "landscape"){
                     pT.scale.set(ratioX,ratioY);
                     //tween = charm.breathe(pT,0.9,0.9,40,true,0);
                 }else{
-                    tween = charm.breathe(pT,ratioX*1.2,ratioY*1.2,40,true,0);
+                    tween = charm.breathe(pT,ratioX*1,ratioY*1,40,true,0);
                 }
                 tweens.push(tween);
                 return option;
@@ -1777,9 +1772,9 @@ class Charm {
             }
             
             function shootAnimation(tower){
-                tower.scale.y -=0.165*ratio;
+                tower.scale.y -=0.165*ratioY;
                 setTimeout(()=>{
-                   tower.scale.y +=0.165*ratio; 
+                   tower.scale.y +=0.165*ratioY; 
                 },600)
             }
             
@@ -1816,7 +1811,7 @@ class Charm {
                 //PLAYFIELD
                 playfield = new PIXI.Graphics();
                 playfield.lineStyle(4, choosenColorCode, 1);
-                playfield.drawRoundedRect(width/10, height/25, width-width/5, height-height/5, 50);
+                playfield.drawRoundedRect(width/13, height/25, width-width/6.5, height-height/5, 30);
                 playfield.parentGroup = backgroundGroup;
                 game.addChild(playfield);
                 
