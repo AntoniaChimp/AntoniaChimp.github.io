@@ -906,8 +906,8 @@ class Charm {
            let app, scene, begin, game, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
            
-           let desiredWidth = 980;
-           let desiredHeight = 1743;
+           let desiredWidth = 1440;
+           let desiredHeight = 2960;
            let ratioX = window.innerWidth/desiredWidth;
            let ratioY = window.innerHeight/desiredHeight;
             
@@ -1111,30 +1111,30 @@ class Charm {
             function setupGame() {  
       
                 //LOGO            
-                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,0.5);
+                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,1);
                 if(this.type == "landscape"){
                     logo.scale.set(ratioX,ratioY);
                     logo.position.set(game.width/2+20,4.4*game.height);
                 }
                 
                 //TRY NOW
-                let scaleX = width/2;
-                let scaleY = height/8;
+                let scaleX = width/2.2;
+                let scaleY = height/9;
                 let x = width/2;
-                let y = height/1.2;
+                let y = height/1.15;
                 if(this.type == "landscape"){x = width-280; y = 3.9*game.height; scaleX = 250; scaleY = 100;}
                 let install = new PIXI.Graphics();
                 install.beginFill(0x32CD32,1);
-                install.drawRoundedRect(x, y, scaleX, scaleY, 30);
+                install.drawRoundedRect(x, y, scaleX, scaleY, 10);
                 install.endFill();
                 game.addChild(install);
                 install.interactive = true;
                 install.on('pointerdown', function(){mraid.open(platform);});
                 
                 
-                let t = new PIXI.Text("Try Now!",{fontFamily: 'riffic_free_mediumbold', fontSize: "60px", fill: 'white', fontWeight: 'bold'});
+                let t = new PIXI.Text("Try Now!",{fontFamily: 'riffic_free_mediumbold', fontSize: "25px", fill: 'white', fontWeight: 'bold'});
                 t.anchor.set(0.5,0.5);
-                t.position.set(x+200, y+75);
+                t.position.set(x+install.width/2, y+install.height/2);
                 if(this.type != "landscape"){
                     charm.breathe(t,1.1,1.1,30,true,0);
                 }
