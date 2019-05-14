@@ -906,9 +906,13 @@ class Charm {
            let app, scene, begin, game, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
            
-            let ratio;
+           let desiredWidth = 980;
+           let desiredHeight = 1743;
+           let ratioX = window.innerWidth/desiredWidth;
+           let ratioY = window.innerHeight/desiredHeight;
+            
             let towerLvl1Damage = 80;
-            let bigTowerScale = ratio;
+            let bigTowerScale = ratioX;
             let towerColor = "pink" ;
             let choosenColorCode = 0xFF4682;
             let grid, towerPlaces, playfield, tutorialHand, addTower, backgroundMusic;
@@ -962,8 +966,6 @@ class Charm {
                 mraid.setOrientationProperties ( {"allowOrientationChange": false } );
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
                 
-                ratio = app.screen.width/app.screen.height;
-                
                 charm = new Charm(PIXI);
                
                 scene = app.stage;
@@ -1008,21 +1010,21 @@ class Charm {
                 }
 
                 if(this.type == "landscape"){
-                    bigTowerScale = ratio;
+                   // bigTowerScale = ratio;
                     
                     if(height<460){ //iPhoneX
-                        scene.scale.set(ratio,ratio);
+                        scene.scale.set(ratioX,ratioY);
                         scene.position.set(85,0);
-                        begin.scale.set(ratio,ratio);
+                        begin.scale.set(ratioX,ratioY);
                         begin.position.set(-106,0);
-                        end.scale.set(ratio,ratio);
+                        end.scale.set(ratioX,ratioY);
                         end.position.set(-50,0);
                     }else if(height<500){
-                        scene.scale.set(ratio,ratio);
+                        scene.scale.set(ratioX,ratioY);
                         scene.position.set(70,0);
-                        begin.scale.set(ratio,ratio);
+                        begin.scale.set(ratioX,ratioY);
                         begin.position.set(-84,0);
-                        end.scale.set(ratio,ratio);
+                        end.scale.set(ratioX,ratioY);
                         end.position.set(-60,0);
                     }else if(height>700){
                         this.type = "tablet";
@@ -1063,7 +1065,7 @@ class Charm {
                 green = createColorOption(-width/3,0,0,"green",0x11C725,tweens);
                 
                 banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 1 ,begin);
-                if(this.type == "landscape"){banner.scale.set(ratio,ratio)}
+                if(this.type == "landscape"){banner.scale.set(ratioX,ratioY);}
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: 'riffic_free_mediumbold', fontSize: "30px", fill: 'white'});
                 text.anchor.set(0.5,0.5);
                 text.position.set(0,-20);
@@ -1078,7 +1080,7 @@ class Charm {
                 createSprite("tint2.png",width/2+100,0,0.5,1,end).tint = 0x11C725;
                 createSprite("tint2.png",width/2-100,-height/2+100,0.5,1,end).tint = 0xFF4682;
                 let logo = createSprite("logo.png", 0,-470,0.5,1,end);
-                if(this.type == "landscape"){logo.position.set(width/3.6,height/2.7); logo.scale.set(ratio,ratio)}
+                if(this.type == "landscape"){logo.position.set(width/3.6,height/2.7); logo.scale.set(ratioX,ratioY);}
                 
                 let textures = [];
                 
@@ -1087,17 +1089,18 @@ class Charm {
                 }
                 
                 let chest = new PIXI.extras.AnimatedSprite(textures);
-                (this.type == "landscape") ? chest.scale.set(ratio,ratio) : chest.scale.set(ratio,ratio);
+                (this.type == "landscape") ? chest.scale.set(ratioX,ratioY) : chest.scale.set(ratioX,ratioY);
                 (this.type == "landscape") ? chest.position.set(width/1.8,height/15) : chest.position.set(width/3-chest.width/4,height/3);
                 chest.animationSpeed = 0.13;
                 chest.play();
                 end.addChild(chest);
                 let hand = createSprite("tutorialHand.png",150,300,0.5,1,end);
                 charm.pulse(hand,30,0.5);
-                if(this.type == "landscape"){hand.scale.set(ratio,ratio); hand.position.set(width/2+width/3,height/1.3)}
+                if(this.type == "landscape"){hand.scale.set(ratioX,ratioY);
+                                             hand.position.set(width/2+width/3,height/1.3)}
                 
                 let button = createSprite("openBox.png", 0,550,0.5,1);
-                if(this.type == "landscape"){button.position.set(width/3.6,height/1.3); button.scale.set(ratio,ratio)}
+                if(this.type == "landscape"){button.position.set(width/3.6,height/1.3); button.scale.set(ratioX,ratioY);}
                 (this.type == "landscape") ? charm.breathe(button,0.8,0.8,30,true,0) : charm.breathe(button,1.1,1.1,30,true,0);
                 end.addChild(button);
                 
@@ -1108,9 +1111,9 @@ class Charm {
             function setupGame() {  
       
                 //LOGO            
-                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,0.3);
+                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,0.5);
                 if(this.type == "landscape"){
-                    logo.scale.set(ratio,ratio);
+                    logo.scale.set(ratioX,ratioY);
                     logo.position.set(game.width/2+20,4.4*game.height);
                 }
                 
@@ -1137,7 +1140,7 @@ class Charm {
                 }
                 
                 game.addChild(t);
-                if(this.type == "landscape"){t.position.set(x+125,y+50); t.scale.set(ratio,ratio);}
+                if(this.type == "landscape"){t.position.set(x+125,y+50); t.scale.set(ratioX,ratioY);}
                 
                 //TOWER PLACEHOLDER
                 let placeHolderGroup = new PIXI.Container();
@@ -1145,7 +1148,7 @@ class Charm {
                 for (let i = 0; i < 4; i++) {
                     let placeholder = new PIXI.Sprite(spritesheet.textures["placeholder.png"]);
                     placeholder.parentGroup = backgroundGroup;
-                    placeholder.scale.set(ratio,ratio);
+                    placeholder.scale.set(ratioX,ratioY);
                     placeholder.anchor.set(0.5,0.5);
                     placeHolderGroup.addChild(placeholder);
                 }
@@ -1155,13 +1158,13 @@ class Charm {
                 placeHolderGroup.children[3].position.set(width/2-220, height/2-590);
                 if(this.type == "landscape"){
                     placeHolderGroup.children[0].position.set(game.width-game.width/8.5,game.height/9);
-                    placeHolderGroup.children[0].scale.set(ratio,ratio);
+                    placeHolderGroup.children[0].scale.set(ratioX,ratioY);
                     placeHolderGroup.children[1].position.set(game.width-game.width/8.5, game.height/3.5);
-                    placeHolderGroup.children[1].scale.set(ratio,ratio);
+                    placeHolderGroup.children[1].scale.set(ratioX,ratioY);
                     placeHolderGroup.children[2].position.set(game.width-game.width/1.21, game.height/3.5);
-                    placeHolderGroup.children[2].scale.set(ratio,ratio);
+                    placeHolderGroup.children[2].scale.set(ratioX,ratioY);
                     placeHolderGroup.children[3].position.set(game.width-game.width/1.21, game.height/7);
-                    placeHolderGroup.children[3].scale.set(ratio,ratio);
+                    placeHolderGroup.children[3].scale.set(ratioX,ratioY);
                 }
                 
                 towerPlaces = placeHolderGroup.children;
@@ -1171,7 +1174,7 @@ class Charm {
                 for (let i = 0; i < 4; i++) {
                    let tile = new PIXI.Sprite(spritesheet.textures["tile.png"]);
                    tile.parentGroup = backgroundGroup;
-                   tile.scale.set(ratio,ratio);
+                   tile.scale.set(ratioX,ratioY);
                    tile.x = (i % 2) * width/3;
                    tile.y = Math.floor(i / 2) * height/5;
                    grid.addChild(tile);
@@ -1183,7 +1186,7 @@ class Charm {
                 game.addChild(grid); 
                 if(this.type == "landscape"){
                     grid.position.set(width/2,grid.height/2-grid.height/18);
-                    grid.scale.set(ratio,ratio);
+                    grid.scale.set(ratioX,ratioY);
                 }
                 
                 //BUTTONS AND CLICK
@@ -1209,14 +1212,14 @@ class Charm {
                             freeChilds[random].addChild(miniTower);  
                             if(!startTutorial){stopCount();}else{delay = 3; nextAutoMove = "move"}
                         } 
-                         charm.breathe(addTower,ratio*0.9,ratio*0.9,5,false,0);
+                         charm.breathe(addTower,ratioX*0.9,ratioY*0.9,5,false,0);
                     }
                 });
                 addTower.on('pointerup', ()=>{
                     if(this.type == "landscape"){
-                        charm.breathe(addTower,ratio*0.9,0.9,5,false,0);
+                        charm.breathe(addTower,0.9,0.9,5,false,0);
                     }else{
-                        charm.breathe(addTower,ratio*0.8,ratio*0.8,5,false,0);
+                        charm.breathe(addTower,ratioX*0.8,ratioY*0.8,5,false,0);
                     }
                 });
                 let text = new PIXI.Text("TOWER",{fontFamily: 'riffic_free_mediumbold', fontSize: "45px", fill: 'white'});
@@ -1231,7 +1234,7 @@ class Charm {
                     }else{
                         addTower.position.set(game.width/2, game.height-game.height/15);
                     }
-                    addTower.scale.set(ratio,ratio);
+                    addTower.scale.set(ratioX,ratioY);
                 }
             
                 //TUTORIAL HAND
@@ -1298,7 +1301,7 @@ class Charm {
                         enemy.texture = spritesheet.textures[enemy.lifeStages[4]];
                     }else{
                         let splash = createSprite("splash.png", -width/2+enemy.x, -height/2 + enemy.y, 0.5,1);
-                        if(this.type == "landscape"){splash.scale.set(ratio,ratio)}
+                        if(this.type == "landscape"){splash.scale.set(ratioX,ratioY);}
                         splash.parentGroup = splashLayer;
                         game.addChild(splash);
                         game.removeChild(enemy);
@@ -1352,7 +1355,7 @@ class Charm {
                         enemies.push(enemy);
                         if(this.type == "landscape"){
                             charm.walkPath(enemy, wayPointsLandscape, 500, "linear", true, false, 0);
-                            enemy.scale.set(ratio,ratio);
+                            enemy.scale.set(ratioX,ratioY);
                         }else{
                             charm.walkPath(enemy, wayPoints, 500, "linear", true, false, 0);
                         }
@@ -1398,7 +1401,7 @@ class Charm {
                     game.addChild(sprite);
                 }
                 
-                sprite.scale.set(ratio*scale,ratio*scale);
+                sprite.scale.set(ratioX*scale,ratioY*scale);
                 sprite.anchor.set(anchor,anchor);
                 
                 return sprite;
@@ -1436,10 +1439,10 @@ class Charm {
                 let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 0.64, begin);
                 let tween;
                 if(this.type == "landscape"){
-                    pT.scale.set(ratio,ratio);
+                    pT.scale.set(ratioX,ratioY);
                     //tween = charm.breathe(pT,0.9,0.9,40,true,0);
                 }else{
-                    tween = charm.breathe(pT,ratio*0.7,ratio*0.7,40,true,0);
+                    tween = charm.breathe(pT,ratioX*0.7,ratioY*0.7,40,true,0);
                 }
                 tweens.push(tween);
                 return option;
@@ -1466,12 +1469,12 @@ class Charm {
                     case tutorialEnum.add: 
                          if(tutorialTween != undefined){tutorialTween.pause();}
                          if(this.type == "landscape"){
-                             tutorialHand.scale.set(ratio,ratio);
+                             tutorialHand.scale.set(ratioX,ratioY);
                              tutorialHand.x = game.width/2+95;
                              tutorialHand.y = game.height/2+210;
                              tutorialTween = charm.breathe(tutorialHand,0.2,0.2,30,true,0)
                          }else{
-                             tutorialHand.scale.set(ratio,ratio);
+                             tutorialHand.scale.set(ratioX,ratioY);
                              tutorialHand.x = width/2+110;
                              tutorialHand.y = height/2+240;
                              tutorialTween = charm.breathe(tutorialHand,0.3,0.3,30,true,0);
@@ -1813,7 +1816,7 @@ class Charm {
                 game.addChild(playfield);
                 
                 if(this.type == "landscape"){
-                    playfield.scale.set(ratio,ratio);
+                    playfield.scale.set(ratioX,ratioY);
                     playfield.rotation = 1.5707963267949;
                     playfield.position.set(game.width/2.45,0);
                 }else if(this.type == "tablet"){
@@ -2032,7 +2035,7 @@ class Charm {
                     },
                     "meta": {
                         "size": {"w": 1400, "h": 1515},
-                        "scale": ratio
+                        "scale": "1"
                     }
                 });
 
