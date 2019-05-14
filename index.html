@@ -912,7 +912,7 @@ class Charm {
            let ratioY = window.innerHeight/desiredHeight;
             
             let towerLvl1Damage = 80;
-            let bigTowerScale = ratioX*1.1;
+            let bigTowerScale = ratioX*3;
             let towerColor = "pink" ;
             let choosenColorCode = 0xFF4682;
             let grid, towerPlaces, playfield, tutorialHand, addTower, backgroundMusic;
@@ -1078,10 +1078,9 @@ class Charm {
                 
                 banner = createSprite("banner.png", 0, -height/3 +50, 0.5, 1.4,begin);
                 if(this.type == "landscape"){banner.scale.set(ratioX,ratioY);}
-                let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "22px", fill: 'white'});
+                let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "3em", fill: 'white'});
                 text.anchor.set(0.5,0.5);
                 text.position.set(0,-20);
-                text.scale.set(ratioX, ratioY);
                 banner.addChild(text);
             }
             
@@ -1114,7 +1113,7 @@ class Charm {
                 
                 let button = createSprite("openBox.png", 0,height/2-height/7,0.5,1);
                 if(this.type == "landscape"){button.position.set(width/3.6,height/1.3); button.scale.set(ratioX,ratioY);}
-                (this.type == "landscape") ? charm.breathe(button,0.8,0.8,30,true,0) : charm.breathe(button,1.1,1.1,30,true,0);
+                (this.type == "landscape") ? charm.breathe(button,0.8,0.8,30,true,0) : charm.breathe(button,ratioX*1.1,ratioY*1.1,30,true,0);
                 end.addChild(button);
                 
                 end.interactive = true;
@@ -1131,30 +1130,25 @@ class Charm {
                 }
                 
                 //TRY NOW
-                let scaleX = width/2.2;
+                let scaleX = width/2.5;
                 let scaleY = height/9;
                 let x = width/2;
                 let y = height/1.15;
                 if(this.type == "landscape"){x = width-280; y = 3.9*game.height; scaleX = 250; scaleY = 100;}
                 let install = new PIXI.Graphics();
                 install.beginFill(0x32CD32,1);
-                install.drawRoundedRect(x, y, scaleX, scaleY, 50);
+                install.drawRoundedRect(x, y, scaleX, scaleY, 25*ratioX);
                 install.endFill();
                 game.addChild(install);
                 install.interactive = true;
                 install.on('pointerdown', function(){mraid.open(platform);});
                 
                 
-                let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "65px", fill: 'white', fontWeight: 'bold'});
-                t.scale.set(ratioX, ratioY);
+                let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "2.2em", fill: 'white', fontWeight: 'bold'});
                 t.anchor.set(0.5,0.5);
                 t.position.set(x+install.width/2, y+install.height/2);
-                if(this.type != "landscape"){
-                    charm.breathe(t,1.1,1.1,30,true,0);
-                }
-                
                 game.addChild(t);
-                if(this.type == "landscape"){t.position.set(x+125,y+50); t.scale.set(ratioX,ratioY);}
+                if(this.type == "landscape"){t.position.set(x+125,y+50);}
                 
                 //TOWER PLACEHOLDER
                 let placeHolderGroup = new PIXI.Container();
@@ -1220,7 +1214,7 @@ class Charm {
                         if(freeChilds.length > 0){
                             //NEW TOWER
                             let random = Math.floor(Math.random()*(freeChilds.length-1));
-                            let miniTower = createTower(1, towerLvl1Damage, freeChilds[random], 0.4);
+                            let miniTower = createTower(1, towerLvl1Damage, freeChilds[random], 1.4);
                             miniTowerCount.push(miniTower);
                             refresh = true;
                             freeChilds[random].addChild(miniTower);  
@@ -1236,10 +1230,9 @@ class Charm {
                         charm.breathe(addTower,ratioX*1.15,ratioY*1.15,5,false,0);
                     }
                 });
-                let text = new PIXI.Text("TOWER",{fontFamily: font, fontSize: "45px", fill: 'white'});
-                t.scale.set(ratioX, ratioY);
+                let text = new PIXI.Text("TOWER",{fontFamily: font, fontSize: "5.5em", fill: 'white'});
                 text.anchor.set(0.5,0.5);
-                text.position.set(-35,0);
+                text.position.set(-width/9,0);
                 addTower.addChild(text);
                 if(this.type == "landscape"){
                     if(height<460){
@@ -1274,7 +1267,7 @@ class Charm {
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined){
                         shoot(tower, tower.nearestEnemy, 0, -85, game, 7, bullets, ()=>{
-                            let radius = 25;
+                            let radius = 25*ratioX;
                             if(this.type == "landscape"){radius = 15}
                             let graphics = new PIXI.Graphics();
                             graphics.lineStyle(0); 
@@ -1328,7 +1321,7 @@ class Charm {
                 
               //ENDCONDITION
                 if(endBool){
-                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 80, 2000);
+                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 5, 2000);
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
@@ -1397,9 +1390,8 @@ class Charm {
                             .on('pointermove', onDragMove);
                         miniTower.parentGroup = foregroundGroup;
                 
-                let lvlTxt = new PIXI.Text(lvl.toString(),{fontFamily: font, fontSize: "50px", fill: 'white', fontWeight: 'bold'});
+                let lvlTxt = new PIXI.Text(lvl.toString(),{fontFamily: font, fontSize: "5.5em", fill: 'white', fontWeight: 'bold'});
                 lvlTxt.anchor.set(0.5,0.5);
-                lvlTxt.scale.set(ratioX, ratioY);
                 lvlTxt.position.set(0,25);
                 miniTower.addChild(lvlTxt);
                 return miniTower;
@@ -1447,7 +1439,7 @@ class Charm {
                         scene.removeChild(begin);
                         scene.addChild(game);
                         setPlayfield();
-                        createTower(1,towerLvl1Damage,grid.children[0], 0.4);
+                        createTower(1,towerLvl1Damage,grid.children[0], 1.4);
                         nextAutoMove = "add";
                         delay = 3;
                     },1300);
@@ -1491,8 +1483,8 @@ class Charm {
                              tutorialTween = charm.breathe(tutorialHand,ratioX*0.5,ratioY*0.5,30,true,0)
                          }else{
                              tutorialHand.scale.set(ratioX*0.3,ratioY*0.3);
-                             tutorialHand.x = width/2+110;
-                             tutorialHand.y = height/2+240;
+                             tutorialHand.x = addTower.x;
+                             tutorialHand.y = addTower.y;
                              tutorialTween = charm.breathe(tutorialHand,ratioX*0.4,ratioY*0.4,30,true,0)
                          }
                          currentTutorialState = tutorialEnum.none;
@@ -1669,10 +1661,10 @@ class Charm {
                 charm.slide(miniTower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 let tween = charm.slide(tower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 tween.onComplete = () => {
-                    let newTower = createTower(++tower.lvl, tower.damage*2, tower.parent, 0.4);
+                    let newTower = createTower(++tower.lvl, tower.damage*2, tower.parent, 1.2);
                     miniTowerCount.push(newTower);
                     refresh = true;
-                    let breathe = charm.breathe(newTower,0.6,0.6,20,false,0);
+                    let breathe = charm.breathe(newTower,ratioX*1.4,ratioY*1.4,20,false,0);
                     breathe.onComplete = () => merging = false;
                     tower.parent.removeChild(tower);
                     miniTower.parent.removeChild(miniTower);
@@ -1687,7 +1679,7 @@ class Charm {
                 charm.breathe(tower,bigTowerScale,bigTowerScale,20,false,0);
                 tower.reload = false;
                 tower.nearestEnemy = undefined;
-                tower.range = 240;
+                tower.range = 200*ratioX;
                 tower.closestDistance = tower.range;
                 tower.interactive = false;
                 activeTowers.push(tower);
@@ -1709,7 +1701,7 @@ class Charm {
                 charm.slide(miniTower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 let tween = charm.slide(tower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 tween.onComplete = () => {
-                    let newTower = createTower(++tower.lvl, tower.damage*2, undefined, 0.4);
+                    let newTower = createTower(++tower.lvl, tower.damage*2, undefined, 1.4);
                     activeTowers.push(newTower);
                     refresh = true;
                     tower.parent.addChild(newTower);
@@ -1770,7 +1762,7 @@ class Charm {
                 let bullet = bulletSpriteFn();
                 bullet.target = target;
                 bullet.target.health -= shooter.damage;
-                showText(bullet.target, shooter.damage, choosenColorCode, 50, 600);
+                showText(bullet.target, shooter.damage, choosenColorCode, 2, 600);
                 bullet.pivot.set(0.5, 0.5);
 
                 shooter.addChild(bullet);
@@ -1795,11 +1787,10 @@ class Charm {
             }
             
             function showText(position, message, color, size, timeout){
-                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"px", fill: color, strokeThickness:4});
+                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"em", fill: color, strokeThickness:1});
                 text.parentGroup = dragGroup;
-                text.scale.set(ratioX, ratioY);
                 text.anchor.set(0.5,0.5);
-                text.position.set(position.x,position.y-30);
+                text.position.set(position.x,position.y);
                 game.addChild(text);
                 setTimeout(()=>{
                     game.removeChild(text);
@@ -1828,7 +1819,7 @@ class Charm {
                 //PLAYFIELD
                 playfield = new PIXI.Graphics();
                 playfield.lineStyle(5, choosenColorCode, 1);
-                playfield.drawRoundedRect(width/13, height/25, width-width/6.5, height-height/5, 80);
+                playfield.drawRoundedRect(width/13, height/25, width-width/6.5, height-height/5, 35);
                 playfield.parentGroup = backgroundGroup;
                 game.addChild(playfield);
                 
