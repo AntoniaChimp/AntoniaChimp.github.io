@@ -910,6 +910,11 @@ class Charm {
            let desiredHeight = 2960;
            let ratioX = window.innerWidth/desiredWidth;
            let ratioY = window.innerHeight/desiredHeight;
+            console.log(ratioX);
+            console.log(ratioY);
+            
+            ratioX = (ratioX/ratioY)*0.5;
+            ratioY = ratioX;
             
             let towerLvl1Damage = 80;
             let bigTowerScale = ratioX;
