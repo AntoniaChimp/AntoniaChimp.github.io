@@ -1108,17 +1108,17 @@ class Charm {
             function setupGame() {  
       
                 //LOGO            
-                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,1);
+                let logo = createSprite("logo.png", -width/2+width/4.5, height/2-height/15,0.5,ratio);
                 if(this.type == "landscape"){
                     logo.scale.set(ratio,ratio);
                     logo.position.set(game.width/2+20,4.4*game.height);
                 }
                 
                 //TRY NOW
-                let scaleX = width/3;
-                let scaleY = 50;
-                let x = width/2 - scaleX;
-                let y = height/2 - scaleY;
+                let scaleX = width/2;
+                let scaleY = height/8;
+                let x = width/2;
+                let y = height/1.2;
                 if(this.type == "landscape"){x = width-280; y = 3.9*game.height; scaleX = 250; scaleY = 100;}
                 let install = new PIXI.Graphics();
                 install.beginFill(0x32CD32,1);
