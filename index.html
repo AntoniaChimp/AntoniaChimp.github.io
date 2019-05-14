@@ -1101,8 +1101,8 @@ class Charm {
                 }
                 
                 let chest = new PIXI.extras.AnimatedSprite(textures);
-                chest.scale.set(ratioX,ratioY);
-                (this.type == "landscape") ? chest.position.set(width/1.8,height/15) : chest.position.set(width/3-chest.width/4,height/3);
+                chest.scale.set(ratioX*1.3,ratioY*1.3);
+                (this.type == "landscape") ? chest.position.set(width/1.8,height/15) : chest.position.set(width/2-chest.width/2,height/2-chest.height/2);
                 chest.animationSpeed = 0.13;
                 chest.play();
                 end.addChild(chest);
@@ -1182,7 +1182,7 @@ class Charm {
                 for (let i = 0; i < 4; i++) {
                    let tile = new PIXI.Sprite(spritesheet.textures["tile.png"]);
                    tile.parentGroup = backgroundGroup;
-                   tile.scale.set(ratioX*1.5,ratioY*1.5);
+                   tile.scale.set(ratioX*1.5,ratioY*1.7);
                    tile.x = (i % 2) * width/3.4;
                    tile.y = Math.floor(i / 2) * height/5;
                    grid.addChild(tile);
@@ -1214,7 +1214,7 @@ class Charm {
                         if(freeChilds.length > 0){
                             //NEW TOWER
                             let random = Math.floor(Math.random()*(freeChilds.length-1));
-                            let miniTower = createTower(1, towerLvl1Damage, freeChilds[random], 1.4);
+                            let miniTower = createTower(1, towerLvl1Damage, freeChilds[random], 1.1);
                             miniTowerCount.push(miniTower);
                             refresh = true;
                             freeChilds[random].addChild(miniTower);  
@@ -1279,7 +1279,7 @@ class Charm {
                         });
                         setTimeout(function(){
                             reloadTower(tower);
-                        },400);
+                        },700);
                     }
                 });
                 
@@ -1321,7 +1321,7 @@ class Charm {
                 
               //ENDCONDITION
                 if(endBool){
-                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 5, 2000);
+                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 3.8, 2000);
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
@@ -1439,7 +1439,7 @@ class Charm {
                         scene.removeChild(begin);
                         scene.addChild(game);
                         setPlayfield();
-                        createTower(1,towerLvl1Damage,grid.children[0], 1.4);
+                        createTower(1,towerLvl1Damage,grid.children[0], 1.1);
                         nextAutoMove = "add";
                         delay = 3;
                     },1300);
@@ -1661,10 +1661,10 @@ class Charm {
                 charm.slide(miniTower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 let tween = charm.slide(tower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 tween.onComplete = () => {
-                    let newTower = createTower(++tower.lvl, tower.damage*2, tower.parent, 1.2);
+                    let newTower = createTower(++tower.lvl, tower.damage*2, tower.parent, 0.8);
                     miniTowerCount.push(newTower);
                     refresh = true;
-                    let breathe = charm.breathe(newTower,ratioX*1.4,ratioY*1.4,20,false,0);
+                    let breathe = charm.breathe(newTower,ratioX*1.1,ratioY*1.1,20,false,0);
                     breathe.onComplete = () => merging = false;
                     tower.parent.removeChild(tower);
                     miniTower.parent.removeChild(miniTower);
@@ -1701,7 +1701,7 @@ class Charm {
                 charm.slide(miniTower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 let tween = charm.slide(tower, oldPosX, oldPosY, 50, "smoothstep", false, 0);
                 tween.onComplete = () => {
-                    let newTower = createTower(++tower.lvl, tower.damage*2, undefined, 1.4);
+                    let newTower = createTower(++tower.lvl, tower.damage*2, undefined, 1.1);
                     activeTowers.push(newTower);
                     refresh = true;
                     tower.parent.addChild(newTower);
