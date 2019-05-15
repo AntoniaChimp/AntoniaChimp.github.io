@@ -955,7 +955,7 @@ class Charm {
 //                mraid.removeEventListener('ready');
 //                displayAd();
 //            }
-            
+//            
             displayAd();
             
             function displayAd(){
@@ -1385,7 +1385,7 @@ class Charm {
                     string = towerColor + lvl + ".png";
                 }
                 
-                let miniTower = createSprite(string, -width/2 + 65, -height/2+63,1 , size, parent);
+                let miniTower = createSprite(string, -width/2 + 65, -height/2+63, 1 ,size, parent);
                         miniTower.width = (tileWidth*1.4) - tileWidth/4;
                         miniTower.height = tileHeight*1.4;
                         miniTower.interactive = true;
@@ -1419,7 +1419,7 @@ class Charm {
                     game.addChild(sprite);
                 }
                 
-                sprite.scale.set(ratioX*scale,ratioY*scale);
+                sprite.scale.set(1,1);
                 sprite.anchor.set(anchor,anchor);
                 
                 return sprite;
