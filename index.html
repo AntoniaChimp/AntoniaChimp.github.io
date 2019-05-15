@@ -912,8 +912,10 @@ class Charm {
            let ratioY = window.innerHeight/desiredHeight;
             
             let towerLvl1Damage = 80;
-            let bigTowerScale = ratioX*3;
+            let tileWidth;
+            let tileHeight;
             let miniTowerScale = 1;
+            let bigTowerScale = ratioX*(miniTowerScale+2);
             let towerColor = "pink" ;
             let choosenColorCode = 0xFF4682;
             let grid, towerPlaces, playfield, tutorialHand, addTower, backgroundMusic;
@@ -937,7 +939,7 @@ class Charm {
             //let font = "Riffic free";
             document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(init, 50)});
         
-             function init(){
+//             function init(){
 //                 if (document.readyState === 'complete') {
 //                     if (typeof mraid !== 'undefined') {
 //                         if (mraid.getState() === 'loading') {
@@ -947,15 +949,14 @@ class Charm {
 //                         }
 //                     }
 //                 }
-                 displayAd();
-             } 
+//             } 
+//            
+//            function mraidIsReady(){
+//                mraid.removeEventListener('ready');
+//                displayAd();
+//            }
             
-            function mraidIsReady(){
-                mraid.removeEventListener('ready');
-                displayAd();
-            }
-            
-            //displayAd();
+            displayAd();
             
             function displayAd(){
                 checkPlatform();
@@ -1135,7 +1136,7 @@ class Charm {
                 let scaleX = width/2.3;
                 let scaleY = height/12.5;
                 let x = width/2;
-                let y = height/1.1;
+                let y = height/1.115;
                 if(this.type == "landscape"){x = width-280; y = 3.9*game.height; scaleX = 250; scaleY = 100;}
                 let install = new PIXI.Graphics();
                 install.beginFill(0x32CD32,1);
@@ -1146,9 +1147,10 @@ class Charm {
                 install.on('pointerdown', function(){mraid.open(platform);});
                 
                 
-                let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "2.2em", fill: 'white', fontWeight: 'bold'});
+                let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "180%", fill: 'white', fontWeight: 'bold'});
                 t.anchor.set(0.5,0.5);
                 t.position.set(x+install.width/2, y+install.height/2);
+                //t.scale.set()
                 game.addChild(t);
                 if(this.type == "landscape"){t.position.set(x+125,y+50);}
                 
@@ -1185,9 +1187,12 @@ class Charm {
                    let tile = new PIXI.Sprite(spritesheet.textures["tile.png"]);
                    tile.parentGroup = backgroundGroup;
                    tile.scale.set(ratioX*1.3,ratioY*1.3);
+                   //miniTowerScale = 1.3;
                    tile.x = (i % 2) * width/3.3;
                    tile.y = Math.floor(i / 2) * height/4.9;
                    grid.addChild(tile);
+                   tileWidth = tile.width;
+                   tileHeight = tile.height;
                 }
                 grid.x = width/2;
                 grid.y = height/2 - height/8;
@@ -1234,7 +1239,7 @@ class Charm {
                 });
                 let text = new PIXI.Text("TOWER",{fontFamily: font, fontSize: "5.2em", fill: 'white'});
                 text.anchor.set(0.5,0.5);
-                text.position.set(-width/9,0);
+                text.position.set(-text.width/5,0);
                 addTower.addChild(text);
                 if(this.type == "landscape"){
                     if(height<460){
@@ -1281,7 +1286,7 @@ class Charm {
                         });
                         setTimeout(function(){
                             reloadTower(tower);
-                        },700);
+                        },550);
                     }
                 });
                 
@@ -1374,12 +1379,15 @@ class Charm {
             }
             
             function createTower(lvl, damage, parent, size){
+                
                 let string = towerColor +"3.png";
                 if(lvl<3){
                     string = towerColor + lvl + ".png";
                 }
                 
                 let miniTower = createSprite(string, -width/2 + 65, -height/2+63,1 , size, parent);
+                        miniTower.width = (tileWidth*1.4) - tileWidth/4;
+                        miniTower.height = tileHeight*1.4;
                         miniTower.interactive = true;
                         miniTower.lvl = lvl;
                         miniTower.damage = damage;
@@ -1666,8 +1674,9 @@ class Charm {
                     let newTower = createTower(++tower.lvl, tower.damage*2, tower.parent, miniTowerScale-0.2);
                     miniTowerCount.push(newTower);
                     refresh = true;
-                    let breathe = charm.breathe(newTower,ratioX*miniTowerScale,ratioY*miniTowerScale,20,false,0);
-                    breathe.onComplete = () => merging = false;
+//                    let breathe = charm.breathe(newTower,ratioX*miniTowerScale,ratioY*miniTowerScale,20,false,0);
+//                    breathe.onComplete = () => merging = false;
+                    merging = false;
                     tower.parent.removeChild(tower);
                     miniTower.parent.removeChild(miniTower);
                 };  
