@@ -1386,6 +1386,7 @@ class Charm {
                 }
                 
                 let miniTower = createSprite(string, -width/2 + 65, -height/2+63, 1 ,size, parent);
+                        miniTower.scale.set(ratioX, ratioY);
                         miniTower.width = (tileWidth*1.4) - tileWidth/4;
                         miniTower.height = tileHeight*1.4;
                         miniTower.interactive = true;
