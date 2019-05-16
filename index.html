@@ -914,7 +914,7 @@ class Charm {
             let towerLvl1Damage = 80;
             let tileWidth;
             let tileHeight;
-            let miniTowerScale = 1;
+            let miniTowerScale = ratioX+0.95;
             let bigTowerScale = ratioX*(miniTowerScale+2);
             let towerColor = "pink" ;
             let choosenColorCode = 0xFF4682;
@@ -1319,7 +1319,7 @@ class Charm {
                 let miniTower = new PIXI.Sprite(spritesheet.textures[string]);
                 miniTower.position.set(65,63);
                 if(parent !=undefined) parent.addChild(miniTower);
-                miniTower.scale.set(ratioX, ratioX);
+                miniTower.scale.set(ratioX*miniTowerScale, ratioX*miniTowerScale);
                 miniTower.interactive = true;
                 miniTower.lvl = lvl;
                 miniTower.damage = damage;
