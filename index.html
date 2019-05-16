@@ -1318,7 +1318,9 @@ class Charm {
                 let miniTower = new PIXI.Sprite(spritesheet.textures[string]);
                 miniTower.position.set(65,63);
                 if(parent !=undefined) parent.addChild(miniTower);
-                miniTower.scale.set(ratioX*miniTowerScale, ratioX*miniTowerScale);
+                //miniTower.scale.set(ratioX*miniTowerScale, ratioX*miniTowerScale);
+                miniTower.width = tileHeight;
+                miniTower.height = tileHeight;
                 miniTower.interactive = true;
                 miniTower.lvl = lvl;
                 miniTower.damage = damage;
