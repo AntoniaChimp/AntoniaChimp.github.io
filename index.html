@@ -915,8 +915,7 @@ class Charm {
             let tileWidth;
             let tileHeight;
             let miniTowerScale = ratioX+0.95;
-            let bigTowerScale = ratioX*(miniTowerScale+2);
-            console.log(miniTowerScale);
+            let bigTowerScale = ratioX*(miniTowerScale+1.6);
             let towerColor = "pink" ;
             let choosenColorCode = 0xFF4682;
             let grid, towerPlaces, playfield, tutorialHand, addTower, backgroundMusic;
@@ -1321,7 +1320,7 @@ class Charm {
                 miniTower.position.set(65,63);
                 if(parent !=undefined) parent.addChild(miniTower);
                 //miniTower.scale.set(ratioX*miniTowerScale, ratioX*miniTowerScale);
-                miniTower.scale.set(ratioX*(tileWidth/tileHeight), ratioX*(tileWidth/tileHeight));
+                miniTower.scale.set((tileWidth/tileHeight)/2, (tileWidth/tileHeight)/2);
                 miniTower.interactive = true;
                 miniTower.lvl = lvl;
                 miniTower.damage = damage;
