@@ -1261,7 +1261,7 @@ class Charm {
                 
               //ENDCONDITION
                 if(endBool){
-                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 350*ratioX, 2000);
+                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 350, 2000, true);
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
@@ -1316,7 +1316,7 @@ class Charm {
                 let miniTower = new PIXI.Sprite(spritesheet.textures[string]);
                 miniTower.position.set(65,63);
                 if(parent !=undefined) parent.addChild(miniTower);
-                miniTower.width = tileWidth/1.4;
+                miniTower.width = tileHeight/1.8;
                 miniTower.height = tileHeight/1.4;
                 miniTower.interactive = true;
                 miniTower.lvl = lvl;
@@ -1689,7 +1689,7 @@ class Charm {
                 let bullet = bulletSpriteFn();
                 bullet.target = target;
                 bullet.target.health -= shooter.damage;
-                showText(bullet.target, shooter.damage, choosenColorCode, 200, 600);
+                showText(bullet.target, shooter.damage, choosenColorCode, 200, 600, false);
                 bullet.pivot.set(0.5, 0.5);
 
                 shooter.addChild(bullet);
@@ -1713,8 +1713,9 @@ class Charm {
                 },600)
             }
             
-            function showText(position, message, color, size, timeout){
-                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"%", fill: color, strokeThickness:1});
+            function showText(position, message, color, size, timeout, stroke){
+                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"%", fill: color});
+                if(stroke){text.strokeThickness = 1}
                 text.parentGroup = dragGroup;
                 text.anchor.set(0.5,0.5);
                 text.position.set(position.x,position.y);
