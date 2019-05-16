@@ -1070,7 +1070,7 @@ class Charm {
                 createSprite("tint.png",width/2,height/2,0.5,0.9,end).tint = 0x3EA0FF;
                 createSprite("tint.png",0,height/2,0.5,0.5,end).tint = 0xFF4682;
                 createSprite("tint.png",-width/2+150,-height/2+100,0.5,0.9,end).tint = 0x11C725;
-                createSprite("tint.png",width/2+100,0,0.5,0.6,end).tint = 0x11C725;
+                createSprite("tint.png",width/2-100,0,0.5,0.6,end).tint = 0x11C725;
                 createSprite("tint.png",width/2-100,-height/2+100,0.5,0.8,end).tint = 0xFF4682;
                 let logo = createSprite("logo.png", 0,-height/3.6,0.5,1,end);
                 
@@ -1211,7 +1211,7 @@ class Charm {
               //SHOOTING TOWER BEHAVIOUR
                 activeTowers.forEach(tower=>{
                     getNearestEnemy(tower);
-                    if(!tower.reload && tower.nearestEnemy != undefined){
+                    if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
                         shoot(tower, tower.nearestEnemy, 0, -85, game, 7, bullets, ()=>{
                             let radius = 25*ratioX;
                             //if(this.type == "landscape"){radius = 15}
@@ -1254,6 +1254,7 @@ class Charm {
                     }else if(enemy.health<=max-4*step && enemy.health > max-5*step){
                         enemy.texture = spritesheet.textures[enemy.lifeStages[4]];
                     }else{
+                        enemy.dead = true;
                         let splash = createSprite("splash.png", -width/2+enemy.x, -height/2 + enemy.y, 0.5,0.3);
                         splash.parentGroup = splashLayer;
                         game.addChild(splash);
@@ -1318,6 +1319,7 @@ class Charm {
             function createEnemy(wayPoints){
                  let enemy = createSprite("enemy1.png",0,0,0.5,0.8);
                  enemy.parentGroup = dragGroup;
+                 enemy.dead = false;
                  enemy.health = 400;
                  enemy.lifeStages = ["enemy1.png" , "enemy2.png", "enemy3.png", "enemy4.png", "enemy5.png"];
                  enemies.push(enemy);
@@ -1672,9 +1674,9 @@ class Charm {
                 setTower(tower.parent, miniTower);
                 
                 miniTowerParent.addChild(tower);
-                let ratio = tower.width/tower.height;
-                tower.height = tileHeight/1.3;
-                tower.width = tower.height*ratio;
+                let ratio =  miniTower.width/ miniTower.height;
+                tower.height = tileHeight/1.4;
+                tower.width = miniTower.height*ratio;
                 tower.interactive = true;
                 tower.rotation = 0;
                 tower.anchor.set(0.5);
@@ -1698,7 +1700,7 @@ class Charm {
                     }
                 }
                 tower.closestDistance = tower.range;
-                if((tower.nearestEnemy == undefined) || (distanceTo(tower.nearestEnemy.x, tower.nearestEnemy.y, tower.getGlobalPosition().x, tower.getGlobalPosition().y) > tower.range)){
+                if((tower.nearestEnemy == undefined) || (distanceTo(tower.nearestEnemy.x, tower.nearestEnemy.y, tower.getGlobalPosition().x, tower.getGlobalPosition().y) > tower.range) || tower.nearestEnemy.dead){
                     tower.nearestEnemy = undefined;
                 }else{
                     tower.rotation = angle(tower.getGlobalPosition(), tower.nearestEnemy);   
@@ -1711,7 +1713,7 @@ class Charm {
                 let bullet = bulletSpriteFn();
                 bullet.target = target;
                 bullet.target.health -= shooter.damage;
-                showText(bullet.target, shooter.damage, choosenColorCode, 200, 600, true);
+                showText(bullet.target, shooter.damage, choosenColorCode, 50, 600, true);
                 bullet.pivot.set(0.5, 0.5);
 
                 shooter.addChild(bullet);
@@ -1736,7 +1738,8 @@ class Charm {
             }
             
             function showText(position, message, color, size, timeout, stroke){
-                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"%", fill: color});
+                let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"px", fill: color});
+                text.scale.set(ratioX,ratioY);
                 if(stroke){text.style.strokeThickness = 1}
                 text.parentGroup = dragGroup;
                 text.anchor.set(0.5,0.5);
