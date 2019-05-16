@@ -911,6 +911,8 @@ class Charm {
            let ratioX = window.innerWidth/desiredWidth;
            let ratioY = window.innerHeight/desiredHeight;
             
+            let pause = false;
+            
             let towerLvl1Damage = 80;
             let tileWidth;
             let tileHeight;
@@ -1037,8 +1039,10 @@ class Charm {
                 document.addEventListener("visibilitychange", function() {
                     if(document.hidden){
                         backgroundMusic.pause();
+                        pause = true;
                     } else if(!backgroundMusic.playing){
                         backgroundMusic.resume();
+                        pause = false;
                     }
                 });
             }
@@ -1102,7 +1106,7 @@ class Charm {
                 let scaleX = width/2.3;
                 let scaleY = height/12.5;
                 let x = width/2;
-                let y = height/1.115;
+                let y = height/1.1;
                 let install = new PIXI.Graphics();
                 install.beginFill(0x32CD32,1);
                 install.drawRoundedRect(x, y, scaleX, scaleY, 25*ratioX);
@@ -1261,7 +1265,12 @@ class Charm {
                 
               //ENDCONDITION
                 if(endBool){
-                    showText({x:width/2,y:height/2}, "WAVE CLEARED!", "0xFFFFFF", 350, 2000, true);
+                    let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "80px", fill: "0xFFFFFF", strokeThickness:1});
+                    text.scale.set(ratioX, ratioY);
+                    text.parentGroup = dragGroup;
+                    text.anchor.set(0.5,0.5);
+                    text.position.set(width/2,height/2);
+                    game.addChild(text);
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
@@ -1295,15 +1304,23 @@ class Charm {
                 ];
 
                 for(let i = 0; i<9; i++){
-                    setTimeout(function(){
-                        let enemy = createSprite("enemy1.png",0,0,0.5,0.8);
-                        enemy.parentGroup = dragGroup;
-                        enemy.health = 400;
-                        enemy.lifeStages = ["enemy1.png" , "enemy2.png", "enemy3.png", "enemy4.png", "enemy5.png"];
-                        enemies.push(enemy);
-                        charm.walkPath(enemy, wayPoints, 500, "linear", true, false, 0);
-                    },i*750);
+                    spawnEnemy(wayPoints,i);
                 }      
+            }
+            
+            function spawnEnemy(wayPoints,i){
+                 setTimeout(function(){
+                    pause ? spawnEnemy(wayPoints,i) : createEnemy(wayPoints);                             
+                },i*750);
+            }
+                        
+            function createEnemy(wayPoints){
+                 let enemy = createSprite("enemy1.png",0,0,0.5,0.8);
+                 enemy.parentGroup = dragGroup;
+                 enemy.health = 400;
+                 enemy.lifeStages = ["enemy1.png" , "enemy2.png", "enemy3.png", "enemy4.png", "enemy5.png"];
+                 enemies.push(enemy);
+                 charm.walkPath(enemy, wayPoints, 500, "linear", true, false, 0);       
             }
             
             function createTower(lvl, damage, parent){
@@ -1719,7 +1736,7 @@ class Charm {
             
             function showText(position, message, color, size, timeout, stroke){
                 let text = new PIXI.Text(message.toString(),{fontFamily: font, fontSize: size+"%", fill: color});
-                if(stroke){text.strokeThickness = 1}
+                if(stroke){text.style.strokeThickness = 1}
                 text.parentGroup = dragGroup;
                 text.anchor.set(0.5,0.5);
                 text.position.set(position.x,position.y);
