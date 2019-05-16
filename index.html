@@ -1119,7 +1119,7 @@ class Charm {
                 let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "250%", fill: 'white', fontWeight: 'bold'});
                 t.anchor.set(0.5,0.5);
                 t.position.set(x+install.width/2, y+install.height/2);
-                game.addChild(t);
+                install.addChild(t);
                 
                 //TOWER PLACEHOLDER
                 let placeHolderGroup = new PIXI.Container();
