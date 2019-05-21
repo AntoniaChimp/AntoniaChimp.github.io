@@ -1068,12 +1068,14 @@ class Charm {
                 blue = createColorOption(width/3,width/2+width/6,0,"blue",0x3EA0FF,tweens);
                 green = createColorOption(-width/3,0,0,"green",0x11C725,tweens);
                 
+                let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "300%", fill: 'white'});
                 if(this.type == "landscape"){
                     banner= createSprite("banner.png", 0, -height/3 +50, 0.5, 1, 2.3, begin);
+                    text.scale.set(1,ratioY*3);
                 }else{
                     banner= createSprite("banner.png", 0, -height/3 +50, 0.5, 1.4, 1.4, begin);
                 }
-                let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "300%", fill: 'white'});
+                
                 text.anchor.set(0.5,0.5);
                 text.position.set(0,-20);
                 banner.addChild(text);
@@ -1210,9 +1212,9 @@ class Charm {
                    tileWidth = tile.width;
                    tileHeight = tile.height;
                     if(this.type == "landscape"){
-                        tile.scale.set(ratioX*0.8,ratioY*1.9);
+                        tile.scale.set(ratioX*0.8,ratioY*2.2);
                         tile.x = (i % 2) * width/6;
-                        tile.y = Math.floor(i / 2) * height/4.7;
+                        tile.y = Math.floor(i / 2) * height/4.3;
                         grid.x = width/2;
                         grid.y = height/2 - height/11;
                     }else{
@@ -1360,7 +1362,7 @@ class Charm {
                 if(endBool){
                     let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "80px", fill: "0xFFFFFF", strokeThickness:2});
                     if(this.type == "landscape"){
-                        text.scale.set(ratioX, ratioY*2.2);
+                        text.scale.set(ratioX, ratioY*2.5);
                     }else{
                         text.scale.set(ratioX, ratioY);
                     } 
@@ -1512,7 +1514,7 @@ class Charm {
                 let tween;
                 if(this.type == "landscape"){
                     let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 0.6, 1.6, begin);
-                    tween = charm.breathe(pT,ratioX*0.68,ratioY*1.75,40,true,0);
+                    tween = charm.breathe(pT,ratioX*0.65,ratioY*1.75,40,true,0);
                 }else{
                     let pT = createSprite(color+"Tower.png", towerX, 100, 0.5, 0.8, 0.8, begin);
                     tween = charm.breathe(pT,ratioX,ratioY,40,true,0);
