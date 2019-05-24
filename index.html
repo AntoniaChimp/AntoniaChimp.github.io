@@ -1024,7 +1024,12 @@ class Charm {
                 console.log(desiredHeight);
                 
                 if(window.innerHeight<desiredHeight || window.innerWidth<desiredWidth){
-                    game.scale.set(desiredWidth/desiredHeight,desiredWidth/desiredHeight);
+                    //game.scale.set(desiredWidth/desiredHeight/0.8,window.innerHeight/desiredHeight);
+                    
+                    let gameRatio = desiredWidth/desiredHeight;
+                    game.height = window.innerHeight/1.15;
+                    game.width = game.height*gameRatio;
+                    
                     game.position.set((window.innerWidth/2) - game.width/1.9,(window.innerHeight/2) - game.height/1.75);
                 }else if(false) {
                     console.log("else if");
