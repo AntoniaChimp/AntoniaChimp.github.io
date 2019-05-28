@@ -1317,7 +1317,12 @@ class Charm {
                 addTower.addChild(text);
             
                 //TUTORIAL HAND
-                tutorialHand = createSpriteRelational("tutorialHand.png",2,2,13, gameStuff);
+                if(this.type == "landscape"){
+                    tutorialHand = createSpriteRelational("tutorialHand.png",2,2,13, gameStuff);
+                }else{
+                    tutorialHand = createSpriteRelational("tutorialHand.png",2,2,8, gameStuff);
+                }  
+                
                 tutorialHand.parentGroup = damageLayer;
 
                 
@@ -1576,7 +1581,12 @@ class Charm {
                         delay = 3;
                     },1300);
                 });
-                let pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
+                let pT;
+                if(this.type == "landscape"){
+                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,5.5,begin);
+                }else{
+                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
+                }
                 let tween = charm.breathe(pT,pT.scale.x+(0.15*ratio),pT.scale.y+(0.15*ratio),40,true,0);
                 tweens.push(tween);
                 return option;
@@ -1604,7 +1614,12 @@ class Charm {
                          if(tutorialTween != undefined){tutorialTween.pause();}
                          tutorialHand.x = addTower.getGlobalPosition().x+adWidth/15;
                          tutorialHand.y = addTower.getGlobalPosition().y+adHeight/20;
-                         tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.05*ratio),tutorialHand.scale.y+(0.05*ratio),30,true,0);
+                         let scale = tutorialHand.scale;
+                         if(this.type == "landscape"){
+                             tutorialTween = charm.breathe(tutorialHand,scale.x+(0.02*ratio),scale.y+(0.02*ratio),30,true,0);
+                         }else{
+                             tutorialTween = charm.breathe(tutorialHand,scale.x+(0.05*ratio),scale.y+(0.05*ratio),30,true,0);
+                         }
                          currentTutorialState = tutorialEnum.none;
                          tutorialHand.visible = false;
                          break;
