@@ -916,6 +916,10 @@ class Charm {
             let desiredHeight = 1743;
             let widthShift;
             let heightShift;
+            let adWidth = window.innerWidth;
+            let adHeight = window.innerHeight;
+            let adBool = true;
+            
             
             let pause = false;
             
@@ -972,6 +976,11 @@ class Charm {
             
             function displayAd(){
                 checkPlatform();
+                if(adBool){
+                    mraid.setOrientationProperties ( {"allowOrientationChange": false } );
+                    adWidth = mraid.getMaxSize().width;
+                    adHeight = mraid.getMaxSize().height;
+                }
                 
                 app = new PIXI.Application();
                 app.stage = new PIXI.display.Stage();
@@ -983,7 +992,6 @@ class Charm {
                 app.renderer.autoResize = true;
     
                 app.renderer.resize(window.innerWidth, window.innerHeight);
-                //mraid.setOrientationProperties ( {"allowOrientationChange": false } );
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
     
                 charm = new Charm(PIXI);
@@ -1019,27 +1027,27 @@ class Charm {
 //                .add("images/sprites.json")
 //                .load(setup);
                 
-                if(window.innerHeight<desiredHeight || window.innerWidth<desiredWidth){
+                if(adHeight<desiredHeight || adWidth<desiredWidth){
                     let gameRatio = desiredWidth/desiredHeight;
                     if(this.type == "landscape"){
-                        game.height = window.innerHeight/1.31;
+                        game.height = adHeight/1.31;
                         game.width = game.height/gameRatio;
-                        if(game.width>window.innerWidth){
-                            game.height = window.innerHeight/1.4;
+                        if(game.width>adWidth){
+                            game.height = adHeight/1.4;
                             game.width = game.height/gameRatio;
                         }
                         widthShift = -game.width/1.8;
                         heightShift = -game.height/1.65;
-                        game.position.set((window.innerWidth/2)+widthShift,(window.innerHeight/2)+heightShift);     
+                        game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
                     }else{
-                        game.height = window.innerHeight/1.15;
+                        game.height = adHeight/1.15;
                         game.width = game.height*gameRatio;
                         widthShift = -game.width/1.9;
                         heightShift = -game.height/1.75;
-                        game.position.set((window.innerWidth/2)+widthShift ,(window.innerHeight/2) +heightShift);   
+                        game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
                     }
                 }else{
-                    game.position.set((window.innerWidth-desiredWidth)/2, (window.innerHeight-desiredHeight)/2);
+                    game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
                 }
             }
             
@@ -1082,8 +1090,8 @@ class Charm {
             function setupBegin(){
                 let tweens = [];
                 
-                pink = createColorOption(2,window.innerWidth/2-window.innerWidth/6,"pink",0xFF4682,tweens);
-                blue = createColorOption(1.2,window.innerWidth/2+window.innerWidth/6,"blue",0x3EA0FF,tweens);
+                pink = createColorOption(2,adWidth/2-adWidth/6,"pink",0xFF4682,tweens);
+                blue = createColorOption(1.2,adWidth/2+adWidth/6,"blue",0x3EA0FF,tweens);
                 green = createColorOption(5.8,0,"green",0x11C725,tweens);
                 
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "300%", fill: 'white'});
@@ -1119,15 +1127,15 @@ class Charm {
                 
                 let chest = new PIXI.extras.AnimatedSprite(textures);
                 let r = chest.width/chest.height;
-                chest.width = window.innerWidth/1.6;
+                chest.width = adWidth/1.6;
                 chest.height = chest.width/r;
-                chest.position.set(window.innerWidth/2-chest.width/2,window.innerHeight/1.8-chest.height/2);
+                chest.position.set(adWidth/2-chest.width/2,adHeight/1.8-chest.height/2);
                 
                 if(this.type == "landscape"){
                     let r = chest.width/chest.height;
-                    chest.width = window.innerWidth/2;
+                    chest.width = adWidth/2;
                     chest.height = chest.width/r;
-                    chest.position.set(window.innerWidth/1.3-chest.width/2,window.innerHeight/2.5-chest.height/2);
+                    chest.position.set(adWidth/1.3-chest.width/2,adHeight/2.5-chest.height/2);
                 }
       
                 chest.animationSpeed = 0.13;
@@ -1140,9 +1148,9 @@ class Charm {
                 }else{
                     hand = createSprite("tutorialHand.png",0,0,0.5,1,1,end);
                     let r = hand.width/hand.height;
-                    hand.width = window.innerWidth/5;
+                    hand.width = adWidth/5;
                     hand.height = hand.width/r;
-                    hand.position.set(window.innerWidth/1.5,window.innerHeight/2+chest.height/2);
+                    hand.position.set(adWidth/1.5,adHeight/2+chest.height/2);
                 }
                 charm.pulse(hand,30,0.5);
                 
@@ -1153,7 +1161,7 @@ class Charm {
                     button = createSpriteRelational("openBox.png",2,1.1,1.7,end);
                 }
                 
-               charm.breathe(button,button.scale.x+0.15,button.scale.y+0.15,30,true,0);
+               charm.breathe(button,button.scale.x+(0.15*ratio),button.scale.y+(0.15*ratio),30,true,0);
                 end.addChild(button);
                 
                 end.interactive = true;
@@ -1397,9 +1405,9 @@ class Charm {
                         text.scale.set(1, 2.5);
                     }else{
                         let ratio = text.width/text.height;
-                        text.width = window.innerWidth;
+                        text.width = adWidth;
                         text.height = text.width/ratio;
-                        text.position.set(window.innerWidth/2,window.innerHeight/2);
+                        text.position.set(adWidth/2,adHeight/2);
                     } 
                     text.parentGroup = dragGroup;
                     text.anchor.set(0.5,0.5);
@@ -1523,9 +1531,9 @@ class Charm {
                 let sprite = new PIXI.Sprite(spritesheet.textures[name]);
                 
                 let ratio = sprite.width/sprite.height;
-                sprite.width = window.innerWidth/scale;
+                sprite.width = adWidth/scale;
                 sprite.height = sprite.width/ratio;
-                sprite.position.set(window.innerWidth/x,window.innerHeight/y);
+                sprite.position.set(adWidth/x,adHeight/y);
                 
                 if(group != undefined){
                     group.addChild(sprite);
@@ -1541,7 +1549,7 @@ class Charm {
             function createColorOption(towerX,x,color,colorCode,tweens){
                 let option = new PIXI.Graphics();
                 option.beginFill(colorCode,1);
-                option.drawRoundedRect(x, 0, window.innerWidth/3, window.innerHeight, 0);
+                option.drawRoundedRect(x, 0, adWidth/3, adHeight, 0);
                 option.endFill();
                 begin.addChild(option);
                 option.interactive = true;
@@ -1555,7 +1563,7 @@ class Charm {
                     pauseTweensArray(tweens);
                     frame = new PIXI.Graphics();
                     frame.lineStyle(5, 0xFFFFFF, 1);
-                    frame.drawRoundedRect(x, 2.5, window.innerWidth/3, window.innerHeight-5, 1);
+                    frame.drawRoundedRect(x, 2.5, adWidth/3, adHeight-5, 1);
                     charm.pulse(frame,25,0);
                     begin.addChild(frame);
                     setTimeout(function(){
@@ -1568,15 +1576,8 @@ class Charm {
                         delay = 3;
                     },1300);
                 });
-                let pT;
-                if(this.type == "landscape"){
-                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
-                    //let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.5, 0.5, 0.7, 0.7, begin);
-                }else{
-                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
-                    //pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.7, 0.5, 1, 1, begin);
-                }
-                let tween = charm.breathe(pT,pT.scale.x+0.15,pT.scale.y+0.15,40,true,0);
+                let pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
+                let tween = charm.breathe(pT,pT.scale.x+(0.15*ratio),pT.scale.y+(0.15*ratio),40,true,0);
                 tweens.push(tween);
                 return option;
             }
@@ -1601,18 +1602,18 @@ class Charm {
                  switch(currentTutorialState){
                     case tutorialEnum.add: 
                          if(tutorialTween != undefined){tutorialTween.pause();}
-                         tutorialHand.x = addTower.getGlobalPosition().x+window.innerWidth/15;
-                         tutorialHand.y = addTower.getGlobalPosition().y+window.innerHeight/20;
-                         tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+0.05,tutorialHand.scale.y+0.05,30,true,0);
+                         tutorialHand.x = addTower.getGlobalPosition().x+adWidth/15;
+                         tutorialHand.y = addTower.getGlobalPosition().y+adHeight/20;
+                         tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.05*ratio),tutorialHand.scale.y+(0.05*ratio),30,true,0);
                          currentTutorialState = tutorialEnum.none;
                          tutorialHand.visible = false;
                          break;
                     case tutorialEnum.move:
                          tutorialHand.visible = true; 
                          if(tutorialTween != undefined){tutorialTween.pause();}
-                         tutorialHand.x = tutorialTower.getGlobalPosition().x+window.innerWidth/20;
-                         tutorialHand.y = tutorialTower.getGlobalPosition().y+window.innerHeight/20;   
-                         tutorialTween = charm.slide(tutorialHand, tutorialPlace.getGlobalPosition().x+window.innerWidth/20, tutorialPlace.getGlobalPosition().y+window.innerHeight/20, 50, "smoothstep", true, 0);
+                         tutorialHand.x = tutorialTower.getGlobalPosition().x+adWidth/20;
+                         tutorialHand.y = tutorialTower.getGlobalPosition().y+adHeight/20;   
+                         tutorialTween = charm.slide(tutorialHand, tutorialPlace.getGlobalPosition().x+adWidth/20, tutorialPlace.getGlobalPosition().y+adHeight/20, 50, "smoothstep", true, 0);
                          currentTutorialState = tutorialEnum.none;
                          tutorialHand.visible = false;
                          break;
