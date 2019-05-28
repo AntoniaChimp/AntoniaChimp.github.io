@@ -1082,9 +1082,9 @@ class Charm {
             function setupBegin(){
                 let tweens = [];
                 
-                pink = createColorOption(0,window.innerWidth/2-window.innerWidth/6,"pink",0xFF4682,tweens);
-                blue = createColorOption(window.innerWidth/3,window.innerWidth/2+window.innerWidth/6,"blue",0x3EA0FF,tweens);
-                green = createColorOption(-window.innerWidth/3,0,"green",0x11C725,tweens);
+                pink = createColorOption(2,window.innerWidth/2-window.innerWidth/6,"pink",0xFF4682,tweens);
+                blue = createColorOption(1.2,window.innerWidth/2+window.innerWidth/6,"blue",0x3EA0FF,tweens);
+                green = createColorOption(5.8,0,"green",0x11C725,tweens);
                 
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "300%", fill: 'white'});
                 if(this.type == "landscape"){
@@ -1568,14 +1568,15 @@ class Charm {
                         delay = 3;
                     },1300);
                 });
-                let tween;
+                let pT;
                 if(this.type == "landscape"){
-                    let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.5, 0.5, 0.7, 0.7, begin);
-                    tween = charm.breathe(pT,0.8,0.8,40,true,0);
+                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
+                    //let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.5, 0.5, 0.7, 0.7, begin);
                 }else{
-                    let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.7, 0.5, 1, 1, begin);
-                    tween = charm.breathe(pT,1.2,1.2,40,true,0);
+                    pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
+                    //pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.7, 0.5, 1, 1, begin);
                 }
+                let tween = charm.breathe(pT,pT.scale.x+0.15,pT.scale.y+0.15,40,true,0);
                 tweens.push(tween);
                 return option;
             }
