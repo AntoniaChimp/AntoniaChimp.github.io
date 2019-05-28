@@ -1330,9 +1330,9 @@ class Charm {
                 activeTowers.forEach(tower=>{
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
-                        shoot(tower, tower.nearestEnemy, 50, 50, 30, bullets, ()=>{
-                            let radius = 20;
-                            if(this.type == "landscape"){radius = 18}
+                        shoot(tower, tower.nearestEnemy, 50, 50, 25, bullets, ()=>{
+                            let radius = 15;
+                            if(this.type == "landscape"){radius = 13}
                             let graphics = new PIXI.Graphics();
                             graphics.lineStyle(0); 
                             graphics.beginFill(choosenColorCode, 1);
