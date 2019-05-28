@@ -903,7 +903,7 @@ class Charm {
            let android = "https://play.google.com/store/apps/details?id=chimp.works.td4&hl=en";
            let ios = "https://itunes.apple.com/us/app/power-painter-shoot-color/id1358277938?mt=8";
             
-           let app, scene, begin, game, end, width, height, charm, platform, spritesheet;
+           let app, scene, begin, game, gameStuff, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
             if( window.innerWidth>window.innerHeight){
@@ -924,7 +924,7 @@ class Charm {
             let tileHeight;
             let bigTowerScale;
             if(this.type == "landscape"){
-                bigTowerScale = 2.2;
+                bigTowerScale = 1.8;
             }else{
                 bigTowerScale = 1.2;
             }
@@ -951,7 +951,6 @@ class Charm {
             let pink, blue,green,banner;
             
             let font = "riffic_free_mediumbold";
-            //let font = "Riffic free";
             document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
         
              function init(){
@@ -992,6 +991,7 @@ class Charm {
                 scene = app.stage;
                 begin = new PIXI.Container();
                 game = new PIXI.Container();
+                gameStuff = new PIXI.Container();
                 end = new PIXI.Container();
                 scene.addChild(begin); //comment set playfield + first tower out
                 //scene.addChild(game);
@@ -1020,12 +1020,24 @@ class Charm {
 //                .load(setup);
                 
                 if(window.innerHeight<desiredHeight || window.innerWidth<desiredWidth){
-                    gameRatio = desiredWidth/desiredHeight;
-                    game.height = window.innerHeight/1.15;
-                    game.width = game.height*gameRatio;
-                    widthShift = -game.width/1.9;
-                    heightShift = -game.height/1.75;
-                    game.position.set((window.innerWidth/2)+widthShift ,(window.innerHeight/2) +heightShift);
+                    let gameRatio = desiredWidth/desiredHeight;
+                    if(this.type == "landscape"){
+                        game.height = window.innerHeight/1.31;
+                        game.width = game.height/gameRatio;
+                        if(game.width>window.innerWidth){
+                            game.height = window.innerHeight/1.4;
+                            game.width = game.height/gameRatio;
+                        }
+                        widthShift = -game.width/1.8;
+                        heightShift = -game.height/1.65;
+                        game.position.set((window.innerWidth/2)+widthShift,(window.innerHeight/2)+heightShift);     
+                    }else{
+                        game.height = window.innerHeight/1.15;
+                        game.width = game.height*gameRatio;
+                        widthShift = -game.width/1.9;
+                        heightShift = -game.height/1.75;
+                        game.position.set((window.innerWidth/2)+widthShift ,(window.innerHeight/2) +heightShift);   
+                    }
                 }else{
                     game.position.set((window.innerWidth-desiredWidth)/2, (window.innerHeight-desiredHeight)/2);
                 }
@@ -1076,13 +1088,9 @@ class Charm {
                 
                 let text = new PIXI.Text("CHOOSE YOUR TOWER!",{fontFamily: font, fontSize: "300%", fill: 'white'});
                 if(this.type == "landscape"){
-                    banner = createSprite("banner.png", -width/2-scene.width/2, -height/3, 0.5, 1, 2.3, begin);
+                    banner = createSpriteRelational("banner.png",2,3.8,2,begin);
                 }else{
-                    banner = createSprite("banner.png", 0, -height/3, 0.5, 1, 1, begin);
-                    let bannerRatio = banner.height/banner.width;
-                    banner.width = width/1.3;
-                    banner.height = banner.width*bannerRatio;
-                    banner.position.set(scene.width/2, height/2-height/3);
+                    banner = createSpriteRelational("banner.png",2,3.5,1.3,begin);
                 }
                 text.anchor.set(0.5,0.5);
                 text.position.set(0,-20);
@@ -1098,13 +1106,9 @@ class Charm {
                 createSpriteRelational("tint.png",1.2,1.1,1,end).tint = 0xFF4682;
                 
                  if(this.type == "landscape"){
-                    createSprite("logo.png", -width/4.5,-height/8,0.5,0.8,1.9,end);
+                    createSpriteRelational("logo.png",3.6,3,2.6,end);
                 }else{
-                    let sprite = createSprite("logo.png", 0,-height/3.1,0.5,1,1,end);
-                    let r = sprite.width/sprite.height;
-                    sprite.width = window.innerWidth/1.55;
-                    sprite.height = sprite.width/r;
-                    sprite.position.set(window.innerWidth/2,window.innerHeight/4.5);
+                    createSpriteRelational("logo.png",2,4.5,1.55,end);
                 }
                 
                 let textures = [];
@@ -1120,8 +1124,10 @@ class Charm {
                 chest.position.set(window.innerWidth/2-chest.width/2,window.innerHeight/1.8-chest.height/2);
                 
                 if(this.type == "landscape"){
-                    chest.scale.set(1,2.2);
-                    chest.position.set(width/2.2,0);
+                    let r = chest.width/chest.height;
+                    chest.width = window.innerWidth/2;
+                    chest.height = chest.width/r;
+                    chest.position.set(window.innerWidth/1.3-chest.width/2,window.innerHeight/2.5-chest.height/2);
                 }
       
                 chest.animationSpeed = 0.13;
@@ -1130,7 +1136,7 @@ class Charm {
                 
                 let hand;
                 if(this.type == "landscape"){
-                    hand = createSprite("tutorialHand.png",chest.width/1.5,chest.height/3.2,0.5,0.2,0.5,end);
+                    hand = createSpriteRelational("tutorialHand.png",1.15,1.55,6,end);
                 }else{
                     hand = createSprite("tutorialHand.png",0,0,0.5,1,1,end);
                     let r = hand.width/hand.height;
@@ -1142,16 +1148,12 @@ class Charm {
                 
                 let button;
                  if(this.type == "landscape"){
-                    button = createSprite("openBox.png", -width/4.5,+height/6,0.5,0.6,1.4);
+                    button = createSpriteRelational("openBox.png",3.6,1.4,2.2,end);
                 }else{
-                    button = createSprite("openBox.png", 0,height/2-height/7,0.5,1,1);
-                    let r = button.width/button.height;
-                    button.width = window.innerWidth/1.7;
-                    button.height = button.width/r;
-                    button.position.set(window.innerWidth/2,window.innerHeight/1.1);
+                    button = createSpriteRelational("openBox.png",2,1.1,1.7,end);
                 }
                 
-                (this.type == "landscape") ? charm.breathe(button,0.65,1.5,30,true,0) : charm.breathe(button,button.scale.x+0.15,button.scale.y+0.15,30,true,0);
+               charm.breathe(button,button.scale.x+0.15,button.scale.y+0.15,30,true,0);
                 end.addChild(button);
                 
                 end.interactive = true;
@@ -1211,7 +1213,7 @@ class Charm {
                     let placeholder = new PIXI.Sprite(spritesheet.textures["placeholder.png"]);
                     placeholder.parentGroup = backgroundGroup;
                     if(this.type == "landscape"){
-                        placeholder.scale.set(0.3,0.6);
+                        placeholder.scale.set(0.45,1);
                     }else{
                         placeholder.scale.set(1,1);
                     }
@@ -1307,8 +1309,9 @@ class Charm {
                 addTower.addChild(text);
             
                 //TUTORIAL HAND
-                tutorialHand = createSprite("tutorialHand.png",0,0,0,1,1);
+                tutorialHand = createSpriteRelational("tutorialHand.png",2,2,13, gameStuff);
                 tutorialHand.parentGroup = damageLayer;
+
                 
                 //COMMENT OUT IF WITH BEGINNING AND NEXTAUTOMOVE COMMENT IN
 //                setPlayfield();
@@ -1327,7 +1330,7 @@ class Charm {
                 activeTowers.forEach(tower=>{
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
-                        shoot(tower, tower.nearestEnemy, 50, 50, game, 50, bullets, ()=>{
+                        shoot(tower, tower.nearestEnemy, 50, 50, 30, bullets, ()=>{
                             let radius = 20;
                             if(this.type == "landscape"){radius = 18}
                             let graphics = new PIXI.Graphics();
@@ -1372,7 +1375,7 @@ class Charm {
                         enemy.dead = true;
                         let splash;
                         if(this.type == "landscape"){
-                            splash = createSprite("splash.png", -width/2+enemy.x, -height/2 + enemy.y, 0.5,0.2,0.5);
+                            splash = createSprite("splash.png", -width/2+enemy.x, -height/2 + enemy.y, 0.5,0.4,0.8);
                         }else{
                             splash = createSprite("splash.png", -width/2+enemy.x, -height/2 + enemy.y, 0.5,0.3,0.3);
                         } 
@@ -1405,6 +1408,7 @@ class Charm {
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
+                        scene.removeChild(gameStuff);
                         scene.addChild(end);
                     },2000);
                 }
@@ -1557,6 +1561,7 @@ class Charm {
                     setTimeout(function(){
                         scene.removeChild(begin);
                         scene.addChild(game);
+                        scene.addChild(gameStuff);
                         setPlayfield();
                         createTower(1,towerLvl1Damage,grid.children[0]);
                         nextAutoMove = "add";
@@ -1565,8 +1570,8 @@ class Charm {
                 });
                 let tween;
                 if(this.type == "landscape"){
-                    let pT = createSprite(color+"Tower.png", towerX, 0, 0.5, 0.6, 1.6, begin);
-                    tween = charm.breathe(pT,0.65,1.75,40,true,0);
+                    let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.5, 0.5, 0.7, 0.7, begin);
+                    tween = charm.breathe(pT,0.8,0.8,40,true,0);
                 }else{
                     let pT = createSprite(color+"Tower.png", towerX, -height/2+scene.height/1.7, 0.5, 1, 1, begin);
                     tween = charm.breathe(pT,1.2,1.2,40,true,0);
@@ -1595,28 +1600,20 @@ class Charm {
                  switch(currentTutorialState){
                     case tutorialEnum.add: 
                          if(tutorialTween != undefined){tutorialTween.pause();}
-                         if(this.type == "landscape"){
-                            tutorialHand.scale.set(0.2,0.4);
-                            tutorialTween = charm.breathe(tutorialHand,0.23,0.47,30,true,0);
-                            tutorialHand.x = addTower.x+addTower.width/4;
-                            tutorialHand.y = addTower.y-addTower.height/3.2;
-                         }else{
-                            tutorialHand.scale.set(0.3,0.3);
-                            tutorialTween = charm.breathe(tutorialHand,0.35,0.35,30,true,0);
-                            tutorialHand.x = addTower.x;
-                            tutorialHand.y = addTower.y;
-                         }
+                         tutorialHand.x = addTower.getGlobalPosition().x+window.innerWidth/15;
+                         tutorialHand.y = addTower.getGlobalPosition().y+window.innerHeight/20;
+                         tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+0.05,tutorialHand.scale.y+0.05,30,true,0);
                          currentTutorialState = tutorialEnum.none;
                          tutorialHand.visible = false;
                          break;
                     case tutorialEnum.move:
                          tutorialHand.visible = true; 
                          if(tutorialTween != undefined){tutorialTween.pause();}
-                         tutorialHand.x = tutorialTower.getGlobalPosition().x;
-                         tutorialHand.y = tutorialTower.getGlobalPosition().y;   
-                         tutorialTween = charm.slide(tutorialHand, tutorialPlace.x, tutorialPlace.y, 50, "smoothstep", true, 0);
+                         tutorialHand.x = tutorialTower.getGlobalPosition().x+window.innerWidth/20;
+                         tutorialHand.y = tutorialTower.getGlobalPosition().y+window.innerHeight/20;   
+                         tutorialTween = charm.slide(tutorialHand, tutorialPlace.getGlobalPosition().x+window.innerWidth/20, tutorialPlace.getGlobalPosition().y+window.innerHeight/20, 50, "smoothstep", true, 0);
                          currentTutorialState = tutorialEnum.none;
-                        tutorialHand.visible = false;
+                         tutorialHand.visible = false;
                          break;
                  }
             }
@@ -1877,25 +1874,19 @@ class Charm {
                 }
             }
             
-            function shoot(shooter, target, x, y, container, bulletSpeed, bulletArray, bulletSpriteFn) {
+            function shoot(shooter, target, x, y, bulletSpeed, bulletArray, bulletSpriteFn) {
                 shootAnimation(shooter);
                 
                 let bullet = bulletSpriteFn();
                 bullet.target = target;
+                bullet.speed = bulletSpeed;
                 bullet.damage = shooter.damage;
                 bullet.pivot.set(0.5, 0.5);
                 
-//                shooter.addChild(bullet);
-//                bullet.x = x;
-//                bullet.y = y;
-//
-//                let tempGx = bullet.getGlobalPosition().x,
-//                    tempGy = bullet.getGlobalPosition().y;
-//
-//                container.addChild(bullet);
-//                bullet.x = tempGx;
-//                bullet.y = tempGy;
-                
+                gameStuff.addChild(bullet);
+                bullet.x = shooter.getGlobalPosition().x;
+                bullet.y = shooter.getGlobalPosition().y;
+  
                 bulletArray.push(bullet);
             }
             
@@ -1927,17 +1918,17 @@ class Charm {
             }
             
             function moveBullet(obj){
-                let vx = obj.target.x - obj.x;
-                let vy = obj.target.y - obj.y
-                let distance = distanceTo(obj.x, obj.y, obj.target.x, obj.target.y);
+                let vx = obj.target.getGlobalPosition().x - obj.x;
+                let vy = obj.target.getGlobalPosition().y - obj.y;
+                let distance = distanceTo(obj.x, obj.y, obj.target.getGlobalPosition().x, obj.target.getGlobalPosition().y);
                 
                 if(distance < 30){
                     obj.visible = false;
                     obj.target.health -= obj.damage;
                     showText(obj.target, obj.damage, choosenColorCode, 50, 600, true);
                 }else{
-                    obj.x += (vx/distance) * 15;
-                    obj.y += (vy/distance) * 15;   
+                    obj.x += (vx/distance) * obj.speed;
+                    obj.y += (vy/distance) * obj.speed;   
                 }
             }
             
@@ -1948,7 +1939,7 @@ class Charm {
             function setPlayfield(){
                 //PLAYFIELD
                 playfield = new PIXI.Graphics();
-                playfield.lineStyle(5, choosenColorCode, 1);
+                playfield.lineStyle(9, choosenColorCode, 1);
                 if(this.type == "landscape"){
                     playfield.drawRoundedRect(desiredWidth/20, desiredHeight/25, desiredWidth-desiredWidth/9.8, desiredHeight-desiredHeight/3.7, 35);
                 }else{
