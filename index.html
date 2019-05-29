@@ -1161,10 +1161,10 @@ class Charm {
                 let button;
                  if(this.type == "landscape"){
                     button = createSpriteRelational("openBox.png",3.6,1.4,2.2,end);
-                    charm.breathe(button,button.scale.x+(0.06*ratio),button.scale.y+(0.06*ratio),30,true,0);
+                    charm.breathe(button,button.scale.x+(0.08*game.scale.x),button.scale.y+(0.08*game.scale.x),30,true,0);
                 }else{
                     button = createSpriteRelational("openBox.png",2,1.1,1.7,end);
-                    charm.breathe(button,button.scale.x+(0.15*ratio),button.scale.y+(0.15*ratio),30,true,0);
+                    charm.breathe(button,button.scale.x+(0.15*game.scale.x),button.scale.y+(0.15*game.scale.x),30,true,0);
                 }
                 end.addChild(button);
                 end.interactive = true;
@@ -1348,8 +1348,8 @@ class Charm {
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
                         shoot(tower, tower.nearestEnemy, 50, 50, 25, bullets, ()=>{
-                            let radius = 13;
-                            if(this.type == "landscape"){radius = 11}
+                            let radius = 14*game.scale.x;
+                            if(this.type == "landscape"){radius = 12*game.scale.x}
                             let graphics = new PIXI.Graphics();
                             graphics.lineStyle(0); 
                             graphics.beginFill(choosenColorCode, 1);
@@ -1411,7 +1411,7 @@ class Charm {
                 if(endBool){
                     let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "80px", fill: "0xFFFFFF", strokeThickness:2});
                     if(this.type == "landscape"){
-                        text.scale.set(1.5,3);
+                        text.scale.set(1.5,3.5);
                     }else{
                         text.scale.set(1.3,1.3);
                     } 
@@ -1586,10 +1586,10 @@ class Charm {
                 let tween;
                 if(this.type == "landscape"){
                     pT = createSpriteRelational(color+"Tower.png",towerX,1.5,5.5,begin);
-                    tween = charm.breathe(pT,pT.scale.x+(0.08*ratio),pT.scale.y+(0.08*ratio),40,true,0);
+                    tween = charm.breathe(pT,pT.scale.x+(0.08*game.scale.x),pT.scale.y+(0.08*game.scale.x),40,true,0);
                 }else{
                     pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
-                    tween = charm.breathe(pT,pT.scale.x+(0.15*ratio),pT.scale.y+(0.15*ratio),40,true,0);
+                    tween = charm.breathe(pT,pT.scale.x+(0.15*game.scale.x),pT.scale.y+(0.15*game.scale.x),40,true,0);
                 }
                 tweens.push(tween);
                 return option;
@@ -1616,9 +1616,9 @@ class Charm {
                     case tutorialEnum.add: 
                          if(tutorialTween != undefined){tutorialTween.pause();}
                          if(this.type == "landscape"){
-                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.03*ratio),tutorialHand.scale.y+(0.03*ratio),40,true,0);
+                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.03*game.scale.x),tutorialHand.scale.y+(0.03*game.scale.x),40,true,0);
                          }else{
-                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.18*ratio),tutorialHand.scale.y+(0.18*ratio),40,true,0);
+                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.13*game.scale.x),tutorialHand.scale.y+(0.13*game.scale.x),40,true,0);
                          }
                          tutorialHand.x = addTower.getGlobalPosition().x+adWidth/15;
                          tutorialHand.y = addTower.getGlobalPosition().y+adHeight/20;
