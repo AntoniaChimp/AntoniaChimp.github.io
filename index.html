@@ -1322,7 +1322,7 @@ class Charm {
                 if(this.type == "landscape"){
                     tutorialHand = createSpriteRelational("tutorialHand.png",2,2,13, gameStuff);
                 }else{
-                    tutorialHand = createSpriteRelational("tutorialHand.png",2,2,8, gameStuff);
+                    tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, gameStuff);
                 }  
                 
                 tutorialHand.parentGroup = damageLayer;
@@ -1346,8 +1346,8 @@ class Charm {
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
                         shoot(tower, tower.nearestEnemy, 50, 50, 25, bullets, ()=>{
-                            let radius = 15;
-                            if(this.type == "landscape"){radius = 13}
+                            let radius = 13;
+                            if(this.type == "landscape"){radius = 11}
                             let graphics = new PIXI.Graphics();
                             graphics.lineStyle(0); 
                             graphics.beginFill(choosenColorCode, 1);
@@ -1409,12 +1409,9 @@ class Charm {
                 if(endBool){
                     let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "80px", fill: "0xFFFFFF", strokeThickness:2});
                     if(this.type == "landscape"){
-                        text.scale.set(1, 2.5);
+                        text.scale.set(1.5,3);
                     }else{
-                        let ratio = text.width/text.height;
-                        text.width = adWidth;
-                        text.height = text.width/ratio;
-                        text.position.set(adWidth/2,adHeight/2);
+                        text.scale.set(1.5,1.5);
                     } 
                     text.parentGroup = dragGroup;
                     text.anchor.set(0.5,0.5);
@@ -1817,9 +1814,9 @@ class Charm {
                 tower.reload = false;
                 tower.nearestEnemy = undefined;
                 if(this.type == "landscape"){
-                    tower.range = 100*ratio;
+                    tower.range = 250/ratio;
                 }else{
-                    tower.range = 500*ratio;
+                    tower.range = 150/ratio;
                 }
                 tower.closestDistance = tower.range;
                 tower.interactive = false;
