@@ -1325,7 +1325,8 @@ class Charm {
                 }else{
                     tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, gameStuff);
                 }  
-                
+                tutorialHand.originalSizeX = tutorialHand.scale.x;
+                tutorialHand.originalSizeY = tutorialHand.scale.y;
                 tutorialHand.parentGroup = damageLayer;
 
                 
@@ -1614,7 +1615,11 @@ class Charm {
                  switch(currentTutorialState){
                     case tutorialEnum.add: 
                          if(tutorialTween != undefined){tutorialTween.pause();}
-                         tutorialTween = charm.pulse(tutorialHand,30,0.4);
+                         if(this.type == "landscape"){
+                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.03*ratio),tutorialHand.scale.y+(0.03*ratio),40,true,0);
+                         }else{
+                             tutorialTween = charm.breathe(tutorialHand,tutorialHand.scale.x+(0.18*ratio),tutorialHand.scale.y+(0.18*ratio),40,true,0);
+                         }
                          tutorialHand.x = addTower.getGlobalPosition().x+adWidth/15;
                          tutorialHand.y = addTower.getGlobalPosition().y+adHeight/20;
                          currentTutorialState = tutorialEnum.none;
@@ -1622,7 +1627,7 @@ class Charm {
                          break;
                     case tutorialEnum.move:
                          tutorialHand.visible = true; 
-                         if(tutorialTween != undefined){tutorialTween.pause(); tutorialHand.alpha = 1;}
+                         if(tutorialTween != undefined){tutorialTween.pause(); tutorialHand.alpha = 1; tutorialHand.scale.x = tutorialHand.originalSizeX; tutorialHand.scale.y = tutorialHand.originalSizeY;}
                          tutorialHand.x = tutorialTower.getGlobalPosition().x+adWidth/20;
                          tutorialHand.y = tutorialTower.getGlobalPosition().y+adHeight/20;   
                          tutorialTween = charm.slide(tutorialHand, tutorialPlace.getGlobalPosition().x+adWidth/20, tutorialPlace.getGlobalPosition().y+adHeight/20, 50, "smoothstep", true, 0);
@@ -1804,9 +1809,6 @@ class Charm {
             
             function setTower(parent, tower){
                 pauseTweensArray(tutorialTweens);
-                towerPlaces.forEach(place=>{
-                    place.alpha = 1; 
-                });
                 if(enemies.length == 0 && !endBool){spawnEnemies()}
                 removeFromArray(miniTowerCount,tower);
                 parent.addChild(tower);
@@ -1823,6 +1825,9 @@ class Charm {
                 tower.interactive = false;
                 activeTowers.push(tower);
                 refresh = true;
+                towerPlaces.forEach(place=>{
+                    place.alpha = 1; 
+                });
             }
             
             function mergeBigTower(tower, miniTower){
