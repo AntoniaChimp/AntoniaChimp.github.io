@@ -921,7 +921,7 @@ class Charm {
             let heightShift;
             let adWidth = document.body.clientWidth;
             let adHeight = document.body.clientHeight;
-            let adBool = true;
+            let adBool = false;
             
             
             let pause = false;
@@ -1052,6 +1052,7 @@ class Charm {
                 }else{
                     game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
                 }
+                
             }
             
             function checkPlatform() {
@@ -1814,9 +1815,9 @@ class Charm {
                 tower.reload = false;
                 tower.nearestEnemy = undefined;
                 if(this.type == "landscape"){
-                    tower.range = 250/ratio;
+                    tower.range = 250*game.scale.x;
                 }else{
-                    tower.range = 150/ratio;
+                    tower.range = 250*game.scale.x;
                 }
                 tower.closestDistance = tower.range;
                 tower.interactive = false;
