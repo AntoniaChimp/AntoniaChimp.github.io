@@ -924,7 +924,6 @@ class Charm {
             let adHeight = document.body.clientHeight;
             let adBool = true;
             
-            
             let pause = false;
             
             let towerLvl1Damage = 170;
@@ -959,6 +958,7 @@ class Charm {
             let pink, blue,green,banner;
             
             let font = "riffic_free_mediumbold";
+            let isAudioEnabled;
             
             window.onload = function(){
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
@@ -968,6 +968,7 @@ class Charm {
             function onReadyCallback(){
                 //No need to listen to this event anymore
                 dapi.removeEventListener("ready", onReadyCallback);
+                isAudioEnabled = !!dapi.getAudioVolume();
 
                 //If the ad is visible start the game
                 dapi.isViewable() ? startGame() : console.log();
@@ -1086,6 +1087,7 @@ class Charm {
                 });
                 
                 backgroundMusic.volume = dapi.getAudioVolume();
+                console.log("called audio volume");
                 dapi.addEventListener("viewableChange", adVisibleCallback);
                 dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
@@ -1101,7 +1103,7 @@ class Charm {
             }
             
             function audioVolumeChangeCallback(volume){
-                let isAudioEnabled = !!volume;
+                isAudioEnabled = !!volume;
                 if(isAudioEnabled){
                     backgroundMusic.pause();
                 }else{
