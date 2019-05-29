@@ -1085,7 +1085,7 @@ class Charm {
                     loop : true
                 });
                 
-                
+                backgroundMusic.volume = dapi.getAudioVolume();
                 dapi.addEventListener("viewableChange", adVisibleCallback);
                 dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
