@@ -921,7 +921,7 @@ class Charm {
             let heightShift;
             let adWidth = document.body.clientWidth;
             let adHeight = document.body.clientHeight;
-            let adBool = true;
+            let adBool = false;
             
             
             let pause = false;
@@ -1033,7 +1033,7 @@ class Charm {
                 if(adHeight<desiredHeight || adWidth<desiredWidth){
                     let gameRatio = desiredWidth/desiredHeight;
                     if(this.type == "landscape"){
-                        game.height = adHeight/1.31;
+                        game.height = adHeight/1.33;
                         game.width = game.height/gameRatio;
                         if(game.width>adWidth){
                             game.height = adHeight/1.4;
