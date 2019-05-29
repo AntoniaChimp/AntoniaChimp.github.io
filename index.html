@@ -1164,7 +1164,7 @@ class Charm {
                     charm.breathe(button,button.scale.x+(0.08*game.scale.x),button.scale.y+(0.08*game.scale.x),30,true,0);
                 }else{
                     button = createSpriteRelational("openBox.png",2,1.1,1.7,end);
-                    charm.breathe(button,button.scale.x+(0.15*game.scale.x),button.scale.y+(0.15*game.scale.x),30,true,0);
+                    charm.breathe(button,button.scale.x+(0.13*game.scale.x),button.scale.y+(0.13*game.scale.x),30,true,0);
                 }
                 end.addChild(button);
                 end.interactive = true;
@@ -1348,8 +1348,8 @@ class Charm {
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
                         shoot(tower, tower.nearestEnemy, 50, 50, 25, bullets, ()=>{
-                            let radius = 14*game.scale.x;
-                            if(this.type == "landscape"){radius = 12*game.scale.x}
+                            let radius = 18*game.scale.x;
+                            if(this.type == "landscape"){radius = 13*game.scale.x}
                             let graphics = new PIXI.Graphics();
                             graphics.lineStyle(0); 
                             graphics.beginFill(choosenColorCode, 1);
@@ -1589,7 +1589,7 @@ class Charm {
                     tween = charm.breathe(pT,pT.scale.x+(0.08*game.scale.x),pT.scale.y+(0.08*game.scale.x),40,true,0);
                 }else{
                     pT = createSpriteRelational(color+"Tower.png",towerX,1.5,3.5,begin);
-                    tween = charm.breathe(pT,pT.scale.x+(0.15*game.scale.x),pT.scale.y+(0.15*game.scale.x),40,true,0);
+                    tween = charm.breathe(pT,pT.scale.x+(0.16*ratio),pT.scale.y+(0.16*ratio),40,true,0);
                 }
                 tweens.push(tween);
                 return option;
