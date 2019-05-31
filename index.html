@@ -979,8 +979,6 @@ class Charm {
                 //start your game
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
-                dapi.addEventListener("viewableChange", adVisibleCallback);
-                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
 
             function displayAd(){
@@ -1083,6 +1081,8 @@ class Charm {
                 });
                 
                 backgroundMusic.volume = volume;
+                dapi.addEventListener("viewableChange", adVisibleCallback);
+                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
             
             function adVisibleCallback(event){
