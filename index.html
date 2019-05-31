@@ -915,7 +915,6 @@ class Charm {
             if(document.body.clientWidth > document.body.clientHeight){
                 this.type = "landscape";
             }
-            screen.orientation.lock(this.type+"-primary");
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
             let gameRatio;
