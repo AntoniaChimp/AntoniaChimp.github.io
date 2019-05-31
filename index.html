@@ -1034,20 +1034,15 @@ class Charm {
                 if(adHeight<desiredHeight || adWidth<desiredWidth){
                     let gameRatio = desiredWidth/desiredHeight;
                     if(this.type == "landscape"){
-                        gameRatio = desiredHeight/desiredWidth;
                         game.height = adHeight/1.33;
                         game.width = game.height/gameRatio;
-                        if(game.width>adWidth){
-                            game.height = adHeight/1.5;
-                            game.width = game.height/gameRatio;
-                        }
                         widthShift = -game.width/1.9;
                         heightShift = -game.height/1.65;
                         game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
                     }else{
                         game.height = adHeight/1.25;
                         game.width = game.height*gameRatio;
-                        widthShift = -game.width/1.9;
+                        widthShift = -game.width/1.8;
                         heightShift = -game.height/1.75;
                         game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
                     }
