@@ -910,10 +910,12 @@ class Charm {
            let app, scene, begin, game, gameStuff, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
+            this.type = "portrait";
+            
             if(document.body.clientWidth > document.body.clientHeight){
                 this.type = "landscape";
             }
-            screen.orientation.lock(screen.orientation);
+            screen.orientation.lock(this.type+"-primary");
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
             let gameRatio;
@@ -972,18 +974,14 @@ class Charm {
                 isAudioEnabled = !!dapi.getAudioVolume();
                 //If the ad is visible start the game
                 dapi.isViewable() ? startGame() : console.log();
-                //Use dapi functions
-                dapi.addEventListener("viewableChange", viewableChangeCallback);
+                dapi.addEventListener("viewableChange", adVisibleCallback);
+                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
 
             function startGame() {
                 //start your game
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
-            }
-
-            function viewableChangeCallback(e){
-                e.isViewable ? this.startGame() : pause(); //start the game or resume
             }
 
             function displayAd(){
@@ -1084,11 +1082,10 @@ class Charm {
                 });
                 
                 backgroundMusic.volume = volume;
-                dapi.addEventListener("viewableChange", adVisibleCallback);
-                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
             
             function adVisibleCallback(event){
+ 
                 if(event.isViewable){
                     backgroundMusic.pause();
                     pause = true;
