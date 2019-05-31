@@ -913,6 +913,7 @@ class Charm {
             if(document.body.clientWidth > document.body.clientHeight){
                 this.type = "landscape";
             }
+            screen.orientation.lock(screen.orientation);
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
             let gameRatio;
@@ -977,8 +978,7 @@ class Charm {
 
             function startGame() {
                 //start your game
-                volume = dapi.getAudioVolume()/2;
-                console.log(dapi.getAudioVolume());
+                volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
             }
 
@@ -1105,7 +1105,7 @@ class Charm {
                 }else{
                     backgroundMusic.resume();
                 }
-                backgroundMusic.volume = dapi.getAudioVolume()/2;
+                backgroundMusic.volume = dapi.getAudioVolume()/4;
             }
 
             
