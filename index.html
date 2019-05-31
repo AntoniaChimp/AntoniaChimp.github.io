@@ -1046,6 +1046,10 @@ class Charm {
                     }else{
                         game.height = adHeight/1.2;
                         game.width = game.height*gameRatio;
+                        if(game.height>1000){
+                            game.height = adHeight/1.3;
+                            game.width = game.height/gameRatio;
+                        }
                         widthShift = -game.width/1.75;
                         heightShift = -game.height/1.75;
                         game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
