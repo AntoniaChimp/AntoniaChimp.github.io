@@ -977,11 +977,12 @@ class Charm {
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
             };
             
-            window.onorientationchange = function(){
-                app.destroy(true);
-                landscape = !landscape;
-                displayAd();
-            };
+//            window.onorientationchange = function(){
+//                console.log("orientationchange");
+//                app.destroy(true);
+//                landscape = !landscape;
+//                displayAd();
+//            };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1002,6 +1003,9 @@ class Charm {
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
                     adHeight = dapi.getScreenSize().height;
+                    if(dapi.getScreenSize().width > dapi.getScreenSize().height){
+                        landscape = true;
+                    }
                 }
                 app = new PIXI.Application();
                 app.stage = new PIXI.display.Stage();
