@@ -934,6 +934,7 @@ class Charm {
             let adHeight = document.body.clientHeight;
             let adBool = true;
             
+            let start = false;
             let pause = false;
             
             let towerLvl1Damage = 170;
@@ -973,26 +974,25 @@ class Charm {
             
             window.onload = function(){
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
-                console.log("onload");
             };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
                 dapi.isViewable() ? startGame() : console.log();
-                console.log("onready");
+                dapi.addEventListener("viewableChange", adVisibleCallback);
+                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
 
             function startGame() {
+                start = true;
                 //start your game
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
-                console.log("startGame");
             }
 
             function displayAd(){
-                console.log("displayAd");
-                
+    
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
@@ -1092,18 +1092,20 @@ class Charm {
                 });
                 
                 backgroundMusic.volume = volume;
-                dapi.addEventListener("viewableChange", adVisibleCallback);
-                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
             
             function adVisibleCallback(event){
- 
-                if(event.isViewable){
-                    backgroundMusic.pause();
-                    pause = true;
-                } else if(!backgroundMusic.playing){
-                    backgroundMusic.resume();
-                    pause = false;
+                
+                if(start){
+                    if(event.isViewable){
+                        backgroundMusic.pause();
+                        pause = true;
+                    } else if(!backgroundMusic.playing){
+                        backgroundMusic.resume();
+                        pause = false;
+                    }   
+                }else{
+                    startGame();
                 }
             }
             
