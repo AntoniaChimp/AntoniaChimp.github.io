@@ -981,6 +981,9 @@ class Charm {
             
             window.onorientationchange = function(){
                 app.destroy(true);
+                if(document.body.clientWidth > document.body.clientHeight){
+                    this.type = "landscape";
+                }
                 startGame();
             };
 
