@@ -976,26 +976,26 @@ class Charm {
             };
 
             function onReadyCallback(){
-                //No need to listen to this event anymore
                 dapi.removeEventListener("ready", onReadyCallback);
-                isAudioEnabled = !!dapi.getAudioVolume();
-                //If the ad is visible start the game
                 dapi.isViewable() ? startGame() : console.log();
             }
 
             function startGame() {
                 //start your game
+                isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
             }
 
             function displayAd(){
+                let loadingBar = document.getElementById("loadingBar");
+                loadingBar.style.color = 'red';
+                
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
                     adHeight = dapi.getScreenSize().height;
                 }
-                
                 app = new PIXI.Application();
                 app.stage = new PIXI.display.Stage();
                 document.body.appendChild(app.view);
