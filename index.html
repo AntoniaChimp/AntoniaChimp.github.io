@@ -921,8 +921,8 @@ class Charm {
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
             let landscape = false;
-                if(document.body.clientWidth > document.body.clientHeight){
-                    landscape = true;
+            if(dapi.getScreenSize().width > dapi.getScreenSize().height){
+                landscape = true;
             }
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
@@ -979,7 +979,10 @@ class Charm {
             
             window.onorientationchange = function(){
                 app.destroy(true);
-                landscape = !landscape;
+                landscape = false;
+                if(dapi.getScreenSize().width > dapi.getScreenSize().height){
+                    landscape = true;
+                }
                 displayAd();
             };
 
