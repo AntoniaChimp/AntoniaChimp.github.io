@@ -969,26 +969,23 @@ class Charm {
             let font = "riffic_free_mediumbold";
             let isAudioEnabled;
             let volume;
-            
-            function orientationChange(x) {
-              if (x=="portrait") {       
-                  document.body.style.transform = "rotate(90deg)";
-              } else {
-                  document.body.style.transform = "rotate(-90deg)";
-              }
+        
+            function fullScreenCheck() {
+              if (!document.fullscreenElement)
+              document.documentElement.requestFullscreen();
+                
+              screen.orientation.lock(screen.orientation.type);
             }
             
             window.onload = function(){
                 if(document.body.clientWidth > document.body.clientHeight){
                     this.type = "landscape";
                 }
+                
+                fullScreenCheck();
+                
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
-            };
-            
-            window.onorientationchange = function(){
-                orientationChange(this.type);
-            }
-            
+            };      
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
