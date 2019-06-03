@@ -973,6 +973,8 @@ class Charm {
             
             window.onload = function(){
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
+                let loadingBar = document.getElementById("loadingBar");
+                loadingBar.style.height = '300px';
             };
 
             function onReadyCallback(){
