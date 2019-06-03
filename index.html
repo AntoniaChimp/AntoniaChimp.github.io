@@ -17,8 +17,9 @@
             }
             
             #loadingBar{
-                width: window.width/2;
-                height: window.height/2;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
             @font-face {
     font-family: 'riffic_free_mediumbold';
@@ -1063,8 +1064,7 @@ class Charm {
                 }
                 
                 let loadingBar = document.getElementById("loadingBar");
-                loadingBar.src = '';
-                loadingBar = null;
+                loadingBar.parentNode.removeChild(loadingBar);
             }
             
             function checkPlatform() {
