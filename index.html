@@ -983,6 +983,8 @@ class Charm {
                 app.destroy(true);
                 if(document.body.clientWidth > document.body.clientHeight){
                     this.type = "landscape";
+                }else{
+                    this.type = "portrait";
                 }
                 startGame();
             };
