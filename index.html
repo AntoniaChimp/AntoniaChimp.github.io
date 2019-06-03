@@ -970,21 +970,19 @@ class Charm {
             let isAudioEnabled;
             let volume;
         
-            function fullScreenCheck() {
-              if (!document.fullscreenElement)
-                  document.documentElement.requestFullscreen(); 
-                  screen.orientation.lock("portrait");
-            }
             
             window.onload = function(){
                 if(document.body.clientWidth > document.body.clientHeight){
                     this.type = "landscape";
                 }
                 
-                fullScreenCheck();
-                
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
-            };      
+            };
+            
+            window.onorientationchange = function(){
+                app.destroy(true);
+                startGame();
+            };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1063,7 +1061,7 @@ class Charm {
                         game.height = adHeight/1.2;
                         game.width = game.height*gameRatio;
                         if(game.height>1000){
-                            game.height = adHeight/1.4;
+                            game.height = adHeight/2;
                             game.width = game.height/gameRatio;
                         }
                         widthShift = -game.width/1.75;
