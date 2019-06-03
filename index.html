@@ -973,13 +973,13 @@ class Charm {
             
             window.onload = function(){
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
-                let loadingBar = document.getElementById("loadingBar");
-                loadingBar.style.height = '300px';
+                console.log("onload");
             };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
                 dapi.isViewable() ? startGame() : console.log();
+                console.log("onready");
             }
 
             function startGame() {
@@ -987,12 +987,11 @@ class Charm {
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
+                console.log("startGame");
             }
 
             function displayAd(){
-                let loadingBar = document.getElementById("loadingBar");
-                loadingBar.style.height = '300px';
-                console.log("loadinbar");
+                console.log("displayAd");
                 
                 checkPlatform();
                 if(adBool){
