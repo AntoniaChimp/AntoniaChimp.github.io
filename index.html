@@ -989,7 +989,9 @@ class Charm {
 
             function displayAd(){
                 let loadingBar = document.getElementById("loadingBar");
-                loadingBar.style.height = '150px';
+                loadingBar.style.height = '300px';
+                console.log("loadinbar");
+                
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
