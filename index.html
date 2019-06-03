@@ -972,9 +972,8 @@ class Charm {
         
             function fullScreenCheck() {
               if (!document.fullscreenElement)
-              document.documentElement.requestFullscreen();
-                
-              screen.orientation.lock(screen.orientation.type);
+                  document.documentElement.requestFullscreen(); 
+                  screen.orientation.lock("portrait");
             }
             
             window.onload = function(){
