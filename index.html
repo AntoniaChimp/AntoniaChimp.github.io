@@ -919,10 +919,6 @@ class Charm {
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
             this.type = "portrait";
-            
-            if(document.body.clientWidth > document.body.clientHeight){
-                this.type = "landscape";
-            }
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
             let gameRatio;
@@ -973,6 +969,9 @@ class Charm {
             let volume;
             
             window.onload = function(){
+                if(document.body.clientWidth > document.body.clientHeight){
+                    this.type = "landscape";
+                }
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
             };
 
@@ -985,14 +984,12 @@ class Charm {
 
             function startGame() {
                 start = true;
-                //start your game
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
             }
 
             function displayAd(){
-    
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
@@ -1055,7 +1052,7 @@ class Charm {
                         game.height = adHeight/1.2;
                         game.width = game.height*gameRatio;
                         if(game.height>1000){
-                            game.height = adHeight/1.35;
+                            game.height = adHeight/1.4;
                             game.width = game.height/gameRatio;
                         }
                         widthShift = -game.width/1.75;
@@ -1065,7 +1062,7 @@ class Charm {
                 }else{
                     game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
                 }
-            
+                let loadingBar = document.getElementById("loadingBar");
                 loadingBar.parentNode.removeChild(loadingBar);
             }
             
