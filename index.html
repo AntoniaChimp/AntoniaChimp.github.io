@@ -921,8 +921,7 @@ class Charm {
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
             let landscape = false;
-            if(dapi.getScreenSize().width > dapi.getScreenSize().height){
-                console.log("landscape");
+            if(document.body.clientWidth > document.body.clientHeight){
                 landscape = true;
             }
            
