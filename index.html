@@ -1123,8 +1123,10 @@ class Charm {
             
             function setup(){
                 
-                scene.on('pointerdown', function(){                     screen.orientation.lock(this.type);
-                scene.onpointerdown = null;
+                scene.on('pointerdown', function(){   
+                    console.log("locked");
+                    screen.orientation.lock(this.type);
+                    scene.onpointerdown = null;
                 });
                     
                 setupBegin();
