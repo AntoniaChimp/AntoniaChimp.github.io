@@ -987,26 +987,20 @@ class Charm {
                     this.type = "portrait";
                 }
                 
-                if(this.type == "landscape"){
-                    game.height = adHeight/1.36;
-                    game.width = game.height/gameRatio;
-                    if(game.width>1000){
-                        game.height = adHeight/1.45;
-                        game.width = game.height/gameRatio;
-                    }
-                    widthShift = -game.width/1.8;
-                    heightShift = -game.height/1.65;
-                    game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
+                let gameRatio = desiredWidth/desiredHeight;
+                if(this.type == "portrait"){
+                    game.width = adWidth/1.4;
+                    game.height = game.width/gameRatio;
+                
+//                    widthShift = -game.width/1.8;
+//                    heightShift = -game.height/1.65;
+//                    game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
                 }else{
-                    game.height = adHeight/1.2;
-                    game.width = game.height*gameRatio;
-                    if(game.height>900){
-                        game.height = adHeight/1.35;
-                        game.width = game.height/gameRatio;
-                    }
-                    widthShift = -game.width/1.75;
-                    heightShift = -game.height/1.75;
-                    game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
+                    game.height = adHeight/1.4;
+                    game.width = game.height/gameRatio;
+//                    widthShift = -game.width/1.75;
+//                    heightShift = -game.height/1.75;
+//                    game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
                 }
             };
 
