@@ -979,29 +979,30 @@ class Charm {
             };
             
             window.onorientationchange = function(){
-                if(this.type != "landscape"){
-                    app.renderer.resize(adHeight, adWidth);
-                    this.type = "landscape";
-                }else{
-                    app.renderer.resize(adWidth, adHeight);
-                    this.type = "portrait";
-                }
-                
-                let gameRatio = desiredWidth/desiredHeight;
-                if(this.type == "portrait"){
-                    game.width = adHeight/1.2;
-                    game.height = game.width/gameRatio;
-                
-//                    widthShift = -game.width/1.8;
-//                    heightShift = -game.height/1.65;
-//                    game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
-                }else{
-                    game.height = adWidth/1.2;
-                    game.width = game.height/gameRatio;
-//                    widthShift = -game.width/1.75;
-//                    heightShift = -game.height/1.75;
-                    game.position.set(adWidth/2 ,adHeight/2);   
-                }
+                console.log(screen.orientation);
+//                if(this.type != "landscape"){
+//                    app.renderer.resize(adHeight, adWidth);
+//                    this.type = "landscape";
+//                }else{
+//                    app.renderer.resize(adWidth, adHeight);
+//                    this.type = "portrait";
+//                }
+//                
+//                let gameRatio = desiredWidth/desiredHeight;
+//                if(this.type == "portrait"){
+//                    game.width = adHeight/1.2;
+//                    game.height = game.width/gameRatio;
+//                
+////                    widthShift = -game.width/1.8;
+////                    heightShift = -game.height/1.65;
+//                    game.position.set(adWidth/2 ,adHeight/2);    
+//                }else{
+//                    game.height = adWidth/1.2;
+//                    game.width = game.height/gameRatio;
+////                    widthShift = -game.width/1.75;
+////                    heightShift = -game.height/1.75;
+//                    game.position.set(adWidth/2 ,adHeight/2);   
+//                }
             };
 
             function onReadyCallback(){
