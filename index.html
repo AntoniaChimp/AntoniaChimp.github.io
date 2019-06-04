@@ -989,18 +989,18 @@ class Charm {
                 
                 let gameRatio = desiredWidth/desiredHeight;
                 if(this.type == "portrait"){
-                    game.width = adHeight/1.4;
+                    game.width = adHeight/1.2;
                     game.height = game.width/gameRatio;
                 
 //                    widthShift = -game.width/1.8;
 //                    heightShift = -game.height/1.65;
 //                    game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
                 }else{
-                    game.height = adWidth/1.4;
+                    game.height = adWidth/1.2;
                     game.width = game.height/gameRatio;
 //                    widthShift = -game.width/1.75;
 //                    heightShift = -game.height/1.75;
-//                    game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
+                    game.position.set(adWidth/2 ,adHeight/2);   
                 }
             };
 
