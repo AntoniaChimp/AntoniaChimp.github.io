@@ -1025,6 +1025,7 @@ class Charm {
             function startGame() {
                 this.type = screen.orientation.type;
                 console.log(this.type);
+                screen.orientation.lock(this.type);
                 start = true;
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
@@ -1032,8 +1033,8 @@ class Charm {
             }
 
             function displayAd(){
-                console.log(screen.orientation);
-                console.log(screen.orientation.type);
+//                console.log(screen.orientation);
+//                console.log(screen.orientation.type);
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
