@@ -1033,6 +1033,8 @@ class Charm {
             }
 
             function displayAd(){
+                console.log(screen.orientation);
+                console.log(screen.orientation.type);
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
