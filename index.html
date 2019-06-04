@@ -977,12 +977,9 @@ class Charm {
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
             };
             
-//            window.onorientationchange = function(){
-//                console.log("orientationchange");
-//                app.destroy(true);
-//                landscape = !landscape;
-//                displayAd();
-//            };
+            window.onorientationchange = function(){
+                app.renderer.resize(window.innerWidth, window.innerHeight);
+            };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
