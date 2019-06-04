@@ -1024,6 +1024,7 @@ class Charm {
 
             function startGame() {
                 this.type = screen.orientation.type;
+                consoe.log(this.type);
                 start = true;
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
