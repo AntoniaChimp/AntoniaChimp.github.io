@@ -978,7 +978,12 @@ class Charm {
             };
             
             window.onorientationchange = function(){
-                app.renderer.resize(adHeight, adWidth);
+                if(!landscape){
+                    app.renderer.resize(adHeight, adWidth);
+                }else{
+                    app.renderer.resize(adWidth, adHeight);
+                }
+                landscape = !landscape;
             };
 
             function onReadyCallback(){
