@@ -979,41 +979,41 @@ class Charm {
             };
             
 
-            window.onorientationchange = function(){
-                let deg = 0;
-                
-                if(this.type == "portrait-primary"){
-                    if(screen.orientation.type == "landscape-primary"){
-                        deg = 90;
-                    }else if(screen.orientation.type == "landscape-secondary"){
-                        deg = -90;
-                    }
-                }else if(this.type == "landscape-primary"){
-                    if(screen.orientation.type == "portrait-primary"){
-                        deg = -90;
-                    }else if(screen.orientation.type == "landscape-secondary"){
-                        deg = 180;
-                    }
-                }else if(this.type == "landscape-secondary"){
-                    if(screen.orientation.type == "portrait-primary"){
-                        deg = 90;
-                    }else if(screen.orientation.type == "landscape-primary"){
-                        deg = 180;
-                    }
-                }
-                
-                document.body.style.webkitTransform = 
-                    'rotate('+deg+ 'deg)'; 
-                document.body.style.mozTransform    = 
-                    'rotate('+deg+ 'deg)'; 
-                document.body.style.msTransform     = 
-                    'rotate('+deg+ 'deg)';
-                document.body.style.oTransform      = 
-                    'rotate('+deg+ 'deg)';
-                document.body.style.transform       = 
-                    'rotate('+deg+ 'deg)';
-                       
-            };
+//            window.onorientationchange = function(){
+//                let deg = 0;
+//                
+//                if(this.type == "portrait-primary"){
+//                    if(screen.orientation.type == "landscape-primary"){
+//                        deg = 90;
+//                    }else if(screen.orientation.type == "landscape-secondary"){
+//                        deg = -90;
+//                    }
+//                }else if(this.type == "landscape-primary"){
+//                    if(screen.orientation.type == "portrait-primary"){
+//                        deg = -90;
+//                    }else if(screen.orientation.type == "landscape-secondary"){
+//                        deg = 180;
+//                    }
+//                }else if(this.type == "landscape-secondary"){
+//                    if(screen.orientation.type == "portrait-primary"){
+//                        deg = 90;
+//                    }else if(screen.orientation.type == "landscape-primary"){
+//                        deg = 180;
+//                    }
+//                }
+//                
+//                document.body.style.webkitTransform = 
+//                    'rotate('+deg+ 'deg)'; 
+//                document.body.style.mozTransform    = 
+//                    'rotate('+deg+ 'deg)'; 
+//                document.body.style.msTransform     = 
+//                    'rotate('+deg+ 'deg)';
+//                document.body.style.oTransform      = 
+//                    'rotate('+deg+ 'deg)';
+//                document.body.style.transform       = 
+//                    'rotate('+deg+ 'deg)';
+//                       
+//            };
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1125,7 +1125,7 @@ class Charm {
                 
                 scene.on('pointerdown', function(){   
                     console.log("locked");
-                    screen.orientation.lock(this.type);
+                    screen.orientation.lock(screen.orientation.type);
                     scene.onpointerdown = null;
                 });
                     
