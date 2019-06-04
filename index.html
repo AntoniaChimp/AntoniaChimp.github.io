@@ -981,19 +981,19 @@ class Charm {
             
 
             window.onorientationchange = function(){
-                let deg;
                 
-                if(!landscape && screen.orientation.type == "landscape"){
-                    deg = -90;
-                }else{
-                    deg = 90;
-                }
+                document.body.style.webkitTransform = 
+                    'rotate('+(-screen.orientation.angle)+ 'deg)'; 
+                document.body.style.mozTransform    = 
+                    'rotate('+(-screen.orientation.angle)+ 'deg)'; 
+                document.body.style.msTransform     = 
+                    'rotate('+(-screen.orientation.angle)+ 'deg)';
+                document.body.style.oTransform      = 
+                    'rotate('+(-screen.orientation.angle)+ 'deg)';
+                document.body.style.transform       = 
+                    'rotate('+(-screen.orientation.angle)+ 'deg)';
                 
-                document.body.style.webkitTransform = 'rotate('+deg+'deg)'; 
-                document.body.style.mozTransform    = 'rotate('+deg+'deg)'; 
-                document.body.style.msTransform     = 'rotate('+deg+'deg)'; 
-                document.body.style.oTransform      = 'rotate('+deg+'deg)'; 
-                document.body.style.transform       = 'rotate('+deg+'deg)'; 
+                
 //                if(this.type != "landscape"){
 //                    app.renderer.resize(adHeight, adWidth);
 //                    this.type = "landscape";
