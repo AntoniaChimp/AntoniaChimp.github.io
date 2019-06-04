@@ -1024,8 +1024,6 @@ class Charm {
 
             function startGame() {
                 this.type = screen.orientation.type;
-                console.log(this.type);
-                screen.orientation.lock(this.type);
                 start = true;
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
@@ -1124,6 +1122,10 @@ class Charm {
             }
             
             function setup(){
+                
+                scene.on('pointerdown', function(){                     screen.orientation.lock(this.type);
+                scene.onpointerdown = null;
+                });
                     
                 setupBegin();
                 setupGame();
