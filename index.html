@@ -978,7 +978,7 @@ class Charm {
             };
             
             window.onorientationchange = function(){
-                app.renderer.resize(adWidth, adHeight);
+                app.renderer.resize(adHeight, adWidth);
             };
 
             function onReadyCallback(){
@@ -1011,7 +1011,7 @@ class Charm {
                 app.renderer.backgroundColor = 0x122B4C;
                 app.renderer.view.style.position = "absolute";
                 app.renderer.view.style.display = "block";
-                //app.renderer.autoResize = true;
+                app.renderer.autoResize = true;
     
                 app.renderer.resize(adWidth, adHeight);
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
