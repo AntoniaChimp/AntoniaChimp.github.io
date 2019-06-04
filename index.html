@@ -924,7 +924,6 @@ class Charm {
             let landscape = false;
             if(document.body.clientWidth > document.body.clientHeight){
                 landscape = true;
-                this.type = "landscape";
             }
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
@@ -981,42 +980,39 @@ class Charm {
             
 
             window.onorientationchange = function(){
+                let deg = 0;
+                
+                if(this.type == "portrait-primary"){
+                    if(screen.orientation.type == "landscape-primary"){
+                        deg = 90;
+                    }else if(screen.orientation.type == "landscape-secondary"){
+                        deg = -90;
+                    }
+                }else if(this.type == "landscape-primary"){
+                    if(screen.orientation.type == "portrait-primary"){
+                        deg = -90;
+                    }else if(screen.orientation.type == "landscape-secondary"){
+                        deg = 180;
+                    }
+                }else if(this.type == "landscape-secondary"){
+                    if(screen.orientation.type == "portrait-primary"){
+                        deg = 90;
+                    }else if(screen.orientation.type == "landscape-primary"){
+                        deg = 180;
+                    }
+                }
                 
                 document.body.style.webkitTransform = 
-                    'rotate('+(-screen.orientation.angle)+ 'deg)'; 
+                    'rotate('+deg+ 'deg)'; 
                 document.body.style.mozTransform    = 
-                    'rotate('+(-screen.orientation.angle)+ 'deg)'; 
+                    'rotate('+deg+ 'deg)'; 
                 document.body.style.msTransform     = 
-                    'rotate('+(-screen.orientation.angle)+ 'deg)';
+                    'rotate('+deg+ 'deg)';
                 document.body.style.oTransform      = 
-                    'rotate('+(-screen.orientation.angle)+ 'deg)';
+                    'rotate('+deg+ 'deg)';
                 document.body.style.transform       = 
-                    'rotate('+(-screen.orientation.angle)+ 'deg)';
-                
-                
-//                if(this.type != "landscape"){
-//                    app.renderer.resize(adHeight, adWidth);
-//                    this.type = "landscape";
-//                }else{
-//                    app.renderer.resize(adWidth, adHeight);
-//                    this.type = "portrait";
-//                }
-//                
-//                let gameRatio = desiredWidth/desiredHeight;
-//                if(this.type == "portrait"){
-//                    game.width = adHeight/1.2;
-//                    game.height = game.width/gameRatio;
-//                
-////                    widthShift = -game.width/1.8;
-////                    heightShift = -game.height/1.65;
-//                    game.position.set(adWidth/2 ,adHeight/2);    
-//                }else{
-//                    game.height = adWidth/1.2;
-//                    game.width = game.height/gameRatio;
-////                    widthShift = -game.width/1.75;
-////                    heightShift = -game.height/1.75;
-//                    game.position.set(adWidth/2 ,adHeight/2);   
-//                }
+                    'rotate('+deg+ 'deg)';
+                       
             };
 
             function onReadyCallback(){
@@ -1027,6 +1023,7 @@ class Charm {
             }
 
             function startGame() {
+                this.type = screen.orientation.type;
                 start = true;
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
