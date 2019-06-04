@@ -978,9 +978,21 @@ class Charm {
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
             };
             
-            console.log(screen.orientation);
+
             window.onorientationchange = function(){
+                let deg;
                 
+                if(!landscape && screen.orientation.type == "landscape"){
+                    deg = -90;
+                }else{
+                    deg = 90;
+                }
+                
+                document.body.style.webkitTransform = 'rotate('+deg+'deg)'; 
+                document.body.style.mozTransform    = 'rotate('+deg+'deg)'; 
+                document.body.style.msTransform     = 'rotate('+deg+'deg)'; 
+                document.body.style.oTransform      = 'rotate('+deg+'deg)'; 
+                document.body.style.transform       = 'rotate('+deg+'deg)'; 
 //                if(this.type != "landscape"){
 //                    app.renderer.resize(adHeight, adWidth);
 //                    this.type = "landscape";
