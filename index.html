@@ -923,6 +923,7 @@ class Charm {
             let landscape = false;
             if(document.body.clientWidth > document.body.clientHeight){
                 landscape = true;
+                this.type = "landscape";
             }
            
             let ratio = document.body.clientWidth/document.body.clientHeight;
@@ -978,12 +979,13 @@ class Charm {
             };
             
             window.onorientationchange = function(){
-                if(!landscape){
+                if(this.type != "landscape"){
                     app.renderer.resize(adHeight, adWidth);
+                    this.type = "landscape";
                 }else{
                     app.renderer.resize(adWidth, adHeight);
+                    this.type = "portrait";
                 }
-                landscape = !landscape;
             };
 
             function onReadyCallback(){
