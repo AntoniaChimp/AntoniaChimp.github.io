@@ -981,17 +981,23 @@ class Charm {
 
             window.onorientationchange = function(){  
                 let deg = 0;
+                let width = 0;
+                let height = 0;
                 if(screen.orientation.type == "landscape-primary"){
                     deg = -90;
+                    width = adWidth/2.5;
+                    height = adHeight/4;
                 }else if(screen.orientation.type == "landscape-secondary"){
                     deg = 90;
+                    width = adWidth/2.5;
+                    height = adHeight/4;
                 }
-                rotate(deg);
+                rotate(deg,width,height);
             };
             
-            function rotate(deg){
+            function rotate(deg,width, height){
                 
-                document.body.style.transformOrigin = adWidth/2.5+ "px "+ adHeight/5 + "px";
+                document.body.style.transformOrigin = width +"px " + height +"px";
                 document.body.style.transform ="rotate("+deg+"deg)";
             }
 
