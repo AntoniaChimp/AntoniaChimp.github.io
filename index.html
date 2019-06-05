@@ -996,7 +996,8 @@ class Charm {
                 else if (docelem.msRequestFullscreen) {
                     docelem.msRequestFullscreen();
                 }
-                 screen.orientation.lock("portrait-primary");
+                fullScreen(docelem);
+                screen.orientation.lock("portrait-primary");
             }
 
             function onReadyCallback(){
