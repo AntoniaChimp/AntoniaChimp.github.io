@@ -993,7 +993,7 @@ class Charm {
               } catch (err) {
                 console.error(err);
               }
-              await screen.orientation.lock(screen.orientation.type);
+              screen.orientation.lock(screen.orientation.type);
             }
 
             function onReadyCallback(){
