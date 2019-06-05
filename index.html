@@ -981,8 +981,8 @@ class Charm {
 
             window.onorientationchange = function(){      
                 let deg = 90;
+                document.body.style.transformOrigin = "center center";
                 document.body.style.transform = "rotate("+deg+"deg)";
-                document.body.style.transformOrigin = "0 0";
             };
 
             function onReadyCallback(){
