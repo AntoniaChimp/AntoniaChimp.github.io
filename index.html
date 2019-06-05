@@ -984,18 +984,20 @@ class Charm {
             
             function lock() {
                 var docelem = document.documentElement;
-                if (docelem.requestFullscreen) {
+                
+                if (document.fullscreenElement) {
                     docelem.requestFullscreen();
                 }
-                else if (docelem.mozRequestFullScreen) {
+                else if (document.fullscreenElement) {
                     docelem.mozRequestFullScreen();
                 }
-                else if (docelem.webkitRequestFullscreen) {
+                else if (document.fullscreenElement) {
                     docelem.webkitRequestFullscreen();
                 }
-                else if (docelem.msRequestFullscreen) {
+                else if (document.fullscreenElement) {
                     docelem.msRequestFullscreen();
                 }
+                
                 let promise = screen.orientation.lock("portrait-primary");
                 promise.catch(function(error) {
                   console.log(error);
