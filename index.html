@@ -1030,10 +1030,10 @@ class Charm {
     
                 app.renderer.resize(adWidth, adHeight);
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
-                scene.interactive = true;
-                scene.on('pointerdown', function(){
-                    scene.interactive = false;
-                    scene.onpointerdown = null;
+                app.stage.interactive = true;
+                app.stage.on('pointerdown', function(){
+                    app.stage.interactive = false;
+                    app.stage.onpointerdown = null;
                     lock();
                 });
     
