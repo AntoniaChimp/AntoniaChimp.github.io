@@ -990,13 +990,8 @@ class Charm {
             };
             
             function rotate(deg){
-                document.body.style.position = "absolute";
-                document.body.style.transform = "rotate("+deg+"deg)";
-                document.body.style.width = "100vh";
-                document.body.style.height = "100vw";
-                document.body.style.marginTop = "-100vw";
-                document.body.style.objectFit = "cover";
-                document.body.style.transformOrigin = "bottom left";
+                document.body.style.transform ="translate("+adWidth+","+adHeight+")";
+                document.body.style.transform ="rotate("+deg+"deg)";
             }
 
             function onReadyCallback(){
