@@ -981,22 +981,20 @@ class Charm {
 
             window.onorientationchange = function(){  
                 let deg = 0;
-                console.log(screen.orientation.type);
                 if(screen.orientation.type == "landscape-primary"){
-                    deg = 90;
-                }else if(screen.orientation.type == "portrait-primary"){
-                    deg = 0;
-                }
-                else if(screen.orientation.type == "landscape-secondary"){
                     deg = -90;
+                }else if(screen.orientation.type == "landscape-secondary"){
+                    deg = 90;
                 }
                 rotate(deg);
             };
             
             function rotate(deg){
-                document.body.style.position = "fixed";
+                document.body.style.position = "absolute";
                 document.body.style.transform = "rotate("+deg+"deg)";
-                document.body.style.transformOrigin = "center center";
+                document.body.style.width = "100vh";
+                document.body.style.height = "100vw";
+                document.body.style.transformOrigin = "bottom left";
             }
 
             function onReadyCallback(){
