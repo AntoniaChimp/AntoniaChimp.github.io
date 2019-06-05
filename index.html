@@ -1000,7 +1000,7 @@ class Charm {
                 
                 let promise = screen.orientation.lock("portrait-primary");
                 promise.catch(function(error) {
-                  console.log(error);
+                  console.log(error.name);
                 });
             }
 
