@@ -983,14 +983,14 @@ class Charm {
             };
             
             function openFullscreen() {
-              if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-              } else if (document.documentElement.mozRequestFullScreen) { 
-                document.documentElement.mozRequestFullScreen();
-              } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-              } else if (document.documentElement.msRequestFullscreen) { 
-                document.documentElement.msRequestFullscreen();
+              if (document.body.requestFullscreen) {
+                document.body.requestFullscreen();
+              } else if (document.body.mozRequestFullScreen) { 
+                document.body.mozRequestFullScreen();
+              } else if (document.body.webkitRequestFullscreen) {
+                document.body.webkitRequestFullscreen();
+              } else if (document.body.msRequestFullscreen) { 
+                document.body.msRequestFullscreen();
               }
             }
 
