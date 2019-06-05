@@ -982,18 +982,23 @@ class Charm {
             window.onorientationchange = function(){           
             };
             
-            async function fullScreenCheck() {
-              if (document.fullscreenElement) return;
-              return document.documentElement.requestFullscreen();
+            function openFullscreen() {
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.mozRequestFullScreen) { 
+                elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+              } else if (elem.msRequestFullscreen) { 
+                elem.msRequestFullscreen();
+              }
             }
 
             function lock() {
-              try {
-                await fullScreenCheck();
-              } catch (err) {
-                console.error(err);
-              }
-              screen.orientation.lock(screen.orientation.type);
+                if (!document.fullscreenElement){
+                    openFullscreen();
+                }
+                screen.orientation.lock(screen.orientation.type); 
             }
 
             function onReadyCallback(){
