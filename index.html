@@ -979,41 +979,22 @@ class Charm {
             };
             
 
-//            window.onorientationchange = function(){
-//                let deg = 0;
-//                
-//                if(this.type == "portrait-primary"){
-//                    if(screen.orientation.type == "landscape-primary"){
-//                        deg = 90;
-//                    }else if(screen.orientation.type == "landscape-secondary"){
-//                        deg = -90;
-//                    }
-//                }else if(this.type == "landscape-primary"){
-//                    if(screen.orientation.type == "portrait-primary"){
-//                        deg = -90;
-//                    }else if(screen.orientation.type == "landscape-secondary"){
-//                        deg = 180;
-//                    }
-//                }else if(this.type == "landscape-secondary"){
-//                    if(screen.orientation.type == "portrait-primary"){
-//                        deg = 90;
-//                    }else if(screen.orientation.type == "landscape-primary"){
-//                        deg = 180;
-//                    }
-//                }
-//                
-//                document.body.style.webkitTransform = 
-//                    'rotate('+deg+ 'deg)'; 
-//                document.body.style.mozTransform    = 
-//                    'rotate('+deg+ 'deg)'; 
-//                document.body.style.msTransform     = 
-//                    'rotate('+deg+ 'deg)';
-//                document.body.style.oTransform      = 
-//                    'rotate('+deg+ 'deg)';
-//                document.body.style.transform       = 
-//                    'rotate('+deg+ 'deg)';
-//                       
-//            };
+            window.onorientationchange = function(){           
+            };
+            
+            function fullScreenCheck() {
+              if (document.fullscreenElement) return;
+              return document.documentElement.requestFullscreen();
+            }
+
+            async function lock() {
+              try {
+                await fullScreenCheck();
+              } catch (err) {
+                console.error(err);
+              }
+              await screen.orientation.lock(screen.orientation.type);
+            }
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1023,16 +1004,14 @@ class Charm {
             }
 
             function startGame() {
-                this.type = screen.orientation.type;
                 start = true;
+                lock();
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
             }
 
             function displayAd(){
-//                console.log(screen.orientation);
-//                console.log(screen.orientation.type);
                 checkPlatform();
                 if(adBool){
                     adWidth = dapi.getScreenSize().width;
