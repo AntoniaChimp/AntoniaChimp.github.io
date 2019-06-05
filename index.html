@@ -999,6 +999,20 @@ class Charm {
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
+                
+                if (typeof mraid !== 'undefined') {
+                     if (mraid.getState() === 'loading') {
+                        mraid.addEventListener('ready', mraidIsReady);
+                     } else if (mraid.getState() === 'default') {
+                        dapi.isViewable() ? startGame() : console.log();
+                        dapi.addEventListener("viewableChange", adVisibleCallback);
+                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
+                     }
+                }      
+            }
+            
+            function mraidIsReady(){
+                mraid.removeEventListener('ready');
                 dapi.isViewable() ? startGame() : console.log();
                 dapi.addEventListener("viewableChange", adVisibleCallback);
                 dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
@@ -1006,7 +1020,7 @@ class Charm {
 
             function startGame() {
                 start = true;
-                lock();
+                //lock();
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
