@@ -1005,12 +1005,6 @@ class Charm {
 
             function startGame() {
                 start = true;
-                scene.interactive = true;
-                scene.on('pointerdown', function(){
-                    scene.interactive = false;
-                    scene.onpointerdown = null;
-                    lock();
-                });
                 isAudioEnabled = !!dapi.getAudioVolume();
                 volume = dapi.getAudioVolume()/4;
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
@@ -1036,6 +1030,12 @@ class Charm {
     
                 app.renderer.resize(adWidth, adHeight);
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
+                scene.interactive = true;
+                scene.on('pointerdown', function(){
+                    scene.interactive = false;
+                    scene.onpointerdown = null;
+                    lock();
+                });
     
                 charm = new Charm(PIXI);
                
