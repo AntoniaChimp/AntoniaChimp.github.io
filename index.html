@@ -983,7 +983,19 @@ class Charm {
             };
             
             function lock() {
-                 document.documentElement.requestFullScreen();
+                var docelem = document.documentElement;
+                if (docelem.requestFullscreen) {
+                    docelem.requestFullscreen();
+                }
+                else if (docelem.mozRequestFullScreen) {
+                    docelem.mozRequestFullScreen();
+                }
+                else if (docelem.webkitRequestFullscreen) {
+                    docelem.webkitRequestFullscreen();
+                }
+                else if (docelem.msRequestFullscreen) {
+                    docelem.msRequestFullscreen();
+                }
                  screen.orientation.lock("portrait-primary");
             }
 
