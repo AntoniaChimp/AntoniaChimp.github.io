@@ -1030,12 +1030,6 @@ class Charm {
     
                 app.renderer.resize(adWidth, adHeight);
                 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
-                app.stage.interactive = true;
-                app.stage.on('pointerdown', function(){
-                    app.stage.interactive = false;
-                    app.stage.onpointerdown = null;
-                    lock();
-                });
     
                 charm = new Charm(PIXI);
                
@@ -1106,10 +1100,10 @@ class Charm {
             }
             
             function setup(){
-                
+                scene.interactive = true;
                 scene.on('pointerdown', function(){   
-                    console.log("locked");
                     screen.orientation.lock(screen.orientation.type);
+                    scene.interactive = false;
                     scene.onpointerdown = null;
                 });
                     
