@@ -990,6 +990,7 @@ class Charm {
             };
             
             function rotate(deg){
+                document.body.style.transformOrigin = "center center";
                 document.body.style.transform ="translate("+adWidth/2+","+adHeight/2+")";
                 document.body.style.transform ="rotate("+deg+"deg)";
             }
