@@ -987,13 +987,13 @@ class Charm {
               return document.documentElement.requestFullscreen();
             }
 
-            async function lock() {
+            function lock() {
               try {
                 await fullScreenCheck();
               } catch (err) {
                 console.error(err);
               }
-              await screen.orientation.lock(screen.orientation.type);
+              screen.orientation.lock(screen.orientation.type);
             }
 
             function onReadyCallback(){
@@ -1102,7 +1102,7 @@ class Charm {
             function setup(){
                 scene.interactive = true;
                 scene.on('pointerdown', function(){   
-                    screen.orientation.lock(screen.orientation.type);
+                    lock();
                     scene.interactive = false;
                     scene.onpointerdown = null;
                 });
