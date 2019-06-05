@@ -983,7 +983,8 @@ class Charm {
             };
             
             function lock() {
-                screen.orientation.lock(screen.orientation.type); 
+                 document.documentElement.requestFullScreen();
+                 screen.orientation.lock("portrait-primary");
             }
 
             function onReadyCallback(){
