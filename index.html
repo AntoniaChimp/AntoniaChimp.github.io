@@ -979,30 +979,11 @@ class Charm {
             };
             
 
-            window.onorientationchange = function(){           
+            window.onorientationchange = function(){      
+                let deg = 90;
+                document.body.style.transform-origin = "center";
+                document.body.style.transform = "rotate("+deg+"deg)";
             };
-            
-            function lock() {
-                var docelem = document.documentElement;
-                
-                if (document.fullscreenElement) {
-                    docelem.requestFullscreen();
-                }
-                else if (document.fullscreenElement) {
-                    docelem.mozRequestFullScreen();
-                }
-                else if (document.fullscreenElement) {
-                    docelem.webkitRequestFullscreen();
-                }
-                else if (document.fullscreenElement) {
-                    docelem.msRequestFullscreen();
-                }
-                
-                let promise = screen.orientation.lock("portrait-primary");
-                promise.catch(function(error) {
-                  console.log(error.name);
-                });
-            }
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1108,12 +1089,6 @@ class Charm {
             }
             
             function setup(){
-                scene.interactive = true;
-                scene.on('pointerdown', function(){   
-                    lock();
-                    scene.interactive = false;
-                    scene.onpointerdown = null;
-                });
                     
                 setupBegin();
                 setupGame();
