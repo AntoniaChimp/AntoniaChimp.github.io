@@ -985,12 +985,18 @@ class Charm {
                 if(screen.orientation.type == "landscape-primary"){
                     deg = 90;
                 }else if(screen.orientation.type == "portrait-primary"){
-                    deg = -180;
+                    deg = 180;
+                }
+                else if(screen.orientation.type == "landscape-secondary"){
+                    deg = -90;
                 }
                 rotate(deg);
+                window.scrollTo(0, 0);
+                    
             };
             
             function rotate(deg){
+                //document.body.style.position = "absolute";
                 document.body.style.transform = "rotate("+deg+"deg)";
                 document.body.style.transformOrigin = "center center";
             }
