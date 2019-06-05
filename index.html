@@ -979,11 +979,21 @@ class Charm {
             };
             
 
-            window.onorientationchange = function(){      
-                let deg = 90;
-                document.body.style.transformOrigin = "bottom left";
-                document.body.style.transform = "rotate("+deg+"deg)";
+            window.onorientationchange = function(){  
+                let deg = 0;
+                console.log(screen.orientation.type);
+                if(screen.orientation.type == "landscape-primary"){
+                    deg = 90;
+                }else if(screen.orientation.type == "portrait-primary"){
+                    deg = -180;
+                }
+                rotate(deg);
             };
+            
+            function rotate(deg){
+                document.body.style.transform = "rotate("+deg+"deg)";
+                document.body.style.transformOrigin = "center center";
+            }
 
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
@@ -1093,6 +1103,7 @@ class Charm {
                 setupBegin();
                 setupGame();
                 setupEnd();
+                rotate(90);
                 
                 //AUDIO
                 if(backgroundMusic == null){
