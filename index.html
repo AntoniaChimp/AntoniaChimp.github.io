@@ -984,7 +984,7 @@ class Charm {
             
             async function fullScreenCheck() {
               if (document.fullscreenElement) return;
-                await document.documentElement.requestFullscreen();
+              return document.documentElement.requestFullscreen();
             }
 
             async function lock() {
