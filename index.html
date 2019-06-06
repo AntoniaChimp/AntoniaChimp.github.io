@@ -1206,7 +1206,7 @@ class Charm {
                 }
                 end.addChild(button);
                 end.interactive = true;
-                end.on('pointerdown', function(){mraid.open(platform);});
+                end.on('pointerdown', function(){dapi.open(platform);});
             }
     
             function setupGame() {  
@@ -1242,7 +1242,7 @@ class Charm {
                 game.addChild(install);
                 install.parentGroup = backgroundGroup;
                 install.interactive = true;
-                install.on('pointerdown', function(){mraid.open(platform);});
+                install.on('pointerdown', function(){dapi.open(platform);});
                 
                 
                 let t = new PIXI.Text("Try Now!",{fontFamily: font, fontSize: "40px", fill: 'white', fontWeight: 'bold'});
