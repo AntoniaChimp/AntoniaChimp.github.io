@@ -1003,6 +1003,7 @@ class Charm {
                 document.onclick =  function() {
                     if (screenfull.enabled) {
                         screenfull.request();
+                        screen.orientation.lock(screen.orientation.type);
                     } 
                     document.onclick = null;
                 };          
