@@ -1001,6 +1001,7 @@ class Charm {
             function displayAd(){
                 
                 document.onclick =  function() {
+                    console.log("lock request");
                     if (screenfull.enabled) {
                         screenfull.request();
                         screen.orientation.lock(screen.orientation.type);
