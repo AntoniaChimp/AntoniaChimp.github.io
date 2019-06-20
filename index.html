@@ -1075,6 +1075,17 @@ class Charm {
                 }else{
                     game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
                 }
+                
+                 window.addEventListener("orientationchange", function() {
+                    for (var i = scene.children.length - 1; i >= 0; i--) {	scene.removeChild(scene.children[i]);};
+                    begin = new PIXI.Container();
+                    game = new PIXI.Container();
+                    gameStuff = new PIXI.Container();
+                    end = new PIXI.Container();
+                    scene.addChild(begin);
+                    setup();
+                });
+                
                 let loadingBar = document.getElementById("loadingBar");
                 loadingBar.parentNode.removeChild(loadingBar);
             }
@@ -1089,13 +1100,6 @@ class Charm {
             }
             
             function setup(){
-                console.log("orientationchange");
-                window.addEventListener("orientationchange", function() {
-                    console.log("rotate");
-                    for (var i = scene.children.length - 1; i >= 0; i--) {	scene.removeChild(scene.children[i]);};
-                    scene.addChild(begin);
-                    setup();
-                });
                     
                 setupBegin();
                 setupGame();
