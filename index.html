@@ -998,16 +998,7 @@ class Charm {
                 document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
             }
 
-            function displayAd(){
-                
-                document.onclick =  function() {
-                    console.log("lock request");
-                    if (screenfull.enabled) {
-                        screenfull.request();
-                        screen.orientation.lock(screen.orientation.type);
-                    } 
-                    document.onclick = null;
-                };          
+            function displayAd(){       
                 
                 checkPlatform();
                 if(adBool){
@@ -1098,6 +1089,12 @@ class Charm {
             }
             
             function setup(){
+                
+                window.addEventListener("orientationchange", function() {
+                    for (var i = scene.children.length - 1; i >= 0; i--) {	scene.removeChild(scene.children[i]);};
+                    scene.addChild(begin);
+                    setup();
+                });
                     
                 setupBegin();
                 setupGame();
