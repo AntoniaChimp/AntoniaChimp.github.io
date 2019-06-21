@@ -980,9 +980,13 @@ class Charm {
             
             window.onorientationchange = function(){            
                 //resetGame();
+                
                 app.renderer.resize(adHeight, adWidth);
+                
                 app.stage.children.forEach(function(element){
-                   element.scale = 0.5;  
+                    let ratio = element.width/element.height;
+                    element.height = adWidth;
+                    element.width = element.height/ratio;
                 });
             };
             
