@@ -985,7 +985,7 @@ class Charm {
                 
                 app.stage.children.forEach(function(element){
                     if(landscape){
-                        let ratio = element.height/element.width;
+                        let ratio = element.width/element.height;
                         element.width = adHeight/1.2;
                         element.height = element.width/ratio;
                         element.position.y = adWidth/2-element.height/2;
