@@ -978,6 +978,10 @@ class Charm {
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
             };
             
+            window.onorientationchange = function(){            
+                resetGame();
+            };
+            
             function onReadyCallback(){
                 dapi.removeEventListener("ready", onReadyCallback);
                 dapi.isViewable() ? startGame() : console.log();
@@ -1069,63 +1073,34 @@ class Charm {
                 }else{
                     game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
                 }
-                
-                 window.addEventListener("orientationchange", function() {
-                    var highestTimeoutId = setTimeout(";");
-                    for (var i = 0 ; i < highestTimeoutId ; i++) {
-                        clearTimeout(i); 
-                    }
-                     
-                     if(document.body.clientWidth > document.body.clientHeight){
-                        landscape = true;
-                    }
-                     
-                     if(landscape){
-                         app.renderer.resize(adWidth, adHeight);
-                     }else{
-                         app.renderer.resize(adHeight, adWidth);
-                     }
-                    
-                    app.stage.destroy();
-                    app.stage = new PIXI.display.Stage();
-                    scene=app.stage;
-                    scene = app.stage;
-                    begin = new PIXI.Container();
-                    game = new PIXI.Container();
-                    gameStuff = new PIXI.Container();
-                    end = new PIXI.Container();
-                    scene.addChild(begin);
-                    setup(); 
-                    if(adHeight<desiredHeight || adWidth<desiredWidth){
-                    let gameRatio = desiredWidth/desiredHeight;
-                    if(landscape){
-                        game.height = adHeight/1.36;
-                        game.width = game.height/gameRatio;
-                        if(game.width>1000){
-                            game.height = adHeight/1.45;
-                            game.width = game.height/gameRatio;
-                        }
-                        widthShift = -game.width/1.8;
-                        heightShift = -game.height/1.65;
-                        game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
-                    }else{
-                        game.height = adHeight/1.2;
-                        game.width = game.height*gameRatio;
-                        if(game.height>900){
-                            game.height = adHeight/1.35;
-                            game.width = game.height/gameRatio;
-                        }
-                        widthShift = -game.width/1.75;
-                        heightShift = -game.height/1.75;
-                        game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);   
-                    }
-                }else{
-                    game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
+            }
+            
+            function resetGame(){
+                //reset Timer for tutorial counter
+                stopCount();
+                //remove ticker gameLoop
+                app.ticker.remove(gameLoop);   
+                //stop timeouts
+                var highestTimeoutId = setTimeout(";");
+                for (var i = 0 ; i < highestTimeoutId ; i++) {
+                    clearTimeout(i); 
                 }
-                });
-                
-                let loadingBar = document.getElementById("loadingBar");
-                loadingBar.parentNode.removeChild(loadingBar);
+                //pauseTweenArrays?
+                pauseTweensArray(tweens);
+                //delete stage and make new stage
+                app.stage = new PIXI.display.Stage();
+                scene = app.stage;
+                //set new ratio
+                app.renderer.resize(adHeight, adWidth);
+                landscape = !landscape;
+                //new begin,game,end
+                begin = new PIXI.Container();
+                game = new PIXI.Container();
+                gameStuff = new PIXI.Container();
+                end = new PIXI.Container();
+                scene.addChild(begin); 
+                //setup
+                setup();
             }
             
             function checkPlatform() {
@@ -1178,7 +1153,6 @@ class Charm {
                 }
                 backgroundMusic.volume = dapi.getAudioVolume()/4;
             }
-
             
             function setupBegin(){
                 let tweens = [];
@@ -1423,8 +1397,7 @@ class Charm {
 //                setPlayfield();
 //                createTower(1,towerLvl1Damage,grid.children[0]);
                 nextAutoMove = "colorChoice";
-                
-                app.ticker.add(delta => gameLoop(delta));           
+                app.ticker.add(gameLoop);           
             }
             
             function gameLoop(){
@@ -1749,7 +1722,7 @@ class Charm {
             }
             
             function tutorialTimer(){
-            startCount();
+               startCount();
                if(delay>7 && startTutorial){
                     if(nextAutoMove == "add"){
                         addTower.emit('pointerdown');
@@ -1888,8 +1861,6 @@ class Charm {
                     let newTower = createTower(++tower.lvl, Math.floor(towerLvl1Damage*Math.pow(1.4,tower.lvl-1)), tower.parent);
                     miniTowerCount.push(newTower);
                     refresh = true;
-//                  let breathe = charm.breathe(newTower,ratioX*miniTowerScale,ratioY*miniTowerScale,20,false,0);
-//                  breathe.onComplete = () => merging = false;
                     merging = false;
                     tower.parent.removeChild(tower);
                     miniTower.parent.removeChild(miniTower);
