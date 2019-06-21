@@ -921,12 +921,6 @@ class Charm {
            let app, scene, begin, game, gameStuff, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
-            let scenes =[];
-            scenes.push(begin);
-            scenes.push(game);
-            scenes.push(gameStuff);
-            scenes.push(end);
-            
             let landscape = false;
             if(document.body.clientWidth > document.body.clientHeight){
                 landscape = true;
@@ -989,18 +983,22 @@ class Charm {
                 
                 app.renderer.resize(adHeight, adWidth);
                 
-                scenes.forEach(function(element){
+                app.stage.children.forEach(function(element){
                     if(landscape){
                         let ratio = element.width/element.height;
                         element.width = adHeight/1.2;
                         element.height = element.width/ratio;
                         element.position.y = adWidth/2-element.height/2;
                         element.position.x = 0;
+                        landscape = false;
+                        setupEnd();
                     }else{
                         let ratio = element.height/element.width;
                         element.height = adWidth/1.2;
                         element.width = element.height/ratio;
                         element.position.x = adHeight/2-element.width/2;
+                        landscape = true;
+                        setupEnd();
                     }
                 });
             };
