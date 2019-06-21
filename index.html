@@ -981,6 +981,9 @@ class Charm {
             window.onorientationchange = function(){            
                 //resetGame();
                 app.renderer.resize(adHeight, adWidth);
+                app.stage.children.forEach(function(element){
+                   element.scale = 0.5;  
+                });
             };
             
             function onReadyCallback(){
@@ -989,7 +992,7 @@ class Charm {
                 dapi.addEventListener("viewableChange", adVisibleCallback);
                 dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
             }
-
+            
             function startGame() {
                 start = true;
                 isAudioEnabled = !!dapi.getAudioVolume();
