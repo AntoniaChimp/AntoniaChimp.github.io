@@ -921,7 +921,11 @@ class Charm {
            let app, scene, begin, game, gameStuff, end, width, height, charm, platform, spritesheet;
            let backgroundGroup, foregroundGroup, splashLayer, damageLayer,dragGroup;
             
-            let scenes = [begin, game, gameStuff, end];
+            let scenes;
+            scenes.push(begin);
+            scenes.push(game);
+            scenes.push(gameStuff);
+            scenes.push(end);
             
             let landscape = false;
             if(document.body.clientWidth > document.body.clientHeight){
