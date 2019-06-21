@@ -979,7 +979,8 @@ class Charm {
             };
             
             window.onorientationchange = function(){            
-                resetGame();
+                //resetGame();
+                app.renderer.resize(adHeight, adWidth);
             };
             
             function onReadyCallback(){
