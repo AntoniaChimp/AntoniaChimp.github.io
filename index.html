@@ -984,7 +984,7 @@ class Charm {
                 app.renderer.resize(adHeight, adWidth);
                 
                 app.stage.children.forEach(function(element){
-                    let ratio = element.width/element.height;
+                    let ratio = element.height/element.width;
                     element.height = adWidth;
                     element.width = element.height/ratio;
                 });
