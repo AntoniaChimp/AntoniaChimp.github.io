@@ -984,10 +984,17 @@ class Charm {
                 app.renderer.resize(adHeight, adWidth);
                 
                 app.stage.children.forEach(function(element){
-                    let ratio = element.height/element.width;
-                    element.height = adWidth/1.2;
-                    element.width = element.height/ratio;
-                    element.position.x = adHeight/2-element.width/2;
+                    if(landscape){
+                        let ratio = element.height/element.width;
+                        element.width = adHeight/1.2;
+                        element.height = element.width/ratio;
+                        element.position.y = adWidth/2-element.height/2;
+                    }else{
+                        let ratio = element.height/element.width;
+                        element.height = adWidth/1.2;
+                        element.width = element.height/ratio;
+                        element.position.x = adHeight/2-element.width/2;
+                    }
                 });
             };
             
