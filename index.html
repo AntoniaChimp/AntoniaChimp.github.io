@@ -987,6 +987,7 @@ class Charm {
                     let ratio = element.height/element.width;
                     element.height = adWidth;
                     element.width = element.height/ratio;
+                    element.position.x = adHeight-element.width/2;
                 });
             };
             
