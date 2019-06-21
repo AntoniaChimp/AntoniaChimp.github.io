@@ -985,9 +985,9 @@ class Charm {
                 
                 app.stage.children.forEach(function(element){
                     let ratio = element.height/element.width;
-                    element.height = adWidth;
+                    element.height = adWidth/1.2;
                     element.width = element.height/ratio;
-                    element.position.x = adHeight-element.width/2;
+                    element.position.x = adHeight/2-element.width/2;
                 });
             };
             
