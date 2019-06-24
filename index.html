@@ -991,12 +991,14 @@ class Charm {
                         element.position.y = adWidth/2-element.height/2;
                         element.position.x = 0;
                         landscape = false;
+                        setupEnd();
                     }else{
                         let ratio = element.height/element.width;
                         element.height = adWidth/1.2;
                         element.width = element.height/ratio;
                         element.position.x = adHeight/2-element.width/2;
                         landscape = true;
+                        setupEnd();
                     }
                 });
             };
@@ -1134,8 +1136,8 @@ class Charm {
             function setup(){
                     
                 setupBegin();
-//                setupGame();
-//                setupEnd();
+                setupGame();
+                setupEnd();
                 
                 //AUDIO
                 if(backgroundMusic == null){
@@ -1502,7 +1504,6 @@ class Charm {
                     game.addChild(text);
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
-                        setupEnd();
                         scene.removeChild(game);
                         scene.removeChild(gameStuff);
                         scene.addChild(end);
@@ -1655,7 +1656,6 @@ class Charm {
                     charm.pulse(frame,25,0);
                     begin.addChild(frame);
                     setTimeout(function(){
-                        setupGame();
                         scene.removeChild(begin);
                         scene.addChild(game);
                         scene.addChild(gameStuff);
