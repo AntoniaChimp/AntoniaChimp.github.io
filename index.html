@@ -1136,8 +1136,8 @@ class Charm {
             function setup(){
                     
                 setupBegin();
-                setupGame();
-                setupEnd();
+//                setupGame();
+//                setupEnd();
                 
                 //AUDIO
                 if(backgroundMusic == null){
@@ -1502,6 +1502,7 @@ class Charm {
                     text.anchor.set(0.5,0.5);
                     text.position.set(width/2,height/2);
                     game.addChild(text);
+                    setupEnd();
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
@@ -1655,6 +1656,7 @@ class Charm {
                     frame.drawRoundedRect(x, 2.5, adWidth/3, adHeight-5, 1);
                     charm.pulse(frame,25,0);
                     begin.addChild(frame);
+                    setupGame();
                     setTimeout(function(){
                         scene.removeChild(begin);
                         scene.addChild(game);
