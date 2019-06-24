@@ -968,6 +968,13 @@ class Charm {
             let tutorialTower, tutorialPlace, tutorialTween;
             let nextAutoMove = "add";
             
+            let states = {
+                BEGIN : 'begin',
+                GAME : 'game',
+                END : 'end'
+            }
+            let currentState = states.BEGIN;
+            
             let pink, blue,green,banner;
             
             let font = "riffic_free_mediumbold";
@@ -979,28 +986,36 @@ class Charm {
             };
             
             window.onorientationchange = function(){            
-                //resetGame();
                 
-                app.renderer.resize(adHeight, adWidth);
+                switch(currentState){
+                    case states.BEGIN: //restart
+                                        resetGame();
+                                        break;
+                    case states.GAME: //rotate
+                                        app.renderer.resize(adHeight, adWidth);
+                                        app.stage.children.forEach(function(element){
+                                            if(landscape){
+                                                let ratio = element.width/element.height;
+                                                element.width = adHeight/1.2;
+                                                element.height = element.width/ratio;
+                                                element.position.y = adWidth/2-element.height/2;
+                                                element.position.x = 0;
+                                                landscape = false;
+                                            }else{
+                                                let ratio = element.height/element.width;
+                                                element.height = adWidth/1.2;
+                                                element.width = element.height/ratio;
+                                                element.position.x = adHeight/2-element.width/2;
+                                                landscape = true;
+
+                                            }
+                                        });
+                                        break;
+                    case states.END: //rotate or restart only this scene
+                                        break;      
+                }      
                 
-                app.stage.children.forEach(function(element){
-                    if(landscape){
-                        let ratio = element.width/element.height;
-                        element.width = adHeight/1.2;
-                        element.height = element.width/ratio;
-                        element.position.y = adWidth/2-element.height/2;
-                        element.position.x = 0;
-                        landscape = false;
-                        setupEnd();
-                    }else{
-                        let ratio = element.height/element.width;
-                        element.height = adWidth/1.2;
-                        element.width = element.height/ratio;
-                        element.position.x = adHeight/2-element.width/2;
-                        landscape = true;
-                        setupEnd();
-                    }
-                });
+                
             };
             
             function onReadyCallback(){
@@ -1134,10 +1149,12 @@ class Charm {
             }
             
             function setup(){
+                
+                let currentState = states.BEGIN; 
                     
                 setupBegin();
-//                setupGame();
-//                setupEnd();
+                setupGame();
+                setupEnd();
                 
                 //AUDIO
                 if(backgroundMusic == null){
@@ -1502,11 +1519,11 @@ class Charm {
                     text.anchor.set(0.5,0.5);
                     text.position.set(width/2,height/2);
                     game.addChild(text);
-                    setupEnd();
                     setTimeout(()=>{
                         app.renderer.backgroundColor= 0x01E1FB;
                         scene.removeChild(game);
                         scene.removeChild(gameStuff);
+                        currentState = states.END;
                         scene.addChild(end);
                     },2000);
                 }
@@ -1656,9 +1673,9 @@ class Charm {
                     frame.drawRoundedRect(x, 2.5, adWidth/3, adHeight-5, 1);
                     charm.pulse(frame,25,0);
                     begin.addChild(frame);
-                    setupGame();
                     setTimeout(function(){
                         scene.removeChild(begin);
+                        currentState = states.GAME;
                         scene.addChild(game);
                         scene.addChild(gameStuff);
                         setPlayfield();
