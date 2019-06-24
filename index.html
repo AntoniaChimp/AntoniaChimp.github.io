@@ -1044,29 +1044,25 @@ class Charm {
                 setup();
                 
                 window.onorientationchange = function(){
-                    window.addEventListener('orientationchange', function() {
-                    
-                        var afterOrientationChange = function() {
-                            if(currentState == states.GAME){
-                                // rotate playfield reset enemies path?
-                                app.renderer.resize(window.innerWidth, window.innerHeight);
-                                if(window.innerWidth>window.innerHeight){
-                                    this.type = "landscape";
-                                    setPlayfield();
-                                }else{
-                                    this.type = "portrait";
-                                    setPlayfield();
-                                }
-                                enemies = [];
-                                enemiesToKill = 9;
-                                spawnEnemies();
+                    var afterOrientationChange = function() {
+                        if(currentState == states.GAME){
+                            // rotate playfield reset enemies path?
+                            app.renderer.resize(window.innerWidth, window.innerHeight);
+                            if(window.innerWidth>window.innerHeight){
+                                this.type = "landscape";
+                                setPlayfield();
+                            }else{
+                                this.type = "portrait";
+                                setPlayfield();
                             }
-                            // Remove the resize event listener after it has executed
-                            window.removeEventListener('resize', afterOrientationChange);
-                        };
-                        window.addEventListener('resize', afterOrientationChange);
-                    });
-                    
+                            enemies = [];
+                            enemiesToKill = 9;
+                            spawnEnemies();
+                        }
+                        // Remove the resize event listener after it has executed
+                        window.removeEventListener('resize', afterOrientationChange);
+                    };
+                    window.addEventListener('resize', afterOrientationChange);
                 };
                    
                 if(adHeight<desiredHeight || adWidth<desiredWidth){
