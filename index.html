@@ -938,8 +938,6 @@ class Charm {
             
             let start = false;
             let pause = false;
-            let states = [begin, game, end];
-            let currentState = states[0];
             
             let towerLvl1Damage = 170;
             let tileWidth;
@@ -1508,7 +1506,6 @@ class Charm {
                         scene.removeChild(game);
                         scene.removeChild(gameStuff);
                         scene.addChild(end);
-                        currentState = states[2];
                     },2000);
                 }
                 
@@ -1662,7 +1659,6 @@ class Charm {
                         scene.removeChild(begin);
                         scene.addChild(game);
                         scene.addChild(gameStuff);
-                        currentState = states[1];
                         setPlayfield();
                         createTower(1,towerLvl1Damage,grid.children[0]);
                         nextAutoMove = "add";
