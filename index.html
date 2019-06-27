@@ -1499,18 +1499,18 @@ TWEEN.Interpolation = {
                 let yChest = card.y;
                 
                 let waypoints;
-                //102
+                let step = adWidth/3;
                 switch(number){
                     case 1: waypoints =[
-                                [xChest,yChest],[xChest+202, yChest],[xChest+202, yChest], [xChest, yChest], [xChest+102, yChest], [xChest+102, yChest], [xChest+202, yChest]
+                                [xChest,yChest],[xChest+step*2, yChest],[xChest+step*2, yChest], [xChest, yChest], [xChest+step, yChest], [xChest+step, yChest], [xChest+step*2, yChest]
                             ];
                             break;
                     case 2: waypoints =[
-                                [xChest,yChest],[xChest-102, yChest],[xChest, yChest], [xChest+102, yChest], [xChest-102, yChest], [xChest+102, yChest], [xChest, yChest]
+                                [xChest,yChest],[xChest-step, yChest],[xChest, yChest], [xChest+step, yChest], [xChest-step, yChest], [xChest+step, yChest], [xChest, yChest]
                             ];
                             break;
                     case 3: waypoints =[
-                                [xChest,yChest],[xChest-102, yChest],[xChest-202, yChest], [xChest-102, yChest], [xChest, yChest], [xChest-202, yChest], [xChest-202, yChest]
+                                [xChest,yChest],[xChest-step, yChest],[xChest-step*2, yChest], [xChest-step, yChest], [xChest, yChest], [xChest-step*2, yChest], [xChest-step*2, yChest]
                             ];
                             break;
                 }              
