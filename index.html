@@ -1168,17 +1168,21 @@ class Charm {
                 let continueButton;
                 if(this.type == "landscape"){
                     continueButton = createSpriteRelational("ButtonEmpty.png",2,1.5,3, end);
-                    charm.breathe(continueButton,0.3,0.3,50,true,0);
+                    charm.breathe(continueButton,0.5,0.5,50,true,0);
                 }else{
                     continueButton = createSpriteRelational("ButtonEmpty.png",2,1.5,1.7, end);
                     charm.breathe(continueButton,0.55,0.55,50,true,0);
                 }
                 
                 let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "450%", fill: "0xFFFFFF", strokeThickness:2});
+                
                 let y;
                 if(this.type == "landscape"){
                     y = continueButton.y-text.height*3.2;
                 }else{
+                    let ratio = text.width/text.height;
+                    text.width = adWidth/1.2;
+                    text.height = text.width*ratio;
                     y = continueButton.y-text.height*4.3;
                 }
                 text.position.set(continueButton.x-text.width/2,y);
