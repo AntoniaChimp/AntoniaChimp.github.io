@@ -995,7 +995,7 @@ class Charm {
                 
                 checkPlatform();
                 if(adBool){
-                    mraid.setOrientationProperties ( {"allowOrientationChange": false } );
+                    mraid.setOrientationProperties ( {"allowOrientationChange": true } );
                     adWidth = mraid.getMaxSize().width;
                     adHeight = mraid.getMaxSize().height;
                 }
@@ -1178,10 +1178,16 @@ class Charm {
             }
             
             function endcard(){
-                let continueButton = createSpriteRelational("ButtonEmpty.png",2,1.5,2, end);
-                charm.breathe(continueButton,0.4,0.4,50,true,0);
+                let continueButton;
+                if(this.type == "landscape"){
+                    continueButton = createSpriteRelational("ButtonEmpty.png",2,1.5,3, end);
+                    charm.breathe(continueButton,0.3,0.3,50,true,0);
+                }else{
+                    continueButton = createSpriteRelational("ButtonEmpty.png",2,1.5,1.7, end);
+                    charm.breathe(continueButton,0.45,0.45,50,true,0);
+                }
                 
-                let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "38px", fill: "0xFFFFFF", strokeThickness:2});
+                let text = new PIXI.Text("WAVE CLEARED!",{fontFamily: font, fontSize: "350%", fill: "0xFFFFFF", strokeThickness:2});
                 let y;
                 if(this.type == "landscape"){
                     y = continueButton.y-text.height*2.7;
