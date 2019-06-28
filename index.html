@@ -1138,10 +1138,10 @@ class Charm {
                 let play;
                 if(this.type == "landscape"){
                     play = createSpriteRelational("ButtonPlay.png",1.25,1.15,4,begin);
-                    charm.breathe(play,0.4,0.4,30,true,0);
+                    charm.breathe(play,0.35,0.35,30,true,0);
                 }else{
                     play = createSpriteRelational("ButtonPlay.png",1.3,1.1,2.5,begin);
-                    charm.breathe(play,0.5,0.5,30,true,0);
+                    charm.breathe(play,0.6,0.6,30,true,0);
                 }
                 
                 play.on('pointerdown', function(){
@@ -1180,8 +1180,8 @@ class Charm {
                 if(this.type == "landscape"){
                     y = continueButton.y-text.height*3.2;
                 }else{
-                    let ratio = text.width/text.height;
-                    text.width = adWidth/1.2;
+                    let ratio = text.height/text.width;
+                    text.width = adWidth/1.1;
                     text.height = text.width*ratio;
                     y = continueButton.y-text.height*4.3;
                 }
@@ -1650,7 +1650,7 @@ class Charm {
                                 chests.forEach(function(c){
                                     c.interactive = true;              
                                 });
-                                let text = new PIXI.Text("Open one chest!",{fontFamily: font, fontSize: "300%", fill: "white"});
+                                let text = new PIXI.Text("Open one chest!",{fontFamily: font, fontSize: "370%", fill: "white"});
                                 text.style.strokeThickness = 1;
                                 text.anchor.set(0.5,0.5);
                                 text.position.set(adWidth/2,adHeight/1.35);
@@ -1699,7 +1699,7 @@ class Charm {
                             }else{
                                 chest.text.y = adHeight/1.55;
                             }
-                            chest.tween.pause();
+                            charm.removeTween(chest.tween);
                             chest.text.alpha = 0;
                             charm.fadeIn(chest.text,150);
                             chest.children[0].tint = 0x808080;
