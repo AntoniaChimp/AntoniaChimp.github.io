@@ -1635,8 +1635,12 @@ TWEEN.Interpolation = {
                                     let star;
                                     let legendary;
                                     if(type == "landscape"){
-                                        star = createSpriteRelational("star.png", 2.7, 3.5, 10.5, begin, splashLayer);
-                                        legendary = createSpriteRelational("legendaryButton.png", 2, 1.4, 5.5, begin,splashLayer);
+                                        star = createSpriteRelational("star.png", 1, 1, 10.5, begin, splashLayer);
+                                        star.x = rewardCard.x - rewardCard.width/3;
+                                        star.y = rewardCard.y - rewardCard.height/3.3;
+                                        legendary = createSpriteRelational("legendaryButton.png", 1, 1, 5.5, begin,splashLayer);
+                                        legendary.x = rewardCard.x;
+                                        legendary.y = rewardCard.y + rewardCard.height/3.4;
                                     }else{
                                         star = createSpriteRelational("star.png", 4, 3, 6, begin, splashLayer);
                                         legendary = createSpriteRelational("legendaryButton.png", 2, 1.5, 3.1, begin,splashLayer);
