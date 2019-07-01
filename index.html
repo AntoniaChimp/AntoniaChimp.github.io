@@ -1383,7 +1383,7 @@ TWEEN.Interpolation = {
                         app.renderer.resize(adWidth, adHeight);
                         
                         while(begin.children[0]) { begin.removeChild(begin.children[0]); }
-                        setup();
+                        setupBegin();
                     };
                     window.addEventListener('resize', afterOrientationChange);
                 };
@@ -1555,7 +1555,7 @@ TWEEN.Interpolation = {
                                             card.interactive = true;
                                             let size;
                                             if(this.type == "landscape"){
-                                                size = adWidth/20;
+                                                size = adWidth/22;
                                             }else{
                                                 size = adWidth/13;
                                             }
@@ -1651,7 +1651,7 @@ TWEEN.Interpolation = {
                             if(type == "landscape"){
                                 c.text.y = adHeight/1.1;
                             }else{
-                                c.text.y = rewardCard.y + rewardCard.height/1.8;
+                                c.text.y = rewardCard.y + rewardCard.height/1.75;
                                 if(this.tablet){
                                     c.text.y = rewardCard.y + rewardCard.height/2;
                                 }
