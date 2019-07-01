@@ -1279,8 +1279,8 @@ TWEEN.Interpolation = {
             let desiredHeight = 1743;
             let widthShift;
             let heightShift;
-            let adWidth = document.body.clientWidth;
-            let adHeight = document.body.clientHeight;
+            let adWidth = window.innerWidth;
+            let adHeight = window.innerHeight;
             let adBool = false;
             let pause = false;
              
@@ -1362,37 +1362,31 @@ TWEEN.Interpolation = {
                 
                 window.onorientationchange = function(){
                     var afterOrientationChange = function() {
+                        window.removeEventListener('resize', afterOrientationChange);
+                        if(this.type == "landscape"){
+                            this.type = "portrait";
+                        }else{
+                            this.type = "landscape";
+                        }
+    
+                        let tmp;
+                        tmp = adWidth;
+                        adWidth = adHeight;
+                        adHeight = tmp;
+                        
+                        console.log("orientationChange");
+                        console.log("new AdWidth: " + adWidth);
+                        console.log("new AdHeight: " + adHeight);
+                        console.log("this.type: " + this.type);
             
+                        
+                        app.renderer.resize(adWidth, adHeight);
+                        
+                        while(begin.children[0]) { begin.removeChild(begin.children[0]); }
+                        setup();
                     };
                     window.addEventListener('resize', afterOrientationChange);
                 };
-                   
-//                if(adHeight<desiredHeight || adWidth<desiredWidth){
-//                    let gameRatio = desiredWidth/desiredHeight;
-//                    if(this.type == "landscape"){
-//                        game.height = adHeight/1.36;
-//                        game.width = game.height/gameRatio;
-//                        if(game.width>1000){
-//                            game.height = adHeight/1.45;
-//                            game.width = game.height/gameRatio;
-//                        }
-//                        widthShift = -game.width/1.8;
-//                        heightShift = -game.height/1.65;
-//                        game.position.set((adWidth/2)+widthShift,(adHeight/2)+heightShift);     
-//                    }else{
-//                         game.height = adHeight/1.2;
-//                        game.width = game.height*gameRatio;
-//                        if(game.height>1000){
-//                            game.height = adHeight/1.35;
-//                            game.width = game.height/gameRatio;
-//                        }
-//                        widthShift = -game.width/1.75;
-//                        heightShift = -game.height/1.75;
-//                        game.position.set((adWidth/2)+widthShift ,(adHeight/2) + heightShift);     
-//                    }
-//                }else{
-//                    game.position.set((adWidth-desiredWidth)/2, (adHeight-desiredHeight)/2);
-//                }
                 
             }
             
@@ -1461,33 +1455,20 @@ TWEEN.Interpolation = {
                 createCardOption(6,2.1,1,"Pink");
                 createCardOption(1.2,2.1,3,"Purple");
                 
-                app.ticker.add(delta => gameLoop(delta)); 
+                if(start){
+                   start = false;
+                   app.ticker.add(delta => gameLoop(delta)); 
+                }
+    
             }
              
             function gameLoop(){
          
               //TWEEN
                 TWEEN.update();
-;               charm.update();  
+                charm.update();  
             }
-                    
-            function createSprite(name, x, y, anchor, scaleX, scaleY, group){
-                let sprite = new PIXI.Sprite(spritesheet.textures[name]);
                 
-                sprite.position.set(width/2+x,height/2+y);
-                
-                if(group != undefined){
-                    group.addChild(sprite);
-                }else{
-                    game.addChild(sprite);
-                }
-                
-                sprite.scale.set(scaleX,scaleY);
-                sprite.anchor.set(anchor,anchor);
-                
-                return sprite;
-            }
-            
             function createSpriteRelational(name, x, y, scale, group, parent){
                 
                 let sprite = new PIXI.Sprite(spritesheet.textures[name]);
@@ -1575,7 +1556,6 @@ TWEEN.Interpolation = {
                                             text.anchor.set(0.5,0.5);
                                             if(this.type == "landscape"){
                                                 text.position.set(adWidth/2,adHeight/1.15);
-                                                console.log(text);
                                                 text.style = {fontFamily: font, fontSize: "500%", fill: "white"};
                                             }else{
                                                 text.position.set(adWidth/2,adHeight/1.4);
