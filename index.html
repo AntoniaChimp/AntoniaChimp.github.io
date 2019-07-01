@@ -1650,6 +1650,10 @@ TWEEN.Interpolation = {
                             c.text.text = "Perfect!";
                             if(type == "landscape"){
                                 c.text.y = adHeight/1.1;
+                                if(adHeight<420){
+                                    c.text.style = {fontFamily: font, fontSize: adWidth/25 + "px", fill: "white"}
+                                    c.text.y = adHeight/1.065;
+                                }
                             }else{
                                 c.text.y = rewardCard.y + rewardCard.height/1.75;
                                 if(this.tablet){
