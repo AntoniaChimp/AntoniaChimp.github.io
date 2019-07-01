@@ -1292,6 +1292,7 @@ TWEEN.Interpolation = {
             let cards = [];
           
             let start = true;
+            let noPressed = true;
             
             
             let banner, play;
@@ -1299,7 +1300,6 @@ TWEEN.Interpolation = {
             let rewardCard;
             
             let font = "riffic_free_mediumbold";
-            document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(init, 50)});
         
             window.onload = function(){            
                 (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
@@ -1599,8 +1599,10 @@ TWEEN.Interpolation = {
                                             card.text = text;
                                             card.tween = charm.pulse(text,30,0.1);
                                             setTimeout(function(){
-                                              let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
-                                              charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
+                                                if(noPressed){
+                                                    let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
+                                                    charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
+                                                }
                                             },5000);
                                         },1500);
                                      },500);
@@ -1612,6 +1614,7 @@ TWEEN.Interpolation = {
                    
                 card.on('pointerdown', function(){
                     
+                    noPressed = false;
                     play.visible = true;
                     play.interactive = true;
                 
@@ -1698,7 +1701,7 @@ TWEEN.Interpolation = {
                             c.tint = 0x808080;
                         });
                     
-                        scene.on('pointerdown', function(){
+                        begin.on('pointerdown', function(){
                             dapi.open(platform);
                         });
                 });
