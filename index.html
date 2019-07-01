@@ -1266,9 +1266,13 @@ TWEEN.Interpolation = {
             if(document.body.clientWidth > document.body.clientHeight){
                 this.type = "landscape";
             }
+
+            if(window.innerWidth > 767 && window.innerWidth < 1025){
+                this.tablet = true;
+            }
             
             let type = this.type;
-           
+                       
             let ratio = document.body.clientWidth/document.body.clientHeight;
             let gameRatio;
             let desiredWidth = 980;
@@ -1277,7 +1281,7 @@ TWEEN.Interpolation = {
             let heightShift;
             let adWidth = document.body.clientWidth;
             let adHeight = document.body.clientHeight;
-            let adBool = true;
+            let adBool = false;
             let pause = false;
              
             let fontScale = 2;
@@ -1292,7 +1296,7 @@ TWEEN.Interpolation = {
             let rewardCard;
             
             let font = "riffic_free_mediumbold";
-            document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(init, 50)});
+            document.fonts.load('10pt "riffic_free_mediumbold"').then(()=>{setTimeout(displayAd, 50)});
         
              function init(){
                  if (document.readyState === 'complete') {
@@ -1432,7 +1436,7 @@ TWEEN.Interpolation = {
                     createSpriteRelational("logo.png",8,1.15,4.5,begin,foregroundGroup);
                 }else{
                     text = new PIXI.Text("Daily Bonus",{fontFamily: font, fontSize: "700%", fill: 'white'});
-                    banner = createSpriteRelational("banner_long.png",2,5,1,begin, foregroundGroup);
+                    banner = createSpriteRelational("banner_long.png",2,7,1,begin, foregroundGroup);
                     createSpriteRelational("logo.png",4,1.1,2.5,begin,foregroundGroup);
                 }
         
@@ -1444,8 +1448,8 @@ TWEEN.Interpolation = {
                     play = createSpriteRelational("ButtonPlay.png",1.15,1.15,4,begin);
                     charm.breathe(play,0.35,0.35,30,true,0);
                 }else{
-                    play = createSpriteRelational("ButtonPlay.png",1.3,1.1,2.5,begin);
-                    charm.breathe(play,0.6,0.6,30,true,0);
+                    play = createSpriteRelational("ButtonPlay.png",1.35,1.1,2.5,begin);
+                    charm.breathe(play,0.9,0.9,30,true,0);
                 }
                 
                 play.on('pointerdown', function(){
@@ -1453,9 +1457,9 @@ TWEEN.Interpolation = {
                 });
                 play.visible = false;
                 
-                createCardOption(2,2,2,"Orange");
-                createCardOption(6,2,1,"Pink");
-                createCardOption(1.2,2,3,"Purple");
+                createCardOption(2,2.1,2,"Orange");
+                createCardOption(6,2.1,1,"Pink");
+                createCardOption(1.2,2.1,3,"Purple");
                 
                 app.ticker.add(delta => gameLoop(delta)); 
             }
@@ -1566,7 +1570,7 @@ TWEEN.Interpolation = {
 
                                         setTimeout(function(){
                                             card.interactive = true;
-                                            let text = new PIXI.Text("Choose one card!",{fontFamily: font, fontSize: "30px", fill: "white"});
+                                            let text = new PIXI.Text("Choose one card!",{fontFamily: font, fontSize: "650%", fill: "white"});
                                             text.style.strokeThickness = 1;
                                             text.anchor.set(0.5,0.5);
                                             if(this.type == "landscape"){
@@ -1589,20 +1593,6 @@ TWEEN.Interpolation = {
                     
                     play.visible = true;
                     play.interactive = true;
-                    
-                    cards.forEach(function(c){
-                        c.interactive = false;
-                        c.text.text = "Perfect!";
-                        if(type == "landscape"){
-                            c.text.y = adHeight/1.1;
-                        }else{
-                            c.text.y = adHeight/1.3;
-                        }
-                        c.tween.pause();
-                        c.text.alpha = 0;
-                        charm.fadeIn(c.text,150);
-                        c.tint = 0x808080;
-                    });
                 
                     begin.removeChild(card);
                     
@@ -1613,10 +1603,10 @@ TWEEN.Interpolation = {
                     if(type == "landscape"){
                         rewardCard = createSpriteRelational("card_back.png", 2, 2, 2.6, begin,splashLayer);
                     }else{
-                        rewardCard = createSpriteRelational("card_back.png", 2, 2, 1.3, begin,splashLayer);
+                        rewardCard = createSpriteRelational("card_back.png", 2, 2.1, 1.3, begin,splashLayer);
                     } 
                     let oldWidth = rewardCard.width;
-                    console.log(oldWidth);
+
                     rewardCard.setWidth = function(w){
                         rewardCard.width =  w;
                     };                    
@@ -1642,8 +1632,12 @@ TWEEN.Interpolation = {
                                         legendary.x = rewardCard.x;
                                         legendary.y = rewardCard.y + rewardCard.height/3.4;
                                     }else{
-                                        star = createSpriteRelational("star.png", 4, 3, 6, begin, splashLayer);
-                                        legendary = createSpriteRelational("legendaryButton.png", 2, 1.5, 3.1, begin,splashLayer);
+                                        star = createSpriteRelational("star.png", 1, 1, 6, begin, splashLayer);
+                                        star.x = rewardCard.x - rewardCard.width/3;
+                                        star.y = rewardCard.y - rewardCard.height/3.1;
+                                        legendary = createSpriteRelational("legendaryButton.png", 1, 1, 3.1, begin,splashLayer);
+                                        legendary.x = rewardCard.x;
+                                        legendary.y = rewardCard.y + rewardCard.height/3.1;
                                     }
                                     star.alpha = 0;
                                     legendary.alpha = 0;
@@ -1661,6 +1655,23 @@ TWEEN.Interpolation = {
                                 .start();
                         })
                         .start();
+                    
+                        cards.forEach(function(c){
+                            c.interactive = false;
+                            c.text.text = "Perfect!";
+                            if(type == "landscape"){
+                                c.text.y = adHeight/1.1;
+                            }else{
+                                c.text.y = rewardCard.y + rewardCard.height/1.8;
+                                if(this.tablet){
+                                    c.text.y = rewardCard.y + rewardCard.height/2;
+                                }
+                            }
+                            charm.removeTween(c.tween);
+                            c.text.alpha = 0;
+                            charm.fadeIn(c.text,150);
+                            c.tint = 0x808080;
+                        });
                 });
             }
                  
