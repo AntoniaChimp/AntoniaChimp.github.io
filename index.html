@@ -1440,10 +1440,10 @@ TWEEN.Interpolation = {
                 
                 if(this.type == "landscape"){
                     play = createSpriteRelational("ButtonPlay.png",1.15,1.15,5,begin);
-                    //charm.breathe(play,0.45,0.45,30,true,0);
+                    charm.pulse(play,30,0.1);
                 }else{
                     play = createSpriteRelational("ButtonPlay.png",1.35,1.1,2.5,begin);
-                    //charm.breathe(play,0.6,0.6,30,true,0);
+                    charm.pulse(play,30,0.1);
                 }
                 
                 play.on('pointerdown', function(){
@@ -1553,12 +1553,17 @@ TWEEN.Interpolation = {
 
                                         setTimeout(function(){
                                             card.interactive = true;
-                                            let text = new PIXI.Text("Choose one card!",{fontFamily: font, fontSize: "5em", fill: "white"});
+                                            let size;
+                                            if(this.type == "landscape"){
+                                                size = adWidth/20;
+                                            }else{
+                                                size = adWidth/13;
+                                            }
+                                            let text = new PIXI.Text("Choose one card!",{fontFamily: font, fontSize: size + "px", fill: "white"});
                                             text.style.strokeThickness = 1;
                                             text.anchor.set(0.5,0.5);
                                             if(this.type == "landscape"){
                                                 text.position.set(adWidth/2,adHeight/1.15);
-                                                text.style = {fontFamily: font, fontSize: "3em", fill: "white"};
                                             }else{
                                                 text.position.set(adWidth/2,adHeight/1.4);
                                             }
