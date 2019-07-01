@@ -1368,7 +1368,8 @@ TWEEN.Interpolation = {
                         }else{
                             this.type = "landscape";
                         }
-    
+                        type = this.type;
+                        
                         let tmp;
                         tmp = adWidth;
                         adWidth = adHeight;
@@ -1379,7 +1380,6 @@ TWEEN.Interpolation = {
                         console.log("new AdHeight: " + adHeight);
                         console.log("this.type: " + this.type);
             
-                        
                         app.renderer.resize(adWidth, adHeight);
                         
                         while(begin.children[0]) { begin.removeChild(begin.children[0]); }
@@ -1472,7 +1472,7 @@ TWEEN.Interpolation = {
             function createSpriteRelational(name, x, y, scale, group, parent){
                 
                 let sprite = new PIXI.Sprite(spritesheet.textures[name]);
-                
+        
                 let ratio = sprite.width/sprite.height;
                 sprite.width = adWidth/scale;
                 sprite.height = sprite.width/ratio;
@@ -1497,8 +1497,10 @@ TWEEN.Interpolation = {
                 let card;
                 if(this.type == "landscape"){
                     card = createSpriteRelational("legendaryCard"+color+".png", x, y, 3.7, begin,splashLayer);
+                    
                 }else{
                     card = createSpriteRelational("legendaryCard"+color+".png", x, y, 2.2, begin,splashLayer);
+                  
                 }
 
                 let oldWidth = card.width;
