@@ -1290,7 +1290,7 @@ TWEEN.Interpolation = {
           
             let start = true;
             let noPressed = true;
-            let noPressedTimeout; 
+            let noPressedTimeouts = []; 
             
             
             let banner, play;
@@ -1377,7 +1377,10 @@ TWEEN.Interpolation = {
                         adWidth = adHeight;
                         adHeight = tmp;
                         
-                        clearTimeout(noPressedTimeout);
+                        noPressedTimeouts.forEach((hand)=>{
+                            clearTimeout(hand);               
+                        });
+                        
             
                         app.renderer.resize(adWidth, adHeight);
                         
@@ -1566,12 +1569,17 @@ TWEEN.Interpolation = {
                                             begin.addChild(text);
                                             card.text = text;
                                             card.tween = charm.pulse(text,30,0.1);
-                                            let noPressedTimeout = setTimeout(function(){
+                                            noPressedTimeouts.push(setTimeout(function(){
                                                 if(noPressed){
-                                                    let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
-                                                    charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
+                                                    if(this.type == "landscape"){
+                                                        let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 8, begin,splashLayer);  
+                                                        charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
+                                                    }else{
+                                                        let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
+                                                        charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
+                                                    }
                                                 }
-                                            },5000);
+                                            },5000));
                                         },1500);
                                      },500);
                                 })
