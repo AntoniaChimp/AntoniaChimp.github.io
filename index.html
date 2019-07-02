@@ -1293,6 +1293,7 @@ TWEEN.Interpolation = {
           
             let start = true;
             let noPressed = true;
+            let tutorialHand;
             let noPressedTimeouts = []; 
             
             let banner, play;
@@ -1600,10 +1601,10 @@ TWEEN.Interpolation = {
                                             noPressedTimeouts.push(setTimeout(function(){
                                                 if(noPressed){
                                                     if(this.type == "landscape"){
-                                                        let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 8, begin,splashLayer);  
+                                                        tutorialHand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 8, begin,splashLayer);  
                                                         charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
                                                     }else{
-                                                        let hand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
+                                                        tutorialHand = createSpriteRelational("tutorialHand.png", 1.72, 1.65, 4, begin,splashLayer);  
                                                         charm.breathe(hand, hand.scale.x/1.5, hand.scale.y/1.5, 45, true);
                                                     }
                                                 }
@@ -1623,6 +1624,7 @@ TWEEN.Interpolation = {
                     play.interactive = true;
                 
                     begin.removeChild(card);
+                    begin.removeChild(tutorialHand);
                     
                     let shine = createSpriteRelational("Shine.png", 2, 2, 0.8, begin,splashLayer);
                     setInterval(function(){ shine.rotation+=0.1;}, 50);
