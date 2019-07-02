@@ -1701,7 +1701,8 @@ TWEEN.Interpolation = {
                             c.tint = 0x808080;
                         });
                     
-                        begin.on('pointerdown', function(){
+                        scene.interactive = true;
+                        scene.on('pointerdown', function(){
                             dapi.open(platform);
                         });
                 });
