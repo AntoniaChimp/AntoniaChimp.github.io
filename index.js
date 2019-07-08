@@ -7,8 +7,18 @@ js = {
     index: 0,
     initDashboardPageCharts: function() {
         
-    getGameData();
+    $.ajax({url:"https://storage.googleapis.com/chimpworks_tv_dashboard_alpha/GA_Test01.csv",
+        success:function() {
+            alert("Success");
+        },
+        error:function() {
+            alert("Error");
+        },
+        dataType:"csv",
+        type:"get"
+    });
         
+
     Chart.defaults.global.defaultFontSize = "16";
     Chart.defaults.global.tooltips.enabled = false;
 
@@ -689,8 +699,10 @@ function initSessionLength(game_data, type){
 }
 
 function initRatings(){
-//    $("#PlayStoreRating").text(js.ratings[js.index][0]);
-//    $("#AppStoreRating").text(js.ratings[js.index][1]);
+    if(js.ratings[js.index][0]!=undefined){
+        $("#PlayStoreRating").text(js.ratings[js.index][0]);
+        $("#AppStoreRating").text(js.ratings[js.index][1]);
+    }
 }
 
 function getMaxOrMin(stringArray, max){
