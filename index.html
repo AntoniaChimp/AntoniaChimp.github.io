@@ -1781,15 +1781,15 @@ class Charm {
                     let shine = createSpriteRelational("Shine.png", 2, 2, size, begin,splashLayer);
                     shine.alpha = 0;
 
-                    let winnerTower; 
+                    let winnerChest; 
                     if(landscape){
-                        winnerTower = createSpriteRelational(chest.tower, 1, 1, 10, begin,splashLayer);
+                        winnerChest = createSpriteRelational(chest.tower, 1, 1, 10, begin,splashLayer);
                     }else{
-                        winnerTower = createSpriteRelational(chest.tower, 1, 1, 6, begin,splashLayer);
+                        winnerChest = createSpriteRelational(chest.tower, 1, 1, 6, begin,splashLayer);
                     }
-                    winnerTower.y = chest.children[0].getGlobalPosition().y-1.5*winnerChest.height;  
-                    winnerTower.x = chest.children[0].getGlobalPosition().x; 
-                    winnerTower.alpha = 0;
+                    winnerChest.y = chest.children[0].getGlobalPosition().y-1.5*winnerChest.height;  
+                    winnerChest.x = chest.children[0].getGlobalPosition().x; 
+                    winnerChest.alpha = 0;
                     charm.fadeIn(winnerChest);
                     
                     slide.onComplete = () =>{
@@ -1832,7 +1832,7 @@ class Charm {
                         });
                         
                         let slide2 = charm.slide(
-                          winnerTower,              //A sprite
+                          winnerChest,              //A sprite
                           adWidth/2,         //The x position where the movement should end
                           adHeight/2,         //The y position where the movement should end
                           20,       //How long the movement should last, in frames
@@ -1845,22 +1845,17 @@ class Charm {
                             charm.fadeIn(shine);
                          };
                         
-                        let oldScale = winnerTower.scale.x;
-                        var oldScaleCopy = Object.assign({}, oldScale);
-        
-                        let ratioTower = winnerTower.width/winnerTower.height;
-                        winnerTower.width = adWidth/2;
-                        winnerTower.height = winnerTower.width*ratioTower;
-                        
-                        let newScale = winnerTower.scale.x;
-                        var newScaleCopy = Object.assign({}, newScale); 
-                        
-                        winnerTower.scale.x = oldScaleCopy;
+                        let finalScale = 1;
+                        if(landscape){
+                            finalScale = 1;
+                            if(chest.color == "green")
+                                finalScale = 1;    
+                        }
                         
                         charm.scale(
-                          winnerTower,         //The sprite
-                          newScaleCopy,         //The final x scale value
-                          newScaleCopy,         //The final y scale value
+                          winnerChest,         //The sprite
+                          finalScale,         //The final x scale value
+                          finalScale,         //The final y scale value
                           30   //The duration, in frames
                         );
                     };
