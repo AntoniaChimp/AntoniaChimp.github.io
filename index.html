@@ -1664,14 +1664,14 @@ class Charm {
                     chestTop = createSpriteRelational("chestTop.png", x, y, 7, chest,splashLayer);
                     reward = createSpriteRelational(color + "Tower.png", x, 1, 11, begin,foregroundGroup);
                     reward.y = chestBottom.y-1.15*reward.height;
-                    let scalingFactor = 0.15/(adHeight/adWidth);
+                    let scalingFactor = 0.15/(adWidth/adHeight);
                     breathe = charm.breathe(reward,scalingFactor,scalingFactor,30,true,0);
                 }else{
                     chestBottom = createSpriteRelational("chestBottom.png", x, y, 4, chest,splashLayer);
                     chestTop = createSpriteRelational("chestTop.png", x, y, 4, chest,splashLayer);
                     reward = createSpriteRelational(color + "Tower.png", x, 1, 5.5, begin,foregroundGroup);
                     reward.y = chestBottom.y-1.5*reward.height;
-                    let scalingFactor = 0.8/(adHeight/adWidth);
+                    let scalingFactor = 0.8/(adWidth/adHeight);
                     breathe = charm.breathe(reward,scalingFactor,scalingFactor,30,true,0);
                 }
                 
