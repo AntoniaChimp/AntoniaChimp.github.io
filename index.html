@@ -1458,7 +1458,7 @@ class Charm {
                 activeTowers.forEach(tower=>{
                     getNearestEnemy(tower);
                     if(!tower.reload && tower.nearestEnemy != undefined && !tower.nearestEnemy.dead){
-                        shoot(tower, tower.nearestEnemy, 50, 50, 25, bullets, ()=>{
+                        shoot(tower, tower.nearestEnemy, 50, 50, 7, bullets, ()=>{
                             let radius = 18*game.scale.x;
                             if(landscape){radius = 13*game.scale.x}
                             let graphics = new PIXI.Graphics();
@@ -2002,14 +2002,16 @@ class Charm {
             }
             
             function onDragStart(event) {
-                this.data = event.data;
-                this.dragObject = event.currentTarget;
-                this.oldX = event.currentTarget.x;
-                this.oldY = event.currentTarget.y;
-                this.oldGroup = this.dragObject.parentGroup;
-                this.dragObject.parentGroup = dragGroup;
-                this.dragging = true;
-                jumpingTowerPlaces(true);
+                if(!this.dragging){
+                    this.data = event.data;
+                    this.dragObject = event.currentTarget;
+                    this.oldX = event.currentTarget.x;
+                    this.oldY = event.currentTarget.y;
+                    this.oldGroup = this.dragObject.parentGroup;
+                    this.dragObject.parentGroup = dragGroup;
+                    this.dragging = true;
+                    jumpingTowerPlaces(true);
+                }
             }
 
             function onDragEnd() {
