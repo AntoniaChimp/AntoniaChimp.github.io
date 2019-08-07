@@ -1504,15 +1504,15 @@ TWEEN.Interpolation = {
                 let button = createSprite("UILarge.png",card.x,card.y+card.height/3.25,1.25, endcard, fifthGroup);
                 button.tint = 0xEE7600;
                 
-                let wanna = addText("WANNA",-button.width/25,0,"white","white", 2, 0, button, fifthGroup);
+                let wanna = addText("WANNA",-button.width/25,0,"white","white", 200, 0, button, fifthGroup);
                 wanna.oldScale = Object.assign({},wanna.scale);
                 wanna.scale.set(wanna.scale.x*4,wanna.scale.y*4);
                 charm.scale(wanna, wanna.oldScale.x, wanna.oldScale.y, 20).onComplete = ()=>{
-                    let get = addText("GET",+button.width/300, 0,"white","white", 2, 0, button, fifthGroup);
+                    let get = addText("GET",+button.width/300, 0,"white","white", 200, 0, button, fifthGroup);
                     get.oldScale = Object.assign({},get.scale);
                     get.scale.set(get.scale.x*4,get.scale.y*4);
                     charm.scale(get, get.oldScale.x, get.oldScale.y, 20).onComplete = ()=>{
-                        let rich = addText("RICH ?",+button.width/25, 0,"white","white", 2, 0, button, fifthGroup);
+                        let rich = addText("RICH ?",+button.width/25, 0,"white","white", 200, 0, button, fifthGroup);
                         rich.oldScale = Object.assign({},rich.scale);
                         rich.scale.set(rich.scale.x*4,rich.scale.y*4);
                         charm.scale(rich, rich.oldScale.x, rich.oldScale.y, 20).onComplete = ()=>{
@@ -1819,10 +1819,15 @@ TWEEN.Interpolation = {
             
             function addBottle(index, amount){
                 workstations[index].bottleCount+=amount;
-                if(workstations[index].bottleCount == 0){
+                console.log(workstations[index].bottleCount);
+                if(workstations[index].bottleCount <= 0){
+                    workstations[index].bottleCount = 0;
                     game.removeChild(workstations[index].boxFilling);
+                    workstations[index].boxFilling = undefined;
                 }else{
-                    workstations[index].boxFilling = createSprite("boxFilling"+ workstations[index].name + ".png",workstations[index].box.x-workstations[index].box.width/10,workstations[index].box.y-workstations[index].box.height/2.35,10, game, firstGroup);
+                    if(workstations[index].boxFilling == undefined){
+                        workstations[index].boxFilling = createSprite("boxFilling"+ workstations[index].name + ".png",workstations[index].box.x-workstations[index].box.width/10,workstations[index].box.y-workstations[index].box.height/2.35,10, game, firstGroup);
+                    }   
                 }
                 updateUI();
             }
