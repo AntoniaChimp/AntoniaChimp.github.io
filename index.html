@@ -1552,8 +1552,8 @@ TWEEN.Interpolation = {
                  switch(currentTutorialState){
                     case tutorialEnum.worker: 
                             textContainer.position.set(workstations[0].container.x-workstations[0].container.width/1.7,workstations[0].container.y-workstations[0].container.height/1.7);
-                            let tap = addText("Tap to make",0, 0, 0xFD9C14, "white", adWidth/12, 5, textContainer);
-                            addText("Lemonade",0, tap.height, 0xFD9C14, "white", adWidth/12, 5, textContainer);
+                            let tap = addText("Tap to make",0, 0, 0xFD9C14, "white", adWidth/9, 5, textContainer);
+                            addText("Lemonade",0, tap.height, 0xFD9C14, "white", adWidth/9, 5, textContainer);
                             tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, game, fifthGroup); 
                             tutorialHand.position = {x:workstations[0].container.position.x+tutorialHand.width/2.4, y:workstations[0].container.position.y+ tutorialHand.height/2};
                             wobble(workstations[0].container);
@@ -1565,8 +1565,8 @@ TWEEN.Interpolation = {
                     case tutorialEnum.upgrade:
                             let station = workstations[0].container;
                             textContainer.position.set(station.x-station.width/1.7,station.y-station.height/1.7);
-                            let tap3 = addText("Use Money",0, 0, 0xFD9C14, "white", adWidth/12, 5, textContainer);
-                            addText("to Upgrade",0, tap3.height, 0xFD9C14, "white", adWidth/12, 5, textContainer);
+                            let tap3 = addText("Use Money",0, 0, 0xFD9C14, "white", adWidth/9, 5, textContainer);
+                            addText("to Upgrade",0, tap3.height, 0xFD9C14, "white", adWidth/9, 5, textContainer);
                             tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, game, fifthGroup); 
                             tutorialHand.position = {x:station.position.x+tutorialHand.width/2.4, y:station.position.y+tutorialHand.height*1.3};
                             wobble(station);
@@ -1639,6 +1639,12 @@ TWEEN.Interpolation = {
             
             function work(index){
                 if(!workstations[index].isWorking){
+                    
+                   if(currentTutorialState!=2 && tutorial){
+                        currentTutorialState=0; 
+                        updateTutorial();
+                    }
+                    
                     let station = workstations[index];
                     if(station.worker.isSleeping){
                         wakeUp(station);
@@ -1718,16 +1724,16 @@ TWEEN.Interpolation = {
                     isServing = true;
                     cashier.sprite.texture = spritesheet.textures["cashierWalk.png"];
                     cashier.sprite.scale.x = cashier.sprite.scale.x*-1.5;
-                    charm.slide(cashier.sprite, box.x, box.y, 50, "linear", false).onComplete = ()=>{
+                    charm.slide(cashier.sprite, box.x, box.y, 42, "linear", false).onComplete = ()=>{
                         cashier.sprite.scale.x = -cashier.sprite.scale.x;
                         let bottle = createSpriteRelational(bottleName,1,1,16, game, secondGroup);
                         bottle.x = cashier.sprite.getGlobalPosition().x;
                         bottle.y = cashier.sprite.getGlobalPosition().y-cashier.sprite.height/1.4;
                         addBottle(customer.type,-1);
-                        charm.slide(bottle, cashier.idlePosition.x, cashier.idlePosition.y-cashier.sprite.height/1.4, 50, "linear", false).onComplete = ()=>{
+                        charm.slide(bottle, cashier.idlePosition.x, cashier.idlePosition.y-cashier.sprite.height/1.4, 42, "linear", false).onComplete = ()=>{
                             game.removeChild(bottle);
                         }
-                        charm.slide(cashier.sprite, cashier.idlePosition.x, cashier.idlePosition.y, 50, "linear", false).onComplete = ()=>{
+                        charm.slide(cashier.sprite, cashier.idlePosition.x, cashier.idlePosition.y, 42, "linear", false).onComplete = ()=>{
                             cashier.sprite.texture = spritesheet.textures["cashier.png"];
                             solveCustomerQuest(customerIndex);
                             cashier.moving = false;
@@ -1864,7 +1870,7 @@ TWEEN.Interpolation = {
                     if(button.lvl == button.max){
                         workstations[index].upgradeWorkstationButton.costs = 0 ;
                         workstations[index].upgradeWorkstationButton.removeChild(workstations[index].upgradeWorkstationButton.costDisplay);
-                        workstations[index].upgradeWorkstationButton.costDisplay = addText("MAX",workstations[index].upgradeWorkstationButton.sprite.width/4.5,-workstations[index].upgradeWorkstationButton.sprite.height/20, "white", "black", adWidth/30, 0, workstations[index].upgradeWorkstationButton);
+                        workstations[index].upgradeWorkstationButton.costDisplay = addText("MAX",workstations[index].upgradeWorkstationButton.sprite.width/3.97,-workstations[index].upgradeWorkstationButton.sprite.height/20, "white", "black", adWidth/30, 0, workstations[index].upgradeWorkstationButton);
                     }
                     updateUI();
                 }
@@ -1961,17 +1967,13 @@ TWEEN.Interpolation = {
                         let oldPos = bottle.getGlobalPosition();
                         bottle.x = mixer.getGlobalPosition().x;
                         bottle.y = mixer.getGlobalPosition().y;
-                        charm.slide(bottle, oldPos.x, oldPos.y, 50, "linear", false).onComplete = ()=>{
+                        charm.slide(bottle, oldPos.x, oldPos.y, 30, "linear", false).onComplete = ()=>{
                             bottle.parent.removeChild(bottle);
                             if(workstations[index].firstBottle){
                                 workstations[index].firstBottle = false;
                                 createSprite("bottle"+workstations[index].name + ".png",-station.width/3.5,station.height/12,14, station, fourthGroup);
                             }                 
                             addBottle(index,1);
-                            if(currentTutorialState!=2 && tutorial){
-                                currentTutorialState=0; 
-                                updateTutorial();
-                            }
                         }; 
                     })
                     .start();     
@@ -2066,7 +2068,7 @@ TWEEN.Interpolation = {
                 workstation.mixer = createSprite("filledMixer"+ name + ".png",0,0,10, workstation.container, thirdGroup);
                 
                 workstation.worker = new Object();
-                workstation.worker.speed = 1.5;
+                workstation.worker.speed = 2;
                 workstation.worker.moving = false;
                 workstation.worker.sleepTimeout = setTimeout(()=>{sleep(workstation)},4000);
                 workstation.worker.isSleeping = false;
