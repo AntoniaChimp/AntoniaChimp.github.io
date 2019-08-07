@@ -1443,7 +1443,7 @@ TWEEN.Interpolation = {
                 game.addChild(placeholderStation);
                 let station = createSprite("placeholderStation.png",0,0,1.85, placeholderStation, firstGroup);
                 let cash = createSprite("cash.png",-station.width/4.5,0,12, placeholderStation, secondGroup);
-                placeholderStation.costs = addText("25",cash.x+190, cash.y, 0xFC4343, "white", 7, 0,placeholderStation);
+                placeholderStation.costs = addText("25",cash.x+190, cash.y, 0xFC4343, "white", 700, 0,placeholderStation);
                 
                 //Lemonade stand
                 stand = new PIXI.Container();
@@ -1467,7 +1467,7 @@ TWEEN.Interpolation = {
                 indicator.tint = 0x2041b6;
                 indicator.width = indicator.width/1.25;
                 createSprite("cash.png",indicator.x-indicator.width/3.5,indicator.y,12, game, secondGroup);
-                moneyUI = addText("0",indicator.x+indicator.width/9, indicator.y, "white", "white",5, 0);
+                moneyUI = addText("0",indicator.x+indicator.width/9, indicator.y, "white", "white",500, 0);
                 
                 blink();
                 setInterval(drinkCoffee,5000);
@@ -1546,8 +1546,8 @@ TWEEN.Interpolation = {
                  switch(currentTutorialState){
                     case tutorialEnum.worker: 
                             textContainer.position.set(workstations[0].container.x-workstations[0].container.width/1.7,workstations[0].container.y-workstations[0].container.height/1.7);
-                            let tap = addText("Tap to make",0, 0, 0xFD9C14, "white", 10, 11, textContainer);
-                            addText("Lemonade",0, tap.height, 0xFD9C14, "white", 10, 11, textContainer);
+                            let tap = addText("Tap to make",0, 0, 0xFD9C14, "white", 750, 11, textContainer);
+                            addText("Lemonade",0, tap.height, 0xFD9C14, "white", 750, 11, textContainer);
                             tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, game, fifthGroup); 
                             tutorialHand.position = {x:workstations[0].container.position.x+tutorialHand.width/2.4, y:workstations[0].container.position.y+ tutorialHand.height/2};
                             wobble(workstations[0].container);
@@ -1559,8 +1559,8 @@ TWEEN.Interpolation = {
                     case tutorialEnum.upgrade:
                             let station = workstations[0].container;
                             textContainer.position.set(station.x-station.width/1.7,station.y-station.height/1.7);
-                            let tap3 = addText("Use Money",0, 0, 0xFD9C14, "white", 10, 11, textContainer);
-                            addText("to Upgrade",0, tap3.height, 0xFD9C14, "white", 10, 11, textContainer);
+                            let tap3 = addText("Use Money",0, 0, 0xFD9C14, "white", 750, 11, textContainer);
+                            addText("to Upgrade",0, tap3.height, 0xFD9C14, "white", 750, 11, textContainer);
                             tutorialHand = createSpriteRelational("tutorialHand.png",2,2,6, game, fifthGroup); 
                             tutorialHand.position = {x:station.position.x+tutorialHand.width/2.4, y:station.position.y+tutorialHand.height*1.3};
                             wobble(station);
@@ -1775,9 +1775,9 @@ TWEEN.Interpolation = {
                 
                 if(icon != undefined){
                     let iconSprite = createSprite(icon,0,0,12, container, fourthGroup);
-                    text = addText(content,iconSprite.x + iconSprite.width, iconSprite.y, color, strokeColor, 7, 3, container);
+                    text = addText(content,iconSprite.x + iconSprite.width, iconSprite.y, color, strokeColor, 700, 3, container);
                 }else{
-                    text = addText(content,0,0, color, strokeColor, 7, 3, container);
+                    text = addText(content,0,0, color, strokeColor, 700, 3, container);
                 }
                 
                 charm.slide(container, container.x,container.y-text.height*2, 100, "smoothstep", false, 0);
@@ -1853,7 +1853,7 @@ TWEEN.Interpolation = {
                     if(button.lvl == button.max){
                         workstations[index].upgradeWorkstationButton.costs = 0 ;
                         workstations[index].upgradeWorkstationButton.removeChild(workstations[index].upgradeWorkstationButton.costDisplay);
-                        workstations[index].upgradeWorkstationButton.costDisplay = addText("MAX",workstations[index].upgradeWorkstationButton.sprite.width/4.5,-workstations[index].upgradeWorkstationButton.sprite.height/20, "white", "black", 3, 2, workstations[index].upgradeWorkstationButton);
+                        workstations[index].upgradeWorkstationButton.costDisplay = addText("MAX",workstations[index].upgradeWorkstationButton.sprite.width/4.5,-workstations[index].upgradeWorkstationButton.sprite.height/20, "white", "black", 300, 2, workstations[index].upgradeWorkstationButton);
                     }
                     updateUI();
                 }
@@ -1973,7 +1973,7 @@ TWEEN.Interpolation = {
                 bubble.y = customer.sprite.getGlobalPosition().y-250;
                 bottle.x = bubble.x;
                 bottle.y = bubble.y-8;  
-                let t = addText(text,bubble.x, bubble.y-90, 0xFC4343, "white", 7, 3);
+                let t = addText(text,bubble.x, bubble.y-90, 0xFC4343, "white", 600, 3);
                 customer.type = type;
                 customer.bubble = bubble;
                 customer.bottle = bottle;
@@ -2031,11 +2031,11 @@ TWEEN.Interpolation = {
                 workstation.upgradeWorkstationButton.sprite = createSprite("workstationButton"+name+".png",0,0,3.5, workstation.upgradeWorkstationButton, secondGroup);
                 workstation.upgradeWorkstationButton.lvl = 1;
                 workstation.upgradeWorkstationButton.max = 3;
-                workstation.upgradeWorkstationButton.text = addText("Upgrade",workstation.upgradeWorkstationButton.sprite.width/5,-workstation.upgradeWorkstationButton.sprite.height/3, "white", "black", 3, 2, workstation.upgradeWorkstationButton);
+                workstation.upgradeWorkstationButton.text = addText("Upgrade",workstation.upgradeWorkstationButton.sprite.width/5,-workstation.upgradeWorkstationButton.sprite.height/3, "white", "black", 300, 2, workstation.upgradeWorkstationButton);
                 
                 workstation.upgradeWorkstationButton.costs = (index==0) ? 10 : 25;
                 
-                workstation.upgradeWorkstationButton.costDisplay = addText(workstation.upgradeWorkstationButton.costs,workstation.upgradeWorkstationButton.sprite.width/4.5,-workstation.upgradeWorkstationButton.sprite.height/20, "white", "black", 3, 2, workstation.upgradeWorkstationButton);
+                workstation.upgradeWorkstationButton.costDisplay = addText(workstation.upgradeWorkstationButton.costs,workstation.upgradeWorkstationButton.sprite.width/4.5,-workstation.upgradeWorkstationButton.sprite.height/20, "white", "black", 300, 2, workstation.upgradeWorkstationButton);
                 
                 workstation.upgradeWorkstationButton.interactive = true;
                 workstation.upgradeWorkstationButton.on('pointerdown', ()=>{upgradeWorkstation(index)});
@@ -2048,7 +2048,7 @@ TWEEN.Interpolation = {
                 let UI = createSprite("UILarge.png",workstation.box.x,workstation.box.y+workstation.box.height/1.25,5, game, firstGroup);
                 UI.tint = 0x2041b6;
                 UI.width = UI.width/1.5;
-                workstation.bottleUI = addText("0", UI.x, UI.y, "white", "white", 4, 0);
+                workstation.bottleUI = addText("0", UI.x, UI.y, "white", "white", 400, 0);
                 workstation.bottleUI.parentGroup = firstGroup;
                 workstation.bottleCount = 0;
                 createSprite("placeholderBottle.png",-workstation.container.width/3.5,workstation.container.height/5,8, workstation.container, thirdGroup);
@@ -2070,7 +2070,7 @@ TWEEN.Interpolation = {
             }
             
             function addText(content, x, y, color, strokeColor, size, strokeSize, group, layer){
-                let text = new PIXI.Text(content,{fontFamily: font, fontSize: size + "em", fill: color});
+                let text = new PIXI.Text(content,{fontFamily: font, fontSize: size + "%", fill: color});
                 text.style.strokeThickness = strokeSize;
                 text.style.stroke = strokeColor;
                 text.anchor.set(0.5,0.5);
