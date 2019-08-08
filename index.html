@@ -1407,10 +1407,10 @@ TWEEN.Interpolation = {
                 
                 document.addEventListener("visibilitychange", function() {
                     if(document.hidden){
-                        backgroundMusic.pause();
+                        //backgroundMusic.pause();
                         pause = true;
-                    } else if(!backgroundMusic.playing){
-                        backgroundMusic.resume();
+                    } else {
+                        //backgroundMusic.resume();
                         pause = false;
                     }
                 });
