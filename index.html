@@ -1482,7 +1482,15 @@ TWEEN.Interpolation = {
                 updateUI();
                 
                 //CTA
-                setTimeout(showEndcard,28000);
+                setInterval(()=>{
+                    if(!pause){
+                        timeTillEndScreen-=1;
+                    }
+                    
+                    if(timeTillEndScreen<=0){
+                        showEndcard();
+                    }
+                },1000);
                
                 app.ticker.add(delta => gameLoop(delta)); 
             }
