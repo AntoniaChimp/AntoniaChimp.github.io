@@ -1307,6 +1307,7 @@ TWEEN.Interpolation = {
             let tutorialActive = true;
             const bottleEnum = {"lemo":0, "cherry":1}
             let possibleBottles = [bottleEnum.lemo];
+            let timeTillEndScreen = 28;
             
             let font = "'Fredoka One'";
             document.fonts.load('10pt "Fredoka One"').then(()=>{setTimeout(displayAd, 50)});
@@ -2093,7 +2094,7 @@ TWEEN.Interpolation = {
                 workstation.container.interactive = true;
                 workstation.container.on('pointerdown', ()=>{work(index)});
                 
-                if(index == 1) workstation.worker.sleepTimeout = setTimeout(()=>{sleep(station)},2700);
+                if(index != 0) workstation.worker.sleepTimeout = setTimeout(()=>{sleep(station)},2700);
                 
                 spawnCustomer(index);
             }
