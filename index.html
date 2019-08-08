@@ -1488,7 +1488,7 @@ TWEEN.Interpolation = {
                         timeTillEndScreen-=1;
                     }
                     
-                    if(timeTillEndScreen==0){
+                    if(timeTillEndScreen==0 && !endBool){
                         showEndcard();
                     }
                 },1000);
