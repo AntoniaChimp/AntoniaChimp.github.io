@@ -1336,6 +1336,10 @@ TWEEN.Interpolation = {
                     adHeight = mraid.getMaxSize().height;
                 }
                 
+                console.log(document.body.clientWidth);
+                console.log(document.body.clientHeight);
+                console.log(document.body.clientHeight<desiredHeight);
+                
                 app = new PIXI.Application();
                 app.stage = new PIXI.display.Stage();
                 document.body.appendChild(app.view);
@@ -1672,11 +1676,11 @@ TWEEN.Interpolation = {
             }
             
             function sleep(station){
-                if(!tutorial){
+                if(!tutorial && !station.worker.isSleeping){
                     station.worker.isSleeping = true;
                     station.worker.sleepSprite = createSprite("sleep.png",station.worker.sprite.x+station.worker.sprite.width/1.85,station.worker.sprite.y-station.worker.sprite.height/2.1,16, game, thirdGroup);
-                    station.tutorialHand = createSpriteRelational("tutorialHand.png",2,2,12, game, fifthGroup); 
-                    station.tutorialHand.position = {x:station.container.position.x+station.container.width/2.8, y:station.container.position.y+ station.container.height/3};
+                    station.tutorialHand = createSpriteRelational("tutorialHand.png",2,2,15, game, fifthGroup); 
+                    station.tutorialHand.position = {x:station.container.position.x+station.tutorialHand.width/2, y:station.container.position.y+station.tutorialHand.height/2};
                     handAnimation(station.tutorialHand);
                     station.worker.handInterval = setInterval(()=>{handAnimation(station.tutorialHand)},1500);
                     wobble(station.container);
@@ -1940,7 +1944,7 @@ TWEEN.Interpolation = {
                     button.text.tint = 0xffffff;
                     button.costDisplay.tint = 0xffffff;
                     if(button.arrow == undefined && button.lvl< button.max){
-                        button.arrow = createSprite("upgradeArrow.png", button.x+button.width/2.4, button.y-button.height/2.3,12,game,fourthGroup);
+                        button.arrow = createSprite("upgradeArrow.png", button.x+button.width/2, button.y-button.height/2.3,12,game,fourthGroup);
                         charm.slide(button.arrow, button.arrow.x, button.arrow.y-button.arrow.height/3, 25, "linear", true,0);
                     }
                 }
