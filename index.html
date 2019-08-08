@@ -1297,6 +1297,7 @@ TWEEN.Interpolation = {
             let tweens = [];    
             
             let fontScale = 2;
+            let customScale = 1; //1.28
             let backgroundMusic;
             
             let tutorial = true;
@@ -1416,6 +1417,10 @@ TWEEN.Interpolation = {
             
             function setupGame(){
                 
+                if(adWidth>480){
+                    customScale = 1.28;
+                }
+                
                 //Tutorial
                 textContainer = new PIXI.Container(); 
                 textContainer.pivot.set(0.5,0.5);
@@ -1473,7 +1478,7 @@ TWEEN.Interpolation = {
                 blink();
                 setInterval(drinkCoffee,5000);
                 //setInterval(()=>{createReaction(boss.sprite.position, "boss", 3000);},8000);
-                setInterval(spawnCustomer,5600);
+                setInterval(spawnCustomer,5100);
                 updateUI();
                 
                 //CTA
@@ -2057,7 +2062,6 @@ TWEEN.Interpolation = {
                 }else{
                     workstation.box = createSpriteRelational("box.png",8,2,5.5, game, firstGroup);
                     possibleBottles.push(1);
-                     console.log(distanceTo(workstations[0].container, workstations[1].container));
                 }
                 let UI = createSprite("UILarge.png",workstation.box.x,workstation.box.y+workstation.box.height/1.25,5, game, firstGroup);
                 UI.tint = 0x2041b6;
@@ -2084,7 +2088,7 @@ TWEEN.Interpolation = {
             }
             
             function addText(content, x, y, color, strokeColor, size, strokeSize, group, layer){
-                let text = new PIXI.Text(content,{fontFamily: font, fontSize: size + "px", fill: color});
+                let text = new PIXI.Text(content,{fontFamily: font, fontSize: size/customScale + "px", fill: color});
                 text.style.strokeThickness = strokeSize;
                 text.style.stroke = strokeColor;
                 text.anchor.set(0.5,0.5);
@@ -2106,7 +2110,7 @@ TWEEN.Interpolation = {
                 let sprite = new PIXI.Sprite(spritesheet.textures[name]);
         
                 let ratio = sprite.width/sprite.height;
-                sprite.width = adWidth/scale;
+                sprite.width = adWidth/(scale*customScale);
                 sprite.height = sprite.width/ratio;
                 sprite.position.set(adWidth/x,adHeight/y);
                 
@@ -2134,7 +2138,7 @@ TWEEN.Interpolation = {
                 let sprite = new PIXI.Sprite(spritesheet.textures[name]);
         
                 let ratio = sprite.width/sprite.height;
-                sprite.width = adWidth/scale;
+                sprite.width = adWidth/(scale*customScale);
                 sprite.height = sprite.width/ratio;
                 sprite.position.set(x,y);
                 
