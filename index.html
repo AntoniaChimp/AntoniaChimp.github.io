@@ -1478,11 +1478,11 @@ TWEEN.Interpolation = {
                 blink();
                 setInterval(drinkCoffee,5000);
                 //setInterval(()=>{createReaction(boss.sprite.position, "boss", 3000);},8000);
-                setInterval(spawnCustomer,5100);
+                setInterval(spawnCustomer,4200);
                 updateUI();
                 
                 //CTA
-                //setTimeout(showEndcard,5000);
+                setTimeout(showEndcard,28000);
                
                 app.ticker.add(delta => gameLoop(delta)); 
             }
@@ -1654,6 +1654,7 @@ TWEEN.Interpolation = {
                     if(station.worker.isSleeping){
                         wakeUp(station);
                     }
+                    console.log("clear sleep");
                     clearTimeout(station.worker.sleepTimeout);
                     station.isWorking = true;
                     charm.slide(station.worker.sprite, station.lemonadeStation.getGlobalPosition().x-station.worker.sprite.width/2, station.worker.sprite.y, 100/station.worker.speed, "linear", false).onComplete = ()=>{
@@ -1668,7 +1669,8 @@ TWEEN.Interpolation = {
                             charm.slide(station.worker.sprite, station.worker.idleXPosition,station.worker.sprite.y, 100/station.worker.speed, "linear", false).onComplete = ()=>{
                                 station.isWorking = false;
                                 if(!tutorial){
-                                    station.worker.sleepTimeout = setTimeout(()=>{sleep(station)},4000);
+                                    console.log("set sleep");
+                                    station.worker.sleepTimeout = setTimeout(()=>{sleep(station)},2700);
                                 }
                             };
                         };
@@ -1685,7 +1687,7 @@ TWEEN.Interpolation = {
                     handAnimation(station.tutorialHand);
                     station.worker.handInterval = setInterval(()=>{handAnimation(station.tutorialHand)},1500);
                     wobble(station.container);
-                    station.worker.wobbleInterval = setInterval(()=>{wobble(station.container)},3000);
+                    station.worker.wobbleInterval = setInterval(()=>{wobble(station.container)},2000);
                     station.worker.sprite.texture = spritesheet.textures["workerSleep.png"];
                 }
             }
@@ -1856,7 +1858,10 @@ TWEEN.Interpolation = {
             function upgradeWorkstation(index){
                 
                 if(tutorial){
-                    workstations[0].worker.sleepTimeout = setTimeout(()=>{sleep(workstations[0])},4000);
+                    if(!workstations[index].isWorking){
+                        console.log("set sleep");
+                        workstations[0].worker.sleepTimeout = setTimeout(()=>{sleep(workstations[0])},2700);
+                    }
                     tutorial= false;
                     currentTutorialState = 0; 
                     updateTutorial();
@@ -2075,7 +2080,6 @@ TWEEN.Interpolation = {
                 workstation.worker = new Object();
                 workstation.worker.speed = 2;
                 workstation.worker.moving = false;
-                workstation.worker.sleepTimeout = setTimeout(()=>{sleep(workstation)},4000);
                 workstation.worker.isSleeping = false;
                 workstation.worker.sprite = createSprite("worker.png",station.getGlobalPosition().x + station.width/4.5,station.getGlobalPosition().y - station.height/1.55,9, game, firstGroup);
                 workstation.worker.idleXPosition = workstation.worker.sprite.getGlobalPosition().x;
