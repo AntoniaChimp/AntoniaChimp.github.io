@@ -1336,10 +1336,6 @@ TWEEN.Interpolation = {
                     adHeight = mraid.getMaxSize().height;
                 }
                 
-                console.log(document.body.clientWidth);
-                console.log(document.body.clientHeight);
-                console.log(document.body.clientHeight<desiredHeight);
-                
                 app = new PIXI.Application();
                 app.stage = new PIXI.display.Stage();
                 document.body.appendChild(app.view);
@@ -1656,7 +1652,7 @@ TWEEN.Interpolation = {
                     clearTimeout(station.worker.sleepTimeout);
                     station.isWorking = true;
                     charm.slide(station.worker.sprite, station.lemonadeStation.getGlobalPosition().x-station.worker.sprite.width/2, station.worker.sprite.y, 100/station.worker.speed, "linear", false).onComplete = ()=>{
-                        let lemo = createSpriteRelational(workstations[index].name + ".png",1,1,16, game, secondGroup);
+                        let lemo = createSpriteRelational(workstations[index].name + ".png",1,1,16, game, fifthGroup);
                         lemo.x = station.worker.sprite.getGlobalPosition().x;
                         lemo.y = station.worker.sprite.getGlobalPosition().y-station.worker.sprite.height/1.5;
                         station.worker.sprite.scale.x = -station.worker.sprite.scale.x;
@@ -2061,6 +2057,7 @@ TWEEN.Interpolation = {
                 }else{
                     workstation.box = createSpriteRelational("box.png",8,2,5.5, game, firstGroup);
                     possibleBottles.push(1);
+                     console.log(distanceTo(workstations[0].container, workstations[1].container));
                 }
                 let UI = createSprite("UILarge.png",workstation.box.x,workstation.box.y+workstation.box.height/1.25,5, game, firstGroup);
                 UI.tint = 0x2041b6;
@@ -2174,6 +2171,13 @@ TWEEN.Interpolation = {
                     intervals = [];
                 }
                 
+            }
+            
+            function distanceTo(sprite1,sprite2){
+                let a = sprite1.x - sprite2.x;
+                let b = sprite1.y - sprite2.y;
+
+                return Math.sqrt( a*a + b*b );
             }
             
             function spritesheetSetup(){
