@@ -1484,11 +1484,11 @@ TWEEN.Interpolation = {
                 
                 //CTA
                 setInterval(()=>{
-                    if(!pause){
+                    if(!pause && !endBool){
                         timeTillEndScreen-=1;
                     }
                     
-                    if(timeTillEndScreen<=0){
+                    if(timeTillEndScreen==0){
                         showEndcard();
                     }
                 },1000);
@@ -2094,7 +2094,7 @@ TWEEN.Interpolation = {
                 workstation.container.interactive = true;
                 workstation.container.on('pointerdown', ()=>{work(index)});
                 
-                if(index != 0) workstation.worker.sleepTimeout = setTimeout(()=>{sleep(station)},2700);
+                if(index != 0) workstation.worker.sleepTimeout = setTimeout(()=>{sleep(workstation)},2700);
                 
                 spawnCustomer(index);
             }
