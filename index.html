@@ -1298,6 +1298,7 @@ TWEEN.Interpolation = {
             
             let fontScale = 2;
             let customScale = 1; //1.28
+            let nextWorkstationCosts = 22; //1.28
             let backgroundMusic;
             
             let tutorial = true;
@@ -1450,7 +1451,7 @@ TWEEN.Interpolation = {
                 game.addChild(placeholderStation);
                 let station = createSprite("placeholderStation.png",0,0,1.85, placeholderStation, firstGroup);
                 let cash = createSprite("cash.png",-station.width/4.5,0,12, placeholderStation, secondGroup);
-                placeholderStation.costs = addText("25",cash.x+adWidth/6, cash.y, 0xFC4343, "white", adWidth/12, 0, placeholderStation);
+                placeholderStation.costs = addText(nextWorkstationCosts,cash.x+adWidth/6, cash.y, 0xFC4343, "white", adWidth/12, 0, placeholderStation);
                 
                 //Lemonade stand
                 stand = new PIXI.Container();
@@ -1762,9 +1763,9 @@ TWEEN.Interpolation = {
             }
             
             function solveCustomerQuest(index){
-                let money = 12;
+                let money = 15;
                 if(customers[index].type == 1){
-                    money = 24;
+                    money = 25;
                 }
                 releasePosition(customers[index].pos);
                 let customer = Object.assign({}, customers[index]);
@@ -1905,7 +1906,7 @@ TWEEN.Interpolation = {
                     let result2 = tintButton(button2);
                     if(result1 && result2 && !endBool) showEndcard();
                 }else{
-                    if(moneyCount >=25){
+                    if(moneyCount >=nextWorkstationCosts){
                         placeholderStation.costs.style.fill = "white";
                         if(placeholderStation.arrow==undefined){
                             placeholderStation.arrow = createSprite("newWorkstationArrow.png", 0, -placeholderStation.height/1.2, 5,placeholderStation,fourthGroup);
@@ -2062,7 +2063,7 @@ TWEEN.Interpolation = {
                 workstation.upgradeWorkstationButton.max = 3;
                 workstation.upgradeWorkstationButton.text = addText("Upgrade",workstation.upgradeWorkstationButton.sprite.width/5,-workstation.upgradeWorkstationButton.sprite.height/3, "white", "black", adWidth/30, 0, workstation.upgradeWorkstationButton);
                 
-                workstation.upgradeWorkstationButton.costs = (index==0) ? 10 : 25;
+                workstation.upgradeWorkstationButton.costs = (index==0) ? 10 : nextWorkstationCosts;
                 
                 workstation.upgradeWorkstationButton.costDisplay = addText(workstation.upgradeWorkstationButton.costs,workstation.upgradeWorkstationButton.sprite.width/4.5,-workstation.upgradeWorkstationButton.sprite.height/20, "white", "black", adWidth/30, 0, workstation.upgradeWorkstationButton);
                 
