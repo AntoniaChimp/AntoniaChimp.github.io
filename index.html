@@ -4,9 +4,6 @@
     <head>
         <meta charset="utf-8">
         <title>Idle Production Boss</title>
-        <script>
-            function getScript(e,i){var n=document.createElement("script");n.type="text/javascript",n.async=!0,i&&(n.onload=i),n.src=e,document.head.appendChild(n)}function parseMessage(e){var i=e.data,n=i.indexOf(DOLLAR_PREFIX+RECEIVE_MSG_PREFIX);if(-1!==n){var t=i.slice(n+2);return getMessageParams(t)}return{}}function getMessageParams(e){var i,n=[],t=e.split("/"),a=t.length;if(-1===e.indexOf(RECEIVE_MSG_PREFIX)){if(a>=2&&a%2===0)for(i=0;a>i;i+=2)n[t[i]]=t.length<i+1?null:decodeURIComponent(t[i+1])}else{var o=e.split(RECEIVE_MSG_PREFIX);void 0!==o[1]&&(n=JSON&&JSON.parse(o[1]))}return n}function getDapi(e){var i=parseMessage(e);if(!i||i.name===GET_DAPI_URL_MSG_NAME){var n=i.data;getScript(n,onDapiReceived)}}function invokeDapiListeners(){for(var e in dapiEventsPool)dapiEventsPool.hasOwnProperty(e)&&dapi.addEventListener(e,dapiEventsPool[e])}function onDapiReceived(){dapi=window.dapi,window.removeEventListener("message",getDapi),invokeDapiListeners()}function init(){window.dapi.isDemoDapi&&(window.parent.postMessage(DOLLAR_PREFIX+SEND_MSG_PREFIX+JSON.stringify({state:"getDapiUrl"}),"*"),window.addEventListener("message",getDapi,!1))}var DOLLAR_PREFIX="$$",RECEIVE_MSG_PREFIX="DAPI_SERVICE:",SEND_MSG_PREFIX="DAPI_AD:",GET_DAPI_URL_MSG_NAME="connection.getDapiUrl",dapiEventsPool={},dapi=window.dapi||{isReady:function(){return!1},addEventListener:function(e,i){dapiEventsPool[e]=i},removeEventListener:function(e){delete dapiEventsPool[e]},isDemoDapi:!0};init();
-        </script>
     </head>
     <body>
        
@@ -1276,7 +1273,7 @@ TWEEN.Interpolation = {
             let heightShift;
             let adWidth = window.innerWidth;
             let adHeight = window.innerHeight;
-            let adBool = true;
+            let adBool = false;
             let pause = false;
             let graphics;
             
@@ -1301,7 +1298,7 @@ TWEEN.Interpolation = {
             
             let fontScale = 2;
             let customScale = 1; //1.28
-            let nextWorkstationCosts = 22; //1.28
+            let nextWorkstationCosts = 30; 
             let backgroundMusic;
             
             let tutorial = true;
@@ -1314,61 +1311,32 @@ TWEEN.Interpolation = {
             let timeTillEndScreen = 28;
             
             let font = "'Fredoka One'";
+            document.fonts.load('10pt "Fredoka One"').then(()=>{setTimeout(displayAd, 50)});
         
-            window.onload = function(){            
-                (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
-            };
+            function init(){
+                 if (document.readyState === 'complete') {
+                     if (typeof mraid !== 'undefined') {
+                         if (mraid.getState() === 'loading') {
+                            mraid.addEventListener('ready', mraidIsReady);
+                         } else if (mraid.getState() === 'default') {
+                            displayAd();
+                         }
+                     }
+                 }
+             } 
             
-            function onReadyCallback(){
-                dapi.removeEventListener("ready", onReadyCallback);
-                dapi.isViewable() ? startGame() : console.log();
-                dapi.addEventListener("viewableChange", adVisibleCallback);
-                dapi.addEventListener("audioVolumeChange",audioVolumeChangeCallback);
+            function mraidIsReady(){
+                mraid.removeEventListener('ready');
+                displayAd();
             }
-            
-            function adVisibleCallback(event){
-                if(!start){
-                    startGame();
-                }
-                
-                if(!event.isViewable){
-                        backgroundMusic.pause();
-                        pause = true;
-                } else {
-                        backgroundMusic.resume();
-                        pause = false;
-                }  
-            }
-            
-            function audioVolumeChangeCallback(volume){
-                isAudioEnabled = !!volume;
-                if(isAudioEnabled){
-                    backgroundMusic.pause();
-                }else{
-                    backgroundMusic.resume();
-                }
-                //backgroundMusic.volume = dapi.getAudioVolume()/4;
-            }
-            
-            
-             function startGame() {
-                start = true;
-                isAudioEnabled = !!dapi.getAudioVolume();
-                volume = dapi.getAudioVolume()/4;
-                document.fonts.load('10pt "Fredoka One"').then(()=>{setTimeout(displayAd, 50)});
-            }
-            
-            
             
             function displayAd(){
                 
                 checkPlatform();
                 if(adBool){
-                    adWidth = dapi.getScreenSize().width;
-                    adHeight = dapi.getScreenSize().height;
-                    if(dapi.getScreenSize().width > dapi.getScreenSize().height){
-                        landscape = true;
-                    }
+                    mraid.setOrientationProperties ( {"allowOrientationChange": true } );
+                    adWidth = mraid.getMaxSize().width;
+                    adHeight = mraid.getMaxSize().height;
                 }
                 
                 app = new PIXI.Application();
@@ -1474,6 +1442,7 @@ TWEEN.Interpolation = {
                     if(moneyCount >= 25){
                         moneyCount -= 25;
                         createWorkstation(1, "Cherry");
+                        workstations[1].container.emit('pointerdown');
                         updateUI();
                         while(placeholderStation.children[0]) { 
                             placeholderStation.removeChild(placeholderStation.children[0]);
@@ -1512,7 +1481,7 @@ TWEEN.Interpolation = {
                 blink();
                 setInterval(drinkCoffee,5000);
                 //setInterval(()=>{createReaction(boss.sprite.position, "boss", 3000);},8000);
-                setInterval(spawnCustomer,3500);
+                setInterval(spawnCustomer,2300);
                 updateUI();
                 
                 //CTA
@@ -1543,7 +1512,7 @@ TWEEN.Interpolation = {
                
                 end.interactive = true;
                 end.on('pointerdown', ()=>{
-                    dapi.open(platform);
+                    mraid.open(platform);
                 });
            
                 let card = createSprite("card.png",adWidth/2,adHeight/2,1, end, fifthGroup);
@@ -1797,7 +1766,7 @@ TWEEN.Interpolation = {
             function solveCustomerQuest(index){
                 let money = 15;
                 if(customers[index].type == 1){
-                    money = 25;
+                    money = 30;
                 }
                 releasePosition(customers[index].pos);
                 let customer = Object.assign({}, customers[index]);
@@ -1914,7 +1883,10 @@ TWEEN.Interpolation = {
                 if(moneyCount>=button.costs && button.lvl< button.max){
                     button.lvl++;
                     moneyCount-=button.costs;
-                    workstations[index].worker.speed+=0.5;
+                    button.costs+=5;
+                    button.costDisplay.parent.removeChild(button.costDisplay);
+                    button.costDisplay = addText(button.costs,button.sprite.width/4.5,-button.sprite.height/20, "white", "black", adWidth/30, 0, button);
+                    workstations[index].worker.speed+=1;
                     showAnimatedText("+Speed", workstations[index].container.x, workstations[index].container.y,0x2041b6, "white",5);
                     if(button.lvl == button.max){
                         workstations[index].upgradeWorkstationButton.costs = 0 ;
@@ -2092,7 +2064,7 @@ TWEEN.Interpolation = {
                 workstation.upgradeWorkstationButton.position.set(workstation.container.x, workstation.container.y+workstation.container.height/2.1);
                 workstation.upgradeWorkstationButton.sprite = createSprite("workstationButton"+name+".png",0,0,3.5, workstation.upgradeWorkstationButton, secondGroup);
                 workstation.upgradeWorkstationButton.lvl = 1;
-                workstation.upgradeWorkstationButton.max = 3;
+                workstation.upgradeWorkstationButton.max = 4;
                 workstation.upgradeWorkstationButton.text = addText("Upgrade",workstation.upgradeWorkstationButton.sprite.width/5,-workstation.upgradeWorkstationButton.sprite.height/3, "white", "black", adWidth/30, 0, workstation.upgradeWorkstationButton);
                 
                 workstation.upgradeWorkstationButton.costs = (index==0) ? 10 : nextWorkstationCosts;
@@ -2122,10 +2094,21 @@ TWEEN.Interpolation = {
                 workstation.worker.isSleeping = false;
                 workstation.worker.sprite = createSprite("worker.png",station.getGlobalPosition().x + station.width/4.5,station.getGlobalPosition().y - station.height/1.55,9, game, firstGroup);
                 workstation.worker.idleXPosition = workstation.worker.sprite.getGlobalPosition().x;
+                workstation.worker.automatic = false;
                 workstation.worker.sprite.interactive = true;
-                workstation.worker.sprite.on('pointerdown', ()=>{work(index)});
+                workstation.worker.sprite.on('pointerdown', ()=>{
+                    if(!workstation.worker.automatic){
+                        app.ticker.add(delta => work(index));
+                        workstation.worker.automatic = true;
+                    }
+                });
                 workstation.container.interactive = true;
-                workstation.container.on('pointerdown', ()=>{work(index)});
+                workstation.container.on('pointerdown', ()=>{
+                    if(!workstation.worker.automatic){
+                        app.ticker.add(delta => work(index));
+                        workstation.worker.automatic = true;
+                    }
+                });
                 
                 if(index != 0) workstation.worker.sleepTimeout = setTimeout(()=>{sleep(workstation)},2700);
                 
