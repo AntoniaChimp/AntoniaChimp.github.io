@@ -1886,7 +1886,7 @@ TWEEN.Interpolation = {
                     button.costs+=5;
                     button.costDisplay.parent.removeChild(button.costDisplay);
                     button.costDisplay = addText(button.costs,button.sprite.width/4.5,-button.sprite.height/20, "white", "black", adWidth/30, 0, button);
-                    workstations[index].worker.speed+=1;
+                    workstations[index].worker.speed+=1.5;
                     showAnimatedText("+Speed", workstations[index].container.x, workstations[index].container.y,0x2041b6, "white",5);
                     if(button.lvl == button.max){
                         workstations[index].upgradeWorkstationButton.costs = 0 ;
@@ -2089,7 +2089,7 @@ TWEEN.Interpolation = {
                 workstation.mixer = createSprite("filledMixer"+ name + ".png",0,0,10, workstation.container, thirdGroup);
                 
                 workstation.worker = new Object();
-                workstation.worker.speed = 2;
+                workstation.worker.speed = 1.5;
                 workstation.worker.moving = false;
                 workstation.worker.isSleeping = false;
                 workstation.worker.sprite = createSprite("worker.png",station.getGlobalPosition().x + station.width/4.5,station.getGlobalPosition().y - station.height/1.55,9, game, firstGroup);
